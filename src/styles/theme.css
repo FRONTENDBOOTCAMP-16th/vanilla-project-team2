@@ -1,21 +1,273 @@
 :root {
-  --bg-color: var(--white);
-  --line-color: hsla(var(--black-values) / 0.15);
-  
-  --active-color: var(--blue-500);
-  --active-hover-color: hsla(var(--blue-200-values) / 0.1);
-  --active-focus-color: hsla(var(--blue-400-values) / 1);
-  
-  --tab-button-color: hsla(var(--gray-500-values) / 0.85);
-  --tab-panel-title-color: hsla(var(--black-values) / 0.75);
-  
-  --account-title-color: hsla(var(--black-values) / 0.5);
-  
-  --list-row-title-color: hsla(var(--blue-gray-600-values) / 0.95);
-  --list-row-sub-color: hsla(var(--blue-gray-800-values) / 0.6);
-  
-  --shadow-100: hsla(var(--black-values) / 0.1);
-  
-  --shinhan-color: hsla(var(--blue-gray-800-values) / 0.65);
-  --kb-color: var(--active-color);
+  --white-values: 0 0% 100%;
+  --black-values: 0 0% 0%;
+
+  --gray-50-values: 0 0% 95%;
+  --gray-100-values: 0 0% 90%;
+  --gray-200-values: 0 0% 80%;
+  --gray-300-values: 0 0% 70%;
+  --gray-400-values: 0 0% 60%;
+  --gray-500-values: 0 0% 50%;
+  --gray-600-values: 0 0% 40%;
+  --gray-700-values: 0 0% 30%;
+  --gray-800-values: 0 0% 20%;
+  --gray-900-values: 0 0% 10%;
+  --gray-950-values: 0 0% 5%;
+
+  --blue-gray-50-values: 210 36% 96%;
+  --blue-gray-100-values: 210 31% 91%;
+  --blue-gray-200-values: 210 31% 80%;
+  --blue-gray-300-values: 211 27% 70%;
+  --blue-gray-400-values: 209 23% 60%;
+  --blue-gray-500-values: 210 22% 49%;
+  --blue-gray-600-values: 209 28% 39%;
+  --blue-gray-700-values: 209 34% 30%;
+  --blue-gray-800-values: 210 40% 23%;
+  --blue-gray-900-values: 210 61% 16%;
+  --blue-gray-950-values: 208 61% 8%;
+
+  --stone-50-values: 10 1% 95%;
+  --stone-100-values: 10 1% 90%;
+  --stone-200-values: 10 1% 80%;
+  --stone-300-values: 10 1% 70%;
+  --stone-400-values: 10 1% 60%;
+  --stone-500-values: 10 1% 50%;
+  --stone-600-values: 10 1% 40%;
+  --stone-700-values: 10 1% 30%;
+  --stone-800-values: 10 1% 20%;
+  --stone-900-values: 10 1% 10%;
+  --stone-950-values: 10 1% 5%;
+
+  --nature-50-values: 120 1% 95%;
+  --nature-100-values: 120 1% 90%;
+  --nature-200-values: 120 1% 80%;
+  --nature-300-values: 120 1% 70%;
+  --nature-400-values: 120 1% 60%;
+  --nature-500-values: 120 1% 50%;
+  --nature-600-values: 120 1% 40%;
+  --nature-700-values: 120 1% 30%;
+  --nature-800-values: 120 1% 20%;
+  --nature-900-values: 120 1% 10%;
+  --nature-950-values: 120 1% 5%;
+
+  --red-50-values: 0 45% 95%;
+  --red-100-values: 0 45% 90%;
+  --red-200-values: 0 45% 80%;
+  --red-300-values: 0 45% 70%;
+  --red-400-values: 0 45% 60%;
+  --red-500-values: 0 45% 50%;
+  --red-600-values: 0 45% 40%;
+  --red-700-values: 0 45% 30%;
+  --red-800-values: 0 45% 20%;
+  --red-900-values: 0 45% 10%;
+  --red-950-values: 0 45% 5%;
+
+  --orange-50-values: 20 44% 95%;
+  --orange-100-values: 20 45% 90%;
+  --orange-200-values: 20 45% 80%;
+  --orange-300-values: 20 45% 70%;
+  --orange-400-values: 20 45% 60%;
+  --orange-500-values: 20 45% 50%;
+  --orange-600-values: 20 45% 40%;
+  --orange-700-values: 20 45% 30%;
+  --orange-800-values: 20 45% 20%;
+  --orange-900-values: 20 45% 10%;
+  --orange-950-values: 20 45% 5%;
+
+  --yellow-50-values: 50 90% 95%;
+  --yellow-100-values: 51 95% 92%;
+  --yellow-200-values: 50 95% 85%;
+  --yellow-300-values: 51 93% 76%;
+  --yellow-400-values: 51 94% 69%;
+  --yellow-500-values: 51 94% 61%;
+  --yellow-600-values: 51 60% 49%;
+  --yellow-700-values: 51 60% 36%;
+  --yellow-800-values: 50 60% 25%;
+  --yellow-900-values: 51 61% 12%;
+  --yellow-950-values: 50 90% 5%;
+
+  --green-50-values: 150 90% 95%;
+  --green-100-values: 150 90% 90%;
+  --green-200-values: 150 90% 80%;
+  --green-300-values: 150 90% 70%;
+  --green-400-values: 150 90% 60%;
+  --green-500-values: 150 90% 50%;
+  --green-600-values: 150 90% 40%;
+  --green-700-values: 150 90% 30%;
+  --green-800-values: 150 90% 20%;
+  --green-900-values: 150 90% 10%;
+  --green-950-values: 150 90% 5%;
+
+  --blue-50-values: 220 90% 95%;
+  --blue-100-values: 220 90% 90%;
+  --blue-200-values: 220 90% 80%;
+  --blue-300-values: 220 90% 70%;
+  --blue-400-values: 220 90% 60%;
+  --blue-500-values: 220 90% 50%;
+  --blue-600-values: 220 90% 40%;
+  --blue-700-values: 220 90% 30%;
+  --blue-800-values: 220 90% 20%;
+  --blue-900-values: 220 90% 10%;
+  --blue-950-values: 220 90% 5%;
+
+  --purple-50-values: 260 30% 95%;
+  --purple-100-values: 260 30% 90%;
+  --purple-200-values: 260 30% 80%;
+  --purple-300-values: 260 30% 70%;
+  --purple-400-values: 260 30% 60%;
+  --purple-500-values: 260 30% 50%;
+  --purple-600-values: 260 30% 40%;
+  --purple-700-values: 260 30% 30%;
+  --purple-800-values: 260 30% 20%;
+  --purple-900-values: 260 30% 10%;
+  --purple-950-values: 260 30% 5%;
+
+  --pink-50-values: 350 45% 95%;
+  --pink-100-values: 350 45% 90%;
+  --pink-200-values: 350 45% 80%;
+  --pink-300-values: 350 45% 70%;
+  --pink-400-values: 350 45% 60%;
+  --pink-500-values: 350 45% 50%;
+  --pink-600-values: 350 45% 40%;
+  --pink-700-values: 350 45% 30%;
+  --pink-800-values: 350 45% 20%;
+  --pink-900-values: 350 45% 10%;
+  --pink-950-values: 350 45% 5%;
+
+  --white: hsl(var(--white-values));
+  --black: hsl(var(--black-values));
+
+  --gray-50: hsl(var(--gray-50-values));
+  --gray-100: hsl(var(--gray-100-values));
+  --gray-200: hsl(var(--gray-200-values));
+  --gray-300: hsl(var(--gray-300-values));
+  --gray-400: hsl(var(--gray-400-values));
+  --gray-500: hsl(var(--gray-500-values));
+  --gray-600: hsl(var(--gray-600-values));
+  --gray-700: hsl(var(--gray-700-values));
+  --gray-800: hsl(var(--gray-800-values));
+  --gray-900: hsl(var(--gray-900-values));
+  --gray-950: hsl(var(--gray-950-values));
+
+  --blue-gray-50: hsl(var(--blue-gray-50-values));
+  --blue-gray-100: hsl(var(--blue-gray-100-values));
+  --blue-gray-200: hsl(var(--blue-gray-200-values));
+  --blue-gray-300: hsl(var(--blue-gray-300-values));
+  --blue-gray-400: hsl(var(--blue-gray-400-values));
+  --blue-gray-500: hsl(var(--blue-gray-500-values));
+  --blue-gray-600: hsl(var(--blue-gray-600-values));
+  --blue-gray-700: hsl(var(--blue-gray-700-values));
+  --blue-gray-800: hsl(var(--blue-gray-800-values));
+  --blue-gray-900: hsl(var(--blue-gray-900-values));
+  --blue-gray-950: hsl(var(--blue-gray-950-values));
+
+  --stone-50: hsl(var(--stone-50-values));
+  --stone-100: hsl(var(--stone-100-values));
+  --stone-200: hsl(var(--stone-200-values));
+  --stone-300: hsl(var(--stone-300-values));
+  --stone-400: hsl(var(--stone-400-values));
+  --stone-500: hsl(var(--stone-500-values));
+  --stone-600: hsl(var(--stone-600-values));
+  --stone-700: hsl(var(--stone-700-values));
+  --stone-800: hsl(var(--stone-800-values));
+  --stone-900: hsl(var(--stone-900-values));
+  --stone-950: hsl(var(--stone-950-values));
+
+  --nature-50: hsl(var(--nature-50-values));
+  --nature-100: hsl(var(--nature-100-values));
+  --nature-200: hsl(var(--nature-200-values));
+  --nature-300: hsl(var(--nature-300-values));
+  --nature-400: hsl(var(--nature-400-values));
+  --nature-500: hsl(var(--nature-500-values));
+  --nature-600: hsl(var(--nature-600-values));
+  --nature-700: hsl(var(--nature-700-values));
+  --nature-800: hsl(var(--nature-800-values));
+  --nature-900: hsl(var(--nature-900-values));
+  --nature-950: hsl(var(--nature-950-values));
+
+  --red-50: hsl(var(--red-50-values));
+  --red-100: hsl(var(--red-100-values));
+  --red-200: hsl(var(--red-200-values));
+  --red-300: hsl(var(--red-300-values));
+  --red-400: hsl(var(--red-400-values));
+  --red-500: hsl(var(--red-500-values));
+  --red-600: hsl(var(--red-600-values));
+  --red-700: hsl(var(--red-700-values));
+  --red-800: hsl(var(--red-800-values));
+  --red-900: hsl(var(--red-900-values));
+  --red-950: hsl(var(--red-950-values));
+
+  --orange-50: hsl(var(--orange-50-values));
+  --orange-100: hsl(var(--orange-100-values));
+  --orange-200: hsl(var(--orange-200-values));
+  --orange-300: hsl(var(--orange-300-values));
+  --orange-400: hsl(var(--orange-400-values));
+  --orange-500: hsl(var(--orange-500-values));
+  --orange-600: hsl(var(--orange-600-values));
+  --orange-700: hsl(var(--orange-700-values));
+  --orange-800: hsl(var(--orange-800-values));
+  --orange-900: hsl(var(--orange-900-values));
+  --orange-950: hsl(var(--orange-950-values));
+
+  --yellow-50: hsl(var(--yellow-50-values));
+  --yellow-100: hsl(var(--yellow-100-values));
+  --yellow-200: hsl(var(--yellow-200-values));
+  --yellow-300: hsl(var(--yellow-300-values));
+  --yellow-400: hsl(var(--yellow-400-values));
+  --yellow-500: hsl(var(--yellow-500-values));
+  --yellow-600: hsl(var(--yellow-600-values));
+  --yellow-700: hsl(var(--yellow-700-values));
+  --yellow-800: hsl(var(--yellow-800-values));
+  --yellow-900: hsl(var(--yellow-900-values));
+  --yellow-950: hsl(var(--yellow-950-values));
+
+  --green-50: hsl(var(--green-50-values));
+  --green-100: hsl(var(--green-100-values));
+  --green-200: hsl(var(--green-200-values));
+  --green-300: hsl(var(--green-300-values));
+  --green-400: hsl(var(--green-400-values));
+  --green-500: hsl(var(--green-500-values));
+  --green-600: hsl(var(--green-600-values));
+  --green-700: hsl(var(--green-700-values));
+  --green-800: hsl(var(--green-800-values));
+  --green-900: hsl(var(--green-900-values));
+  --green-950: hsl(var(--green-950-values));
+
+  --blue-50: hsl(var(--blue-50-values));
+  --blue-100: hsl(var(--blue-100-values));
+  --blue-200: hsl(var(--blue-200-values));
+  --blue-300: hsl(var(--blue-300-values));
+  --blue-400: hsl(var(--blue-400-values));
+  --blue-500: hsl(var(--blue-500-values));
+  --blue-600: hsl(var(--blue-600-values));
+  --blue-700: hsl(var(--blue-700-values));
+  --blue-800: hsl(var(--blue-800-values));
+  --blue-900: hsl(var(--blue-900-values));
+  --blue-950: hsl(var(--blue-950-values));
+
+  --purple-50: hsl(var(--purple-50-values));
+  --purple-100: hsl(var(--purple-100-values));
+  --purple-200: hsl(var(--purple-200-values));
+  --purple-300: hsl(var(--purple-300-values));
+  --purple-400: hsl(var(--purple-400-values));
+  --purple-500: hsl(var(--purple-500-values));
+  --purple-600: hsl(var(--purple-600-values));
+  --purple-700: hsl(var(--purple-700-values));
+  --purple-800: hsl(var(--purple-800-values));
+  --purple-900: hsl(var(--purple-900-values));
+  --purple-950: hsl(var(--purple-950-values));
+
+  --pink-50: hsl(var(--pink-50-values));
+  --pink-100: hsl(var(--pink-100-values));
+  --pink-200: hsl(var(--pink-200-values));
+  --pink-300: hsl(var(--pink-300-values));
+  --pink-400: hsl(var(--pink-400-values));
+  --pink-500: hsl(var(--pink-500-values));
+  --pink-600: hsl(var(--pink-600-values));
+  --pink-700: hsl(var(--pink-700-values));
+  --pink-800: hsl(var(--pink-800-values));
+  --pink-900: hsl(var(--pink-900-values));
+  --pink-950: hsl(var(--pink-950-values));
+
+  color-scheme: light dark;
 }
