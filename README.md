@@ -1,1 +1,10 @@
-# vanilla-team-project
+# lion-study-room
+
+조장 : 김한결
+조원 : 김효경, 사민재, 이동헌
+
+## 주제
+
+## 폴더 구조
+
+## 개발환경
