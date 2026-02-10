@@ -1,12 +1,15 @@
 @layer base, theme, components, utilities;
 
-@import './common/_normalize.css' layer(base);
-@import './common/base.css' layer(base);
+@import './normalize.css' layer(base);
+@import './base.css' layer(base);
 
-@import './common/theme.css' layer(theme);
+@import './theme.css' layer(theme);
 @import './theme.css' layer(theme);
 
 /* @import './common/_animation.css' layer(utilities); */
-@import './common/a11y.css' layer(utilities);
+@import './a11y.css' layer(utilities);
+/* 
+@import './demo.css'; */
 
-@import './demo.css';
+/* reset.css 와 normalize.css 성격이 비슷하여 
+레거시 버전인 reset.css는 파일만 만들어 두고 연결하지 않았습니다 */
