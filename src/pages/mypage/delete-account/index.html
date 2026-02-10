@@ -22,6 +22,51 @@
   <body class="delete-account__container">
     <h1>계정탈퇴</h1>
     
+      <body class="change-pwd__container">
+<a href="../" class="back-link">
+  마이페이지로 돌아가기
+</a>
+    <h1>회원탈퇴</h1>
+    <p>계정을 삭제하기 전에 아래 내용을 확인해주세요</p>
+
+<!-- 회원탈퇴 폼 -->
+
+      <p>보안 안내<br />
+      정기적인 비밀번호 변경으로 계정을 안전하게 보호하세요.</p>
+
+<form id="changePwd" action="https://formspress.io/f/none" method="post">
+  <fieldset>
+    <legend class="sr-only">비밀번호 변경</legend>
+
+    <section>
+      <strong>회원탈퇴 유의사항</strong>
+      <ul>
+        <li>회원탈퇴 시 모든 개인정보가 즉시 삭제되며 복구할 수 없습니다.</li>
+        <li>작성한 게시글과 댓글은 자동으로 삭제되지 않습니다.</li>
+        <li>획득한 포인트와 활동 내역이 모두 삭제됩니다.</li>
+        <li>동일한 이메일로 재가입 시 이전 데이터는 복구되지 않습니다.</li>
+      </ul>
+    </section>
+
+      <!-- 비밀번호 확인 서식 -->
+      <div>
+        <label for="currentPwd">비밀번호 확인</label>
+        <input type="password" pattern="^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$" id="currentPwd" required placeholder="현재 비밀번호를 입력하세요" name="currntPwd" />
+      </div>
+      
+      <p>
+        위 유의사항을 모두 확인했으며, 회원탈퇴에 동의합니다.
+      </p>
+
+      <a href="../" class="btn btn-cancel">취소</a>
+      <button type="submit" class="btn btn-delete-account">
+        회원탈퇴
+      </button>
+
+
+
+  </fieldset>
+</form>
 
 
 
