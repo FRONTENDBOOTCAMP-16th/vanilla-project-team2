@@ -1,0 +1,12 @@
+
+
+.__container {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  min-width:1200px;
+  min-height: 100vh;
+  padding-block-start: 100px;
+  background-color: hsla(var(--blue-gray-700-values) / 0.15);
+  font-family: 'Noto Sans KR', sans-serif;
+}

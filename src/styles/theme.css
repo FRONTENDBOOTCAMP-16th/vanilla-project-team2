@@ -1,0 +1,21 @@
+:root {
+  --bg-color: var(--white);
+  --line-color: hsla(var(--black-values) / 0.15);
+  
+  --active-color: var(--blue-500);
+  --active-hover-color: hsla(var(--blue-200-values) / 0.1);
+  --active-focus-color: hsla(var(--blue-400-values) / 1);
+  
+  --tab-button-color: hsla(var(--gray-500-values) / 0.85);
+  --tab-panel-title-color: hsla(var(--black-values) / 0.75);
+  
+  --account-title-color: hsla(var(--black-values) / 0.5);
+  
+  --list-row-title-color: hsla(var(--blue-gray-600-values) / 0.95);
+  --list-row-sub-color: hsla(var(--blue-gray-800-values) / 0.6);
+  
+  --shadow-100: hsla(var(--black-values) / 0.1);
+  
+  --shinhan-color: hsla(var(--blue-gray-800-values) / 0.65);
+  --kb-color: var(--active-color);
+}
