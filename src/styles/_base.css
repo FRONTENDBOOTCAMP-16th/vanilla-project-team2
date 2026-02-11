@@ -1,12 +1,10 @@
-
-
- body {
+body {
   display: flex;
   justify-content: center;
   align-items: start;
   min-height: 100vh;
   padding-block-start: 100px;
-  background-color: hsla(var(--blue-gray-700-values) / 0.15);
+  background-color: --white-values;
   font-family: 'Noto Sans KR', sans-serif;
 }
 

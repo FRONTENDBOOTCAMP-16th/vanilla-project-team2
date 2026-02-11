@@ -269,5 +269,5 @@
   --pink-900: hsl(var(--pink-900-values));
   --pink-950: hsl(var(--pink-950-values));
 
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
 }
