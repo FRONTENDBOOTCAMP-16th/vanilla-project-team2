@@ -7,7 +7,11 @@
 
 @import './_a11y.css' layer(utilities);
 
-
+/* @import './common/_animation.css' layer(utilities); */
+@import './a11y.css' layer(components);
+@import './component.css';
+/* 
+@import './demo.css'; */
 
 /* reset.css 와 normalize.css 성격이 비슷하여 
-reset.css는 연결하지 않았습니다. */
+레거시 버전인 reset.css는 파일만 만들어 두고 연결하지 않았습니다 */
