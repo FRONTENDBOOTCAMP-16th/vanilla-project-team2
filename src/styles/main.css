@@ -4,12 +4,9 @@
 @import './_base.css' layer(base);
 
 @import './_theme.css' layer(theme);
-@import './_theme.css' layer(theme);
 
-/* @import './common/_animation.css' layer(utilities); */
 @import './_a11y.css' layer(utilities);
-/* 
-@import './demo.css'; */
+
 
 /* reset.css 와 normalize.css 성격이 비슷하여 
 reset.css는 연결하지 않았습니다. */
