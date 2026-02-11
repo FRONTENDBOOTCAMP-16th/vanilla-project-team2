@@ -4,7 +4,7 @@ body {
   align-items: start;
   min-height: 100vh;
   padding-block-start: 100px;
-  background-color: --white-values;
+  background-color: --white;
   font-family: 'Noto Sans KR', sans-serif;
 }
 
