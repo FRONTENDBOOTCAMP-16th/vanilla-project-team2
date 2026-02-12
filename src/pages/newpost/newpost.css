@@ -21,7 +21,7 @@
     flex-direction: column;
     gap: 12px;
 
-    input,
+    .input,
     #categorySelect {
       height: 50px;
       border: 1px solid lightgray;
@@ -41,6 +41,7 @@
     display: inline-flex;
     padding: 8px;
     padding-inline: 14px;
+    cursor: pointer;
 
     background: lightgray;
     /* padding: 8px; */
@@ -70,38 +71,32 @@ textarea {
 
 .form-buttons {
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly ;
+  justify-content: space-evenly;
   gap: 14px;
 
   height: 50px;
   margin-block: 30px;
-  
+}
 
-  
-  .button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    gap: 6px;
-    border-radius: 12px;
-    border: 1px solid lightgray;
-    cursor: pointer;
+.form-buttons .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
 
-  
-  
-    }
-  }
+  gap: 6px;
+  border-radius: 12px;
+  border: 1px solid lightgray;
+  cursor: pointer;
+}
 
+/* submit 버튼 */
 .submit {
-      background: #4F39F6;
-background: -webkit-linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
-background: -moz-linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
-background: linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(
-  startColorstr="#000000",
-  endColorstr="#000000",
-  GradientType=1
-);
+  background: linear-gradient(
+    90deg,
+    #4f39f6 0%,
+    #7c3aed 100%
+  );
+  color: #ffffff;
+  border: none;
 }
