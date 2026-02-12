@@ -2,6 +2,7 @@
 
 .container {
   background-color: var(--gray-50);
+  margin: auto;
 }
 
 .newpost-form {
@@ -78,12 +79,29 @@ textarea {
   
 
   
-  button {
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     flex: 1;
+    gap: 6px;
     border-radius: 12px;
     border: 1px solid lightgray;
     cursor: pointer;
-  }
 
   
+  
+    }
+  }
+
+.submit {
+      background: #4F39F6;
+background: -webkit-linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+background: -moz-linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+background: linear-gradient(90deg,rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(
+  startColorstr="#000000",
+  endColorstr="#000000",
+  GradientType=1
+);
 }
