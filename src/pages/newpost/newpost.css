@@ -13,8 +13,9 @@
   background: var(--white);
   border: 1px solid lightgray;
   border-radius: 14px;
+  margin-block: 30px;
 
-  .form-input {
+  .form-input__box {
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -64,4 +65,25 @@ textarea {
   line-height: 1.6;
   resize: none;
   min-height: 400px;
+}
+
+.form-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly ;
+  gap: 14px;
+
+  height: 50px;
+  margin-block: 30px;
+  
+
+  
+  button {
+    flex: 1;
+    border-radius: 12px;
+    border: 1px solid lightgray;
+    cursor: pointer;
+  }
+
+  
 }
