@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../../api/JWT.js" defer></script>
+    <script src="./mypage.js" defer></script>
+  </head>
+  <body>
+    <div class="user__container">
+      <div class="user__profile">
+        <p>김</p>
+      </div>
+
+      <div class="user__modify-button" aria-label="회원 정보 수정">
+        <button type="button" class="js-button">변경</button>
+        <button type="button" class="js-button">취소</button>
+      </div>
+
+      <div class="user__data" aria-label="사용자 이름">
+        <input
+          type="text"
+          name="user_nickname"
+          id="user_nickname"
+          value="사용자 이름"
+          readonly
+        />
+      </div>
+
+      <div class="user__data" aria-label="사용자 아이디">
+        <input
+          type="text"
+          name="user_id"
+          id="user_id"
+          value="사용자 이름"
+          readonly
+        />
+      </div>
+
+      <div class="user__data" aria-label="사용자 휴대폰 번호">
+        <input
+          type="text"
+          name="user_phone"
+          id="user_phone"
+          value="010-1234-5678"
+          readonly
+        />
+      </div>
+    </div>
+  </body>
+</html>
