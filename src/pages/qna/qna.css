@@ -31,7 +31,7 @@ body {
   align-items: center;
   position: relative;
   width: calc(1200px - 2px);
-  height: 156px;
+  height: 100px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -63,25 +63,6 @@ body {
 
   .main-category__item {
     list-style-type: none;
-  }
-
-  .main-category__button {
-    padding-inline: 18px;
-    padding-block: 8px;
-    margin: 0px;
-    background-color: #f3f4f6;
-    border: none;
-    border-radius: 10px;
-  }
-
-  .main-category__button:not(.is-active):hover {
-    background-color: #eef2ff;
-    border: 1px solid #4f39f6;
-  }
-
-  .is-active {
-    background-color: #4f39f6;
-    color: #ffffff;
   }
 }
 
@@ -136,29 +117,70 @@ body {
   font-weight: 300;
   position: relative;
   width: calc(596px - 52px - 24px);
+}
 
-  &::before {
-    content: '답변대기';
-    position: absolute;
-    top: 2px;
-    left: 100px;
-    width: 72px;
-    height: 24px;
+.pagination {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 
-    /* 스타일 */
-    border: none;
-    text-align: center;
-    line-height: 25px;
-    border-radius: 12px;
-    background-color: #ffedd4; /* 주황색 */
-    color: #9a3412; /* 글자색 추가 추천 */
-  }
+.pagination__list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  list-style: none;
+}
 
-  /* 2. 🟢 특수 상태: 답변완료 (덮어쓰기!) */
-  /* 해석: .main-post__inner이면서 동시에 .is-completed를 가질 때 */
-  &.is-completed::before {
-    content: '답변완료'; /* 글자 교체 */
-    background-color: #dcfce7; /* 초록색 배경 교체 */
-    color: #166534; /* 글자색 교체 */
-  }
+.pagination button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #f3f0ff;
+  color: #4f39f6;
+  border-color: #e0e7ff;
+}
+
+.pagination__link.is-active {
+  background-color: #4f39f6;
+  color: #ffffff;
+  font-weight: 700;
+  border-color: #4f39f6;
+}
+
+.pagination__link.is-active:hover {
+  background-color: #4f39f6;
+  color: #ffffff;
+  cursor: default;
+}
+
+.pagination button:disabled {
+  color: #d1d5db;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.pagination svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2px;
+}
+
+.pagination button.hidden {
+  display: none;
 }

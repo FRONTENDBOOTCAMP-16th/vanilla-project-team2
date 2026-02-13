@@ -49,23 +49,6 @@
             />
           </div>
         </form>
-        <ul class="main-category__list">
-          <li class="main-category__item">
-            <button class="main-category__button is-active" type="button">
-              전체
-            </button>
-          </li>
-          <li class="main-category__item">
-            <button class="main-category__button" type="button">
-              답변완료
-            </button>
-          </li>
-          <li class="main-category__item">
-            <button class="main-category__button" type="button">
-              답변대기
-            </button>
-          </li>
-        </ul>
       </section>
       <ul class="main-post__list">
         <li class="main-post__item">
@@ -240,6 +223,111 @@
           </a>
         </li>
       </ul>
+      <nav class="pagination" aria-label="게시판 페이지 네비게이션">
+        <ul class="pagination__list">
+          <li class="pagination__item">
+            <button
+              type="button"
+              class="pagination__control pagination__control--first hidden"
+              aria-label="처음 페이지"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="11 17 6 12 11 7"></polyline>
+                <polyline points="18 17 13 12 18 7"></polyline>
+              </svg>
+            </button>
+          </li>
+
+          <li class="pagination__item">
+            <button
+              type="button"
+              class="pagination__control pagination__control--prev"
+              aria-label="이전 페이지"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+          </li>
+
+          <li class="pagination__item">
+            <button class="pagination__link is-active">1</button>
+          </li>
+          <li class="pagination__item">
+            <button class="pagination__link">2</button>
+          </li>
+          <li class="pagination__item">
+            <button class="pagination__link">3</button>
+          </li>
+          <li class="pagination__item">
+            <button class="pagination__link">4</button>
+          </li>
+          <li class="pagination__item">
+            <button class="pagination__link">5</button>
+          </li>
+
+          <li class="pagination__item">
+            <button
+              type="button"
+              class="pagination__control pagination__control--next"
+              aria-label="다음 페이지"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+          </li>
+
+          <li class="pagination__item">
+            <button
+              type="button"
+              class="pagination__control pagination__control--next-group hidden"
+              aria-label="다음 5페이지"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="13 17 18 12 13 7"></polyline>
+                <polyline points="6 17 11 12 6 7"></polyline>
+              </svg>
+            </button>
+          </li>
+        </ul>
+      </nav>
     </main>
   </body>
 </html>
