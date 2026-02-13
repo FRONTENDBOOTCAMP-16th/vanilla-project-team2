@@ -1,0 +1,111 @@
+.container {
+  background-color: var(--gray-50);
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* 404 안내 메시지 */
+
+.error-message {
+  display: contents;
+
+  .error-icon {
+    width: 64px;
+  }
+
+  .error-strong {
+    font-size: 128px;
+    background-image: linear-gradient(45deg, #4f39f6, #9810fa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .error-head {
+    font-size: 36px;
+    color: #0a0a0a;
+  }
+
+  .error-detail {
+    font-size: 18px;
+    color: #4a5565;
+  }
+}
+
+/* 이동 링크 박스 */
+
+.suggestion {
+  background-color: var(--white);
+  border-radius: 16px;
+  width: 600px;
+  padding: 32px;
+  box-shadow: var(--shadow-lg);
+
+  .suggestion-links {
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    list-style: none;
+    text-decoration: none;
+
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .linklist {
+      background-color: #f9fafb;
+      border: 1px solid #e5e7eb;
+      padding: 8px;
+      border-radius: 12px;
+      text-align: center;
+      text-decoration: none;
+    }
+  }
+}
+
+.suggestion-message {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+
+/* 자주 쓰이는 버튼 */
+.regular-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.regular-link {
+    display: flex;
+  align-items: center;
+  gap: 8px;
+
+  background-color: #fff;
+  border: 1px solid #d1d5dc;
+  border-radius: 14px;
+  padding: 12px;
+  margin-block: 32px;
+
+  text-decoration: none;
+  color: inherit;
+
+  &.home{
+    background-image: linear-gradient(45deg, #4f39f6, #9810fa);
+    color: var(--white);
+  }
+}

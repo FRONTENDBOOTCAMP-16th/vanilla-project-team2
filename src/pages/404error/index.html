@@ -7,64 +7,94 @@
     <link rel="stylesheet" href="./404error.css" />
     <script src="404error.page.js" type="module"></script>
     <title>404 not Found - 사자들의의 공부방</title>
+  </head>
+
 <main class="container">
 
 <!-- 404 안내 메시지 -->
-
-  <img src="/src/assets/icons/icon-logo-color.svg" alt="" />
-  <strong>404</strong>
-  <h1>페이지를 찾을 수 없습니다</h1>
-  <p>요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.</p>
+<section class="error-message">
+<svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <linearGradient id="gradient"
+    gradientUnits="userSpaceOnUse"
+    x1="0" y1="0" x2="0" y2="24">
+    <stop offset="0%" stop-color="#4F39F6"/>
+    <stop offset="100%" stop-color="#9810FA"/>
+  </linearGradient>
+</defs>
+<path d="M2.20164 18.4695L10.1643 4.00506C10.9021 2.66498 13.0979 2.66498 13.8357 4.00506L21.7984 18.4695C22.4443 19.6428 21.4598 21 19.9627 21H4.0373C2.54022 21 1.55571 19.6428 2.20164 18.4695Z" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 9V13" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M12 17.0195V17" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+    <strong class="error-strong">404</strong>
+    <h1 class="error-head">페이지를 찾을 수 없습니다</h1>
+    <p class="error-detail">요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.</p>
+</section>
 
 <!-- 이동 링크 -->
   <div class="suggestion">
-<ul>
-<h2>찾으시는 페이지가 있으신가요?</h2>
+    <p class="suggestion-message">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#99A1AF" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M17.5003 17.4998L13.917 13.9165" stroke="#99A1AF" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+찾으시는 페이지가 있으신가요?
+</p>
+<ul class="suggestion-links">
 
-<li class="link dashboard">
-  <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+<li class="linklist dashboard">
+<a class="link" href="../dashboard/index.html">
+  <svg  width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10.8333 16.6662V9.99956C10.8333 9.77855 10.7455 9.56659 10.5892 9.41031C10.4329 9.25403 10.2209 9.16623 9.99992 9.16623H6.66659C6.44557 9.16623 6.23361 9.25403 6.07733 9.41031C5.92105 9.56659 5.83325 9.77855 5.83325 9.99956V16.6662" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M0.833252 7.49958C0.833194 7.25713 0.88603 7.0176 0.988075 6.79767C1.09012 6.57775 1.23892 6.38274 1.42409 6.22624L7.25742 1.22708C7.55824 0.972834 7.93938 0.833344 8.33325 0.833344C8.72712 0.833344 9.10826 0.972834 9.40909 1.22708L15.2424 6.22624C15.4276 6.38274 15.5764 6.57775 15.6784 6.79767C15.7805 7.0176 15.8333 7.25713 15.8333 7.49958V14.9996C15.8333 15.4416 15.6577 15.8655 15.3451 16.1781C15.0325 16.4906 14.6086 16.6662 14.1666 16.6662H2.49992C2.05789 16.6662 1.63397 16.4906 1.32141 16.1781C1.00885 15.8655 0.833252 15.4416 0.833252 14.9996V7.49958Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
-<a href="../dashboard/index.html">대시보드</a></li>
+<span>대시보드</span>
+</a>
+</li>
 
-<li class="link studyroom">
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<li class="linklist studyroom">
+<a class="link" href="../studyroom/index.html">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M17.8503 9.1018C17.9995 9.03599 18.1261 8.92786 18.2144 8.79081C18.3028 8.65375 18.3489 8.49379 18.3473 8.33075C18.3456 8.16771 18.2961 8.00874 18.2049 7.87354C18.1138 7.73834 17.985 7.63285 17.8345 7.57013L10.692 4.3168C10.4749 4.21776 10.239 4.1665 10.0003 4.1665C9.76166 4.1665 9.52579 4.21776 9.30865 4.3168L2.16699 7.5668C2.01863 7.63178 1.89242 7.73858 1.80379 7.87415C1.71517 8.00971 1.66797 8.16817 1.66797 8.33014C1.66797 8.4921 1.71517 8.65056 1.80379 8.78612C1.89242 8.92169 2.01863 9.02849 2.16699 9.09347L9.30865 12.3501C9.52579 12.4492 9.76166 12.5004 10.0003 12.5004C10.239 12.5004 10.4749 12.4492 10.692 12.3501L17.8503 9.1018Z" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M18.333 8.3335V13.3335" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M5 10.4165V13.3332C5 13.9962 5.52678 14.6321 6.46447 15.1009C7.40215 15.5698 8.67392 15.8332 10 15.8332C11.3261 15.8332 12.5979 15.5698 13.5355 15.1009C14.4732 14.6321 15 13.9962 15 13.3332V10.4165" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-<a href="../studyroom/index.html">자습방</a></li>
+</svg><span>자습방</span>
+</a>
+</li>
 
-<li class="link qna">
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<li class="linklist qna">
+<a class="link" href="../qna/index.html">
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M17.5003 17.4998L13.917 13.9165" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-<a href="../qna/index.html">QnA</a></li>
+</svg><span>QnA</span>
+</a>
+</li>
 
-<li class="link mypage">
-  <svg width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<li class="linklist mypage">
+<a class="link" href="../mypage/index.html">
+<svg  width="14" height="17" viewBox="0 0 14 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M12.4999 15.8333V14.1667C12.4999 13.2826 12.1487 12.4348 11.5236 11.8097C10.8985 11.1845 10.0506 10.8333 9.16659 10.8333H4.16659C3.28253 10.8333 2.43468 11.1845 1.80956 11.8097C1.18444 12.4348 0.833252 13.2826 0.833252 14.1667V15.8333" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M6.66659 7.50001C8.50753 7.50001 9.99992 6.00763 9.99992 4.16668C9.99992 2.32573 8.50753 0.833344 6.66659 0.833344C4.82564 0.833344 3.33325 2.32573 3.33325 4.16668C3.33325 6.00763 4.82564 7.50001 6.66659 7.50001Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-<a href="../mypage/index.html"></a>마이페이지</li>
+</svg>마이페이지
+</a>
+</li>
 </ul>
 
   </div>
 
 <!-- 자주 쓰이는 버튼 -->
-<div class="regular-link">
-    <a href="../">
+<div class="regular-links">
+    <a class="regular-link back" href="../">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M10.0003 15.8332L4.16699 9.99984L10.0003 4.1665" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
   <path d="M15.8337 10H4.16699" stroke="#0A0A0A" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>이전 페이지</a>
   
-    <a href="../dashboard/index.html">
+    <a class="regular-link home" href="../dashboard/index.html">
       <svg width="17" height="18" viewBox="0 0 17 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M10.8333 16.6662V9.99956C10.8333 9.77855 10.7455 9.56659 10.5892 9.41031C10.4329 9.25403 10.2209 9.16623 9.99992 9.16623H6.66659C6.44557 9.16623 6.23361 9.25403 6.07733 9.41031C5.92105 9.56659 5.83325 9.77855 5.83325 9.99956V16.6662" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M0.833252 7.49958C0.833194 7.25713 0.88603 7.0176 0.988075 6.79767C1.09012 6.57775 1.23892 6.38274 1.42409 6.22624L7.25742 1.22708C7.55824 0.972834 7.93938 0.833344 8.33325 0.833344C8.72712 0.833344 9.10826 0.972834 9.40909 1.22708L15.2424 6.22624C15.4276 6.38274 15.5764 6.57775 15.6784 6.79767C15.7805 7.0176 15.8333 7.25713 15.8333 7.49958V14.9996C15.8333 15.4416 15.6577 15.8655 15.3451 16.1781C15.0325 16.4906 14.6086 16.6662 14.1666 16.6662H2.49992C2.05789 16.6662 1.63397 16.4906 1.32141 16.1781C1.00885 15.8655 0.833252 15.4416 0.833252 14.9996V7.49958Z" stroke="black" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10.8333 16.6662V9.99956C10.8333 9.77855 10.7455 9.56659 10.5892 9.41031C10.4329 9.25403 10.2209 9.16623 9.99992 9.16623H6.66659C6.44557 9.16623 6.23361 9.25403 6.07733 9.41031C5.92105 9.56659 5.83325 9.77855 5.83325 9.99956V16.6662" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M0.833252 7.49958C0.833194 7.25713 0.88603 7.0176 0.988075 6.79767C1.09012 6.57775 1.23892 6.38274 1.42409 6.22624L7.25742 1.22708C7.55824 0.972834 7.93938 0.833344 8.33325 0.833344C8.72712 0.833344 9.10826 0.972834 9.40909 1.22708L15.2424 6.22624C15.4276 6.38274 15.5764 6.57775 15.6784 6.79767C15.7805 7.0176 15.8333 7.25713 15.8333 7.49958V14.9996C15.8333 15.4416 15.6577 15.8655 15.3451 16.1781C15.0325 16.4906 14.6086 16.6662 14.1666 16.6662H2.49992C2.05789 16.6662 1.63397 16.4906 1.32141 16.1781C1.00885 15.8655 0.833252 15.4416 0.833252 14.9996V7.49958Z" stroke="white" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>
       홈으로 가기</a>
 </div>
@@ -72,6 +102,5 @@
 </main>
 
 
-  </head>
 
 </html>
