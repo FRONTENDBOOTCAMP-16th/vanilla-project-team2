@@ -46,13 +46,13 @@
         </div>
 
         <!-- 에디터 버튼 -->
-        <div class="editor-buttons">
+        <!-- <div class="editor-buttons">
           <button type="button" class="editor-btn" data-type="code">
             코드 블록
           </button>
           <label for="imageUpload" class="editor-btn">이미지 업로드</label>
           <input type="file" id="imageUpload" hidden />
-        </div>
+        </div> -->
 
         <!-- 내용 -->
         <div class="form-input__box content">
@@ -60,16 +60,14 @@
           <textarea
             name="content"
             id="content"
-            placeholder="내용을 입력하세요"
+            placeholder="내용을 입력하세요. (마크다운 문법을 사용할 수 있습니다.)"
             required
           ></textarea>
-          <small class="content-guide"
-            >마크다운 문법을 사용할 수 있습니다.</small
-          >
+          
         </div>
 
         <!-- 태그 -->
-        <div class="form-input__box tag">
+        <!-- <div class="form-input__box tag">
           <label for="tag">태그</label>
           <input
           class="input"
@@ -78,7 +76,7 @@
             name="tag"
             placeholder="태그를 쉼표로 구분하여 입력하세요 (ex: javascript, react)"
           />
-        </div>
+        </div> -->
 
         <!-- 미리보기 -->
         <section class="preview">
@@ -92,10 +90,10 @@
         <!-- 버튼 -->
         <div class="form-buttons">
           <button type="button" class="button cancel">
-            <img src="/src/" alt="" />
+            <img src="/src/assets/icons/icon-cancle.svg" alt="" />
             취소
           </button>
-          <button type="submit" class="button submit">작성 완료</button>
+          <button type="submit" class="button submit"><img src="/src/assets/icons/icon-save.svg" alt="" />작성 완료</button>
         </div>
       </form>
     </main>

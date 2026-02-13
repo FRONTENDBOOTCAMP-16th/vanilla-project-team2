@@ -36,19 +36,6 @@
     }
   }
 
-  .editor-btn {
-    appearance: none;
-    display: inline-flex;
-    padding: 8px;
-    padding-inline: 14px;
-    cursor: pointer;
-
-    background: lightgray;
-    /* padding: 8px; */
-    border-radius: 12px;
-    border: none;
-  }
-
 
   .preview {
     background: var(--gray-50);
@@ -58,7 +45,7 @@
   }
 }
 
-textarea {
+#content {
   box-sizing: border-box;
   width: 100%;
   min-height: 300px;
