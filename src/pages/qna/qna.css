@@ -30,7 +30,7 @@ body {
 
   align-items: center;
   position: relative;
-  width: 1200px;
+  width: calc(1200px - 2px);
   height: 156px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -135,6 +135,7 @@ body {
   color: black;
   font-weight: 300;
   position: relative;
+  width: calc(596px - 52px - 24px);
 
   &::before {
     content: '답변대기';
