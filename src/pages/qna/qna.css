@@ -1,0 +1,163 @@
+body {
+  display: flex;
+  justify-content: center;
+}
+.container {
+  background-color: #f9fafb;
+}
+
+.main-title__wrapper {
+  width: 1200px;
+  height: 70px;
+  margin-bottom: 32px;
+
+  .main-title__heading {
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0px;
+  }
+
+  .main-title__text {
+    font-size: 16px;
+    margin: 0px;
+    margin-top: 9px;
+  }
+}
+
+.main-search__wrapper {
+  display: flex;
+  flex-flow: column;
+
+  align-items: center;
+  position: relative;
+  width: 1200px;
+  height: 156px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+
+  .main-search__icon {
+    position: absolute;
+    top: 42px;
+    left: 44px;
+  }
+
+  #main-search__item {
+    width: 1150px;
+    height: 50px;
+    padding-left: 48px;
+    padding-block: 16px;
+    border: 1px solid #d1d5dc;
+    border-radius: 10px;
+    margin-block: 25px;
+  }
+
+  .main-category__list {
+    display: flex;
+    column-gap: 8px;
+    width: calc(1200px - 25px);
+    padding-left: 25px;
+    margin: 0;
+  }
+
+  .main-category__item {
+    list-style-type: none;
+  }
+
+  .main-category__button {
+    padding-inline: 18px;
+    padding-block: 8px;
+    margin: 0px;
+    background-color: #f3f4f6;
+    border: none;
+    border-radius: 10px;
+  }
+
+  .main-category__button:not(.is-active):hover {
+    background-color: #eef2ff;
+    border: 1px solid #4f39f6;
+  }
+
+  .is-active {
+    background-color: #4f39f6;
+    color: #ffffff;
+  }
+}
+
+.main-post__list {
+  width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 0px;
+  column-gap: 24px;
+  row-gap: 24px;
+
+  .main-post__item {
+    display: flex;
+    flex-flow: nowrap row;
+    list-style-type: none;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    padding: 25px;
+    background-color: #ffffff;
+
+    &:hover {
+      background-color: #eef2ff;
+      border: 1px solid #4f39f6;
+    }
+  }
+
+  .main-post__heading {
+    font-weight: 400;
+  }
+
+  .main-post__tag {
+    display: block;
+    width: 72px;
+    height: 24px;
+    background-color: #e0e7ff;
+    text-align: center;
+    line-height: 25px;
+    padding-block: 2px;
+    padding-inline: 11px;
+    border-radius: 20px;
+  }
+
+  .main-post__meta-box {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.main-post__inner {
+  text-decoration: none;
+  color: black;
+  font-weight: 300;
+  position: relative;
+
+  &::before {
+    content: '답변대기';
+    position: absolute;
+    top: 2px;
+    left: 100px;
+    width: 72px;
+    height: 24px;
+
+    /* 스타일 */
+    border: none;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 12px;
+    background-color: #ffedd4; /* 주황색 */
+    color: #9a3412; /* 글자색 추가 추천 */
+  }
+
+  /* 2. 🟢 특수 상태: 답변완료 (덮어쓰기!) */
+  /* 해석: .main-post__inner이면서 동시에 .is-completed를 가질 때 */
+  &.is-completed::before {
+    content: '답변완료'; /* 글자 교체 */
+    background-color: #dcfce7; /* 초록색 배경 교체 */
+    color: #166534; /* 글자색 교체 */
+  }
+}
