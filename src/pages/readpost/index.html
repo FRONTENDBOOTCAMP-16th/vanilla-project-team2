@@ -10,11 +10,11 @@
   </head>
   <body>
     <div class="container">
-      <article class="question">
-        <header class="question-header">
-          <div class="title-box">
-            <span class="index">React</span>
-            <span class="upload-time">
+      <article class="post">
+        <header class="post__header">
+          <div class="post__title-group">
+            <span class="post__category">React</span>
+            <span class="post__time">
               <svg
                 width="16"
                 height="16"
@@ -39,14 +39,14 @@
               </svg>
               <time datetime="2026-02-13T16:00:00">1시간 전</time>
             </span>
-            <h1 class="title">
+            <h1 class="post__title">
               React에서 useEffect와 useLayoutEffect의 차이점이 궁금합니다
             </h1>
           </div>
 
-          <div class="meta">
-            <div class="author">
-              <div class="author-avatar">
+          <div class="post__meta">
+            <div class="post__author">
+              <div class="post__author-avatar">
                 <svg
                   class="profile-pic"
                   width="14"
@@ -71,7 +71,7 @@
                   />
                 </svg>
               </div>
-              <p class="author-name">초보개발자</p>
+              <p class="post__author-name">초보개발자</p>
             </div>
             <!-- 조회수 -->
             <!-- <div class="question-view">
@@ -81,25 +81,25 @@
               </span>
             </div> -->
 
-<div class="post-edit">
-              <div class="question-modify">
-                <button class="edit-button" data-type="edit-post" type="button">
-                  <img src="/src/assets/icons/icon-post-edit.svg" alt="" />
+<div class="post__actions">
+              
+                <button class="post__btn post__btn--edit" data-type="edit-post" type="button">
+                  <img src="/src/assets/icons/icon-post-edit.svg" alt="작성한 글 수정하기" />
                   수정
                 </button>
-              </div>
+              
   
-              <div class="question-delete">
-                <button class="delete-button" data-type="delete-post" type="button">
-                  <img src="/src/assets/icons/icon-post-delete.svg" alt="" />
+             
+                <button class="post__btn post__btn--delete" data-type="delete-post" type="button">
+                  <img src="/src/assets/icons/icon-post-delete.svg" alt="작성한 글 삭제하기" />
                   삭제
                 </button>
-              </div>
+              
             </div>
 </div>
         </header>
 
-        <div class="question-content">
+        <div class="post__content">
           <p>
             React를 공부하다가 useEffect와 useLayoutEffect의 차이점에 대해
             궁금한 점이 생겼습니다. <br />
@@ -109,7 +109,7 @@
             실무에서 사용하시는 분들의 경험담과 구체적인 예시를 들어
             설명해주시면 정말 감사하겠습니다! <br />
           </p>
-          <pre class="code-content">
+          <pre class="post__content--code">
               <code>// useEffect 예시
   useEffect(() =&lt; {
     // DOM 업데이트 후 실행
@@ -132,7 +132,7 @@
 
       <!-- 코멘트 -->
       <section class="comment">
-        <h2 class="comment-title">
+        <h2 class="comment__title">
           <svg
             width="17"
             height="17"
@@ -151,26 +151,25 @@
           코멘트
         </h2>
         <label for="comment" class="sr-only">답변 댓글</label>
-
-        <form id="comment-form">
+        <form id="comment__form">
           <label for="comment" class="sr-only">리뷰 작성</label>
           <textarea
             id="comment"
             rows="5"
             placeholder="답변을 작성해주세요..."
           ></textarea>
-          <button class="comment-submit-btn" type="submit">
+          <button class="comment__submit" type="submit">
             <img src="/src/assets/icons/icon-send.svg" alt="" />답변 작성
           </button>
         </form>
 
         <!-- 댓글 리스트 시작 -->
-        <ol class="comment-list">
+        <ol class="comment__list">
           <!-- 댓글 article 컴포넌트 -->
-          <li class="comment-item">
-            <article class="comment-article">
+          <li class="comment__item">
+            <article class="comment__card">
               <!-- 댓글 작성자 프사 -->
-              <div class="comment-author-avatar" aria-hidden="true">
+              <div class="comment__avatar" aria-hidden="true">
                 <svg
                   class="profile-pic"
                   width="14"
@@ -197,15 +196,15 @@
               </div>
               <!-- 댓글 작성자 메타 정보 -->
 
-              <div class="comment-author-meta">
-                <span class="author-name">답변자1</span>
-                <time class="comment-time" datetime="2026-02-14T12:00:00"
+              <div class="comment__meta">
+                <span class="comment__author">답변자1</span>
+                <time class="comment__time" datetime="2026-02-14T12:00:00"
                   >30분 전</time
                 >
               </div>
 
               <!-- 댓글 내용 -->
-              <p class="comment-text">
+              <p class="comment__text">
                 좋은 질문이네요! useEffect는 DOM 업데이트 후 비동기적으로
                 실행되고, useLayoutEffect는 DOM 업데이트 후 동기적으로
                 실행됩니다.
@@ -214,10 +213,10 @@
           </li>
 
           <!-- 댓글 article 컴포넌트 -->
-          <li class="comment-item">
-            <article class="comment-article">
+          <li class="comment__item">
+            <article class="comment__card">
               <!-- 댓글 작성자 프사 -->
-              <div class="comment-author-avatar" aria-hidden="true">
+              <div class="comment__avatar" aria-hidden="true">
                 <svg
                   class="profile-pic"
                   width="14"
@@ -244,15 +243,15 @@
               </div>
               <!-- 댓글 작성자 메타 정보 -->
 
-              <div class="comment-author-meta">
-                <span class="author-name">답변자2</span>
-                <time class="comment-time" datetime="2026-02-14T11:00:00"
+              <div class="comment__meta">
+                <span class="comment__author">답변자2</span>
+                <time class="comment__text" datetime="2026-02-14T11:00:00"
                   >1시간 전</time
                 >
               </div>
 
               <!-- 댓글 내용 -->
-              <p class="comment-text">
+              <p class="comment__text">
                 useLayoutEffect는 DOM 변경을 읽고 동기적으로 다시 렌더링해야 할
                 때 사용하면 좋습니다. 예를 들어 스크롤 위치를 측정하거나 DOM
                 노드의 크기를 읽어야 할 때 유용합니다.
@@ -261,10 +260,10 @@
           </li>
 
           <!-- 댓글 article 컴포넌트 -->
-          <li class="comment-item">
-            <article class="comment-article">
+          <li class="comment__item">
+            <article class="comment__card">
               <!-- 댓글 작성자 프사 -->
-              <div class="comment-author-avatar" aria-hidden="true">
+              <div class="comment__avatar" aria-hidden="true">
                 <svg
                   class="profile-pic"
                   width="14"
@@ -291,15 +290,15 @@
               </div>
               <!-- 댓글 작성자 메타 정보 -->
 
-              <div class="comment-author-meta">
-                <span class="author-name">답변자3</span>
-                <time class="comment-time" datetime="2026-02-14T11:00:00"
+              <div class="comment__meta">
+                <span class="comment__author">답변자3</span>
+                <time class="comment__text" datetime="2026-02-14T11:00:00"
                   >1시간 전</time
                 >
               </div>
 
               <!-- 댓글 내용 -->
-              <p class="comment-text">
+              <p class="comment__text">
                 대부분의 경우 useEffect를 사용하면 되고, useLayoutEffect는 화면
                 깜빡임을 방지해야 하는 특수한 경우에만 사용하는 것이 좋습니다.
               </p>

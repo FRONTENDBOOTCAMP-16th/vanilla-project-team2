@@ -4,7 +4,7 @@
 }
 
 
-.question,
+.post,
 .comment {
   background-color: #fff;
   border: 1px solid #e5e7eb;
@@ -13,14 +13,14 @@
   margin-block: 24px;
   padding: 32px;
 
-  .question-header {
+  .post__header {
     width: 100%;
   }
 }
 
 /* 글쓰기 헤더 */
 
-.index {
+.post__category {
   background-color: #e0e7ff;
   border-radius: 50px;
   padding: 8px 12px;
@@ -29,32 +29,32 @@
   align-items: center;
 }
 
-.upload-time {
+.post__time {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding-inline: 8px;
 }
 
-.title {
+.post__title {
   margin-block: 16px;
   font-weight: 500;
   font-size: 30px;
 }
 
-.meta {
+.post__meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.author {
+.post__author {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-block: 24px;
 
-  .author-avatar {
+  .post__author-avatar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,10 +68,10 @@
 }
 
 /* 질문 내용 */
-.question-content {
+.post__content {
   line-height: 2;
 
-  .code-content {
+  .post__content--code {
     background-color: #101828;
     color: white;
     border-radius: 14px;
@@ -81,14 +81,14 @@
 }
 
 /* 댓글 */
-#comment-form{
+#comment__form{
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   
 }
 
-.comment-title {
+.comment__title {
   font-size: 20px;
   margin-block: 8px 24px;
 }
@@ -101,7 +101,7 @@
 
 }
 
-.comment-submit-btn{
+.comment__submit{
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -123,17 +123,17 @@ cursor: pointer;
 }
 
 
-.comment-list {
+.comment__list {
   list-style: none;
   padding: 0;
 }
 
-  .comment-item {
+  .comment__item {
     padding: 20px 0;
     border-bottom: 1px solid #E5E7EB;
   }
 
-  .comment-article {
+  .comment__card {
     display: grid;
     grid-template-columns: 40px 1fr;
     column-gap: 16px;
@@ -142,24 +142,24 @@ cursor: pointer;
  
   }
 
-  .comment-author-meta {
+  .comment__meta {
     display: flex;
     align-items: center;
     gap: 8px;
     grid-column: 2;
 
-    .comment-time {
+    .comment__time {
       font-size: 14px;
       color: #6A7282;
     }
   }
 
-  .comment-text {
+  .comment__text {
     grid-column: 2;
     margin-block: 8px;
   }
 
-  .comment-author-avatar {
+  .comment__avatar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -176,14 +176,14 @@ cursor: pointer;
 
     
     /* 작성자 편집 버튼 활성화 */
-    .post-edit {
+    .post__actions {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 16px;
       
     
-      .edit-button, .delete-button {
+      .post__btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -194,14 +194,14 @@ cursor: pointer;
       border: 0;
       cursor: pointer;
 
-      &.edit-button {
+      &.post__btn--edit {
         color: #155DFC;
         &:hover {
         background-color: var(--blue-50);
       }
       }
 
-      &.delete-button{
+      &.post__btn--delete{
         color: #E7000B;
         &:hover {
           background-color: var(--red-50);
