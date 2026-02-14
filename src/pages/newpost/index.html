@@ -9,15 +9,15 @@
     <title>글 작성 - 아기사자 공부방</title>
   </head>
   <body>
-    <main class="container">
-      <div class="page-header">
-        <h1>자습방 글 작성</h1>
-        <p>학습한 내용을 공유해보세요</p>
+    <main class="container newpost">
+      <div class="newpost__header">
+        <h1 class="newpost__title">자습방 글 작성</h1>
+        <p class="newpost__desc">학습한 내용을 공유해보세요</p>
       </div>
 
-      <form class="newpost-form" method="post">
+      <form class="newpost__form" method="post">
         <!-- 카테고리 (드롭다운) -->
-        <div class="form-input__box category">
+        <div class="newpost__field newpost__field--category">
           <label for="categorySelect">카테고리</label>
           <select name="categorySelect" id="categorySelect">
             <option value="" disabled selected hidden>
@@ -33,7 +33,7 @@
         </div>
 
         <!-- 제목 -->
-        <div class="form-input__box title">
+        <div class="newpost__field newpost__field--title">
           <label for="title">제목</label>
           <input
           class="input"
@@ -46,30 +46,28 @@
         </div>
 
         <!-- 에디터 버튼 -->
-        <div class="editor-buttons">
+        <!-- <div class="editor-buttons">
           <button type="button" class="editor-btn" data-type="code">
             코드 블록
           </button>
           <label for="imageUpload" class="editor-btn">이미지 업로드</label>
           <input type="file" id="imageUpload" hidden />
-        </div>
+        </div> -->
 
         <!-- 내용 -->
-        <div class="form-input__box content">
+        <div class="newpost__field newpost__field--content">
           <label for="content">내용</label>
           <textarea
             name="content"
             id="content"
-            placeholder="내용을 입력하세요"
+            placeholder="내용을 입력하세요. (마크다운 문법을 사용할 수 있습니다.)"
             required
           ></textarea>
-          <small class="content-guide"
-            >마크다운 문법을 사용할 수 있습니다.</small
-          >
+          
         </div>
 
         <!-- 태그 -->
-        <div class="form-input__box tag">
+        <!-- <div class="form-input__box tag">
           <label for="tag">태그</label>
           <input
           class="input"
@@ -78,27 +76,24 @@
             name="tag"
             placeholder="태그를 쉼표로 구분하여 입력하세요 (ex: javascript, react)"
           />
-        </div>
+        </div> -->
 
         <!-- 미리보기 -->
-        <section class="preview">
+        <section class="newpost__preview">
           <p>미리보기</p>
-          <article id="preview-content">
-            <h2 class="preview-title">제목 미리보기</h2>
+          <article id="previewContent">
+            <h2>제목 미리보기</h2>
             <p>내용 미리보기</p>
           </article>
         </section>
 
         <!-- 버튼 -->
-        <div class="form-buttons">
-          <button type="button" class="button cancel">
+        <div class="newpost__actions">
+          <button type="button" class="button button--ghost">
             <img src="/src/assets/icons/icon-cancle.svg" alt="" />
             취소
           </button>
-          <button type="submit" class="button submit">
-            <img src="/src/assets/icons/icon-save.svg" alt="" />
-            작성 완료
-          </button>
+          <button type="submit" class="button submit">작성 완료</button>
         </div>
       </form>
     </main>
