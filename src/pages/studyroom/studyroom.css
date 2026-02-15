@@ -1,3 +1,6 @@
+html {
+  overflow-y: scroll;
+}
 body {
   display: flex;
   justify-content: center;
@@ -6,6 +9,7 @@ body {
 
 .container {
   background-color: #f9fafb;
+  min-height: 900px;
 }
 
 .main-title__wrapper {
@@ -138,6 +142,7 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: auto;
 }
 
 .pagination__list {
@@ -197,4 +202,19 @@ body {
 
 .pagination button.hidden {
   display: none;
+}
+
+.main-post__no-result {
+  grid-column: 1 / -1; /* 📍 핵심: 1번 칸부터 마지막 칸까지 다 써라! */
+  width: 100%;
+  padding: 100px 0; /* 위아래 여백을 더 주면 훨씬 여유 있어 보입니다 */
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+
+  /* 만약 세로로도 중앙에 맞추고 싶다면 아래 추가 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
 }
