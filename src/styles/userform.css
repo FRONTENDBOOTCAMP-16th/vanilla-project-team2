@@ -8,10 +8,12 @@ body.user{
   gap: 32px;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   min-height: 100dvh;
   margin-inline: auto;
+  padding: 80px 0;
   background: linear-gradient(45deg, #EEF2FF, #fff, #FAF5FF);
   .header__box{
     text-align: center;
@@ -102,10 +104,10 @@ body.user{
     background-image: url(./icon/tel-icon.svg);
   }
 
-  .error-massage{
+  .error__text{
     color: var(--red-500);
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: 500;
   }
 
   .flex__box{
@@ -166,4 +168,50 @@ body.user{
   font-size: 1rem;
   line-height: 52px;
   cursor: pointer;
+
+  &.login span{
+    display: block;
+    margin: auto;
+    color: #fff;
+    text-align: center;
+  }
+}
+
+.result__box{
+  display: flex;
+  flex-flow: nowrap column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  text-align: center;
+
+  span{
+    color: #4F39F6;
+    font-weight: 600;
+  }
+
+  strong{
+    display: block;
+    margin-block: 1rem;
+    color: #4F39F6;
+    font-size: 2rem;
+  }
+}
+
+
+/* 프로필 */
+.gray-bg{
+  background: #F9FAFB;
+}
+
+.user__container{
+  display: grid;
+  grid-template-columns: 325px 675px;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+
+  .user__header{
+    grid-column: 1/3;
+  }
 }

@@ -4,49 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/src/styles/userform.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />    
     <script src="../../api/JWT.js" defer></script>
     <script src="./mypage.js" defer></script>
   </head>
-  <body>
+  <body class="gray-bg">
     <div class="user__container">
-      <div class="user__profile">
-        <p>김</p>
+
+      <div class="user__header">
+        <h1>마이페이지</h1>
+        <p>내 정보와 활동 내역을 확인하세요</p>
+      </div>
+
+      <div class="profile__container">
+        <div class="user__profile">
+          <img src="" alt="" />
+          <p>김</p>
+        </div>
+        <div class="user__profile-box">
+          <h2>김개발</h2>
+          <p class="expert">중급 개발자</p>
+          <p class="create-date">
+            가입일 : <span>2024-01-15</span>
+          </p>
+        </div>
+        <div class="user__button-wrap">
+          <a href="" title="비밀번호 변경 바로가기">비밀번호 변경</a>
+          <a href="" title="회원탈퇴">회원탈퇴</a>
+        </div>
+      </div>
+
+      <div class="user__activity">
+        <div class="activity__item write">
+          <div class="activity__icon">
+
+          </div>
+          <p class="write__count">23</p>
+          <p class="title">작성한 글</p>
+        </div>
+        <div class="activity__item comment">
+          <div class="activity__icon">
+
+          </div>
+          <p class="write__count">23</p>
+          <p class="title">작성한 댓글</p>
+        </div>
+        <div class="activity__item like">
+          <div class="activity__icon">
+
+          </div>
+          <p class="write__count">23</p>
+          <p class="title">받은 좋아요</p>
+        </div>
       </div>
 
       <div class="user__modify-button" aria-label="회원 정보 수정">
         <button type="button" class="js-button">변경</button>
         <button type="button" class="js-button">취소</button>
       </div>
-
-      <div class="user__data" aria-label="사용자 이름">
-        <input
-          type="text"
-          name="user_nickname"
-          id="user_nickname"
-          value="사용자 이름"
-          readonly
-        />
-      </div>
-
-      <div class="user__data" aria-label="사용자 아이디">
-        <input
-          type="text"
-          name="user_id"
-          id="user_id"
-          value="사용자 이름"
-          readonly
-        />
-      </div>
-
-      <div class="user__data" aria-label="사용자 휴대폰 번호">
-        <input
-          type="text"
-          name="user_phone"
-          id="user_phone"
-          value="010-1234-5678"
-          readonly
-        />
-      </div>
+      <form action="post" class="uer_profile__box">
+        <div class="user__data" aria-label="사용자 이름">
+          <input
+            type="text"
+            name="user_nickname"
+            id="user_nickname"
+            value="사용자 이름"
+            disabled
+          />
+        </div>
+        <div class="user__data" aria-label="사용자 아이디">
+          <input
+            type="text"
+            name="user_id"
+            id="user_id"
+            value="사용자 아이디"
+            disabled
+          />
+        </div>
+        <div class="user__data" aria-label="사용자 휴대폰 번호">
+          <input
+            type="text"
+            name="user_phone"
+            id="user_phone"
+            value="010-1234-5678"
+            disabled
+          />
+        </div>
+      </form>
     </div>
   </body>
 </html>

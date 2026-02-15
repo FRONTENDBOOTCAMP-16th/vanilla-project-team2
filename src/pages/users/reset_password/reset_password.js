@@ -3,8 +3,8 @@ const userInfo = sessionStorage.getItem('user')
 if (userInfo) window.location.href = '/index.html'
 
 // 로그인
-const URLS = 'http://localhost/likelion/users/signup.php'
-const form = document.getElementById('signup')
+const URLS = 'http://localhost/likelion/users/reset_password.php'
+const form = document.getElementById('reset_pw')
 
 form.addEventListener('click', (e) => {
   if (e.target.matches('input[type="submit"]')) {
@@ -16,9 +16,8 @@ form.addEventListener('click', (e) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('서버 응답:', data)
         if (data.status === 'success') {
-          alert('가입 완료!')
+          window.location.href = './result.html'
         }
       })
       .catch((error) => console.error('에러:', error))

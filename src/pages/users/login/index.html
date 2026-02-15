@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>바닐라 프로젝트 - 로그인</title>
-    <script type="module" src="/src/styles/userform.css"></script>
     <link rel="stylesheet" href="/src/styles/userform.css" />
     <link rel="stylesheet" href="/src/styles/main.css" />
     <script src="../../api/JWT.js" defer></script>
@@ -33,6 +32,7 @@
             <div class="input__box email">
               <input type="email" name="user_id" id="user_id" />
             </div>
+            <p class="error__text"></p>
           </div>
           <div class="user__input">
             <label for="user_password">
@@ -41,6 +41,7 @@
             <div class="input__box password">
               <input type="password" name="user_password" id="user_password" />
             </div>
+            <p class="error__text"></p>
           </div>
 
           <div class="user__item">
