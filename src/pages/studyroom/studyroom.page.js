@@ -307,4 +307,41 @@ categoryButton.forEach((category) => {
   })
 })
 
-updateUI(postData)
+// updateUI(postData)
+// 기존 더미데이터를 실제 작성한 글이 보이도록 교체
+
+// 서버에서 글 목록 가져오기 (fetch)
+// 자습방 글만 보이게 (filter)
+// 화면이 이해하는 형태로 변환 (map)
+// 화면에 뿌리기 (uadateUI(postData))
+async function init() {
+  try {
+    const response = await fetch('http://localhost:4000/posts')
+    if (!response.ok) throw new Error('데이터 불러오기 실패')
+    
+    const serverPosts = await response.json()
+
+    // 자습방 글만 필터
+    const studyPosts = serverPosts.filter(item => item.boardType === 'study')
+
+    postData = studyPosts.map(post => ({
+      post_id: post.id,
+      board_id: 1, // 게시판 임시값
+      UID: 0, // 유저 아이디 임시값
+      nickname: post.authorNickname ?? '사용자',
+      subject: post.title,
+      contents: post.content,
+      type: post.category,
+      typeIndex: 0, // 카테고리 번호 필드
+      create_date: post.createdAt,
+
+    }))
+
+    updateUI(postData)
+  } catch (error) {
+    console.error(error)
+    updateUI(postData)
+  }
+}
+
+init()
