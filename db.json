@@ -1,0 +1,129 @@
+{
+  "posts": [
+    {
+      "id": "70ae",
+      "category": "javascript",
+      "title": "JavaScript",
+      "content": "테스트 테스트",
+      "createdAt": "2026-02-16T15:19:55.139Z"
+    },
+    {
+      "id": "0202",
+      "category": "typescript",
+      "title": "제목 title 부분",
+      "content": "내용인데 id는 지정한 적이 없는데 어디서 얻어오는거지",
+      "createdAt": "2026-02-16T15:20:34.565Z"
+    },
+    {
+      "id": "a39f",
+      "category": "css",
+      "title": "제목입니다요",
+      "content": "내용이고요...",
+      "createdAt": "2026-02-16T15:37:51.932Z"
+    },
+    {
+      "id": "fc96",
+      "boardType": null,
+      "category": "css",
+      "title": "테스트 보드타입 추가했어요",
+      "content": "qna랑 자습방에서 쉐어하는 글작성 페이지라",
+      "createdAt": "2026-02-16T15:49:09.986Z"
+    },
+    {
+      "id": "ef2d",
+      "boardType": null,
+      "category": "javascript",
+      "title": "자습방 게시판 레스트와 연결",
+      "content": "지금 연결한 상태고요 기존 더미 리스트는 날아갔으려나요... 그냥 다 보이면 좋겠다.",
+      "createdAt": "2026-02-16T16:07:38.167Z"
+    },
+    {
+      "id": "665c",
+      "boardType": "study",
+      "category": "typescript",
+      "title": "지금 헤드 컴포넌트 연결 전이라 글쓰기 버튼이 없어요",
+      "content": "그래서 강제로 주소를 http://localhost:3000/src/pages/newpost/index.html?board=study 로 바꿔서 테스트 중이고요",
+      "createdAt": "2026-02-16T16:13:47.197Z"
+    },
+    {
+      "id": "9d40",
+      "boardType": "study",
+      "category": "css",
+      "title": "게시판 선택 라디오버튼 추가 ",
+      "content": "js로도 data에 \nboardType 데이터 가져오는 코드를 추가했어요\nboardType: formData.get('boardType')",
+      "createdAt": "2026-02-16T17:33:54.490Z"
+    },
+    {
+      "id": "0fcf",
+      "boardType": "study",
+      "category": "typescript",
+      "title": "선택한 게시판으로 이동 되도록 ",
+      "content": "이동할까요? 자습방 선택했어요",
+      "createdAt": "2026-02-16T17:58:49.449Z"
+    },
+    {
+      "id": "d800",
+      "boardType": "qna",
+      "category": "javascript",
+      "title": "큐엔에이 선택했구요",
+      "content": "잘 안되는 것 같기도 하네요",
+      "createdAt": "2026-02-16T17:59:32.949Z"
+    },
+    {
+      "id": "670f",
+      "boardType": "study",
+      "category": "typescript",
+      "title": "변수로 다시 설정해봤어요",
+      "content": "테스트 중인데 제발",
+      "createdAt": "2026-02-16T18:01:16.340Z"
+    },
+    {
+      "id": "a77b",
+      "boardType": "study",
+      "category": "html",
+      "title": "ㅋㅋ",
+      "content": "ㅋㅋㅋ",
+      "createdAt": "2026-02-16T18:03:16.355Z"
+    },
+    {
+      "id": "a3cd",
+      "boardType": "study",
+      "category": "css",
+      "title": "작성완료 후 이동 경로 수정",
+      "content": "왜 게시판이 제대로 이동하지 않을까요",
+      "createdAt": "2026-02-16T18:06:05.195Z"
+    },
+    {
+      "id": "c1c9",
+      "boardType": "study",
+      "category": "css",
+      "title": "테스트",
+      "content": "작성 완료 후 게시판 이동 테스트",
+      "createdAt": "2026-02-16T18:08:23.477Z"
+    },
+    {
+      "id": "a2a5",
+      "boardType": "study",
+      "category": "typescript",
+      "title": "구글로는 가나",
+      "content": "가려나",
+      "createdAt": "2026-02-16T18:09:49.654Z"
+    },
+    {
+      "id": "5603",
+      "boardType": "study",
+      "category": "typescript",
+      "title": "상대경로로 다시 설정했어요",
+      "content": "배포하면 src폴더는 사라진다기에... 하드코딩 방식으로요",
+      "createdAt": "2026-02-16T18:15:38.578Z"
+    },
+    {
+      "id": "1048",
+      "boardType": "qna",
+      "category": "javascript",
+      "title": "qna",
+      "content": "여긴 아직 작업전인데 어떻게 되려나",
+      "createdAt": "2026-02-16T18:18:23.447Z"
+    }
+  ]
+}
