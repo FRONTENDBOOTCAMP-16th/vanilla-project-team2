@@ -322,22 +322,22 @@ async function init() {
     // const serverPosts = await response.json()
     // 최신순 정렬
     const serverPosts = (await response.json()).sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+      (a, b) => new Date(b.create_date) - new Date(a.create_date),
     )
 
     // 자습방 글만 필터
-    const studyPosts = serverPosts.filter((item) => item.boardType === 'study')
+    const studyPosts = serverPosts.filter((item) => item.board_id === 1)
 
     postData = studyPosts.map((post) => ({
-      post_id: post.id,
-      board_id: 1, // 게시판 임시값
-      UID: 0, // 유저 아이디 임시값
-      nickname: post.authorNickname ?? '사용자',
-      subject: post.title,
-      contents: post.content,
-      type: post.category,
-      typeIndex: 0, // 카테고리 번호 필드
-      create_date: post.createdAt,
+      post_id: post.post_id,
+      board_id: post.board_id, // 게시판 임시값
+      UID: post.UID, // 유저 아이디 임시값
+      nickname: post.nickname || '사용자',
+      subject: post.subject,
+      contents: post.contents,
+      type: post.type,
+      typeIndex: post.typeIndex, // 카테고리 번호 필드
+      create_date: post.create_date,
     }))
 
     updateUI(postData)
@@ -348,3 +348,4 @@ async function init() {
 }
 
 init()
+

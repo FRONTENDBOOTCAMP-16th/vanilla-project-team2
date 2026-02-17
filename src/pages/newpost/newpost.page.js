@@ -45,13 +45,17 @@ form.addEventListener('submit', async (e) => {
 
   const formData = new FormData(form)
 
-  const data = {
-    boardType: formData.get('boardType'),
-    category: formData.get('categorySelect'),
-    title: formData.get('title'),
-    content: formData.get('content'),
-    createdAt: new Date().toISOString(),
-  }
+const data = {
+  post_id: Date.now(), // 임시 ID
+  board_id: formData.get('boardType') === 'qna' ? 2 : 1,
+  UID: 0,
+  nickname: '사용자',
+  subject: formData.get('title'),
+  contents: formData.get('content'),
+  type: formData.get('categorySelect'),
+  typeIndex: 0,
+  create_date: new Date().toISOString(),
+}
 
   try {
     const response = await fetch('http://localhost:4000/posts', {
