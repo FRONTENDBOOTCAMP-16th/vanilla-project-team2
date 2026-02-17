@@ -318,13 +318,17 @@ async function init() {
   try {
     const response = await fetch('http://localhost:4000/posts')
     if (!response.ok) throw new Error('데이터 불러오기 실패')
-    
-    const serverPosts = await response.json()
+
+    // const serverPosts = await response.json()
+    // 최신순 정렬
+    const serverPosts = (await response.json()).sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
+    )
 
     // 자습방 글만 필터
-    const studyPosts = serverPosts.filter(item => item.boardType === 'study')
+    const studyPosts = serverPosts.filter((item) => item.boardType === 'study')
 
-    postData = studyPosts.map(post => ({
+    postData = studyPosts.map((post) => ({
       post_id: post.id,
       board_id: 1, // 게시판 임시값
       UID: 0, // 유저 아이디 임시값
@@ -334,7 +338,6 @@ async function init() {
       type: post.category,
       typeIndex: 0, // 카테고리 번호 필드
       create_date: post.createdAt,
-
     }))
 
     updateUI(postData)

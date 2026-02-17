@@ -132,6 +132,46 @@
       "title": "왜 오류가 날까",
       "content": "어제까진 잘 됏는데",
       "createdAt": "2026-02-17T04:58:17.443Z"
+    },
+    {
+      "id": "d8b5",
+      "boardType": "study",
+      "category": "react",
+      "title": "정렬순서를 내 선에서 바꿀 수 있을까요",
+      "content": "reverse() 추가해봤어요. 됐으면 좋겠다",
+      "createdAt": "2026-02-17T05:05:28.349Z"
+    },
+    {
+      "id": "3708",
+      "boardType": "study",
+      "category": "typescript",
+      "title": "왜 또 갑자기",
+      "content": "리스트가 안보이지",
+      "createdAt": "2026-02-17T05:06:21.727Z"
+    },
+    {
+      "id": "d725",
+      "boardType": "study",
+      "category": "javascript",
+      "title": "다시테스트",
+      "content": "제발돼라",
+      "createdAt": "2026-02-17T05:07:56.626Z"
+    },
+    {
+      "id": "a8b0",
+      "boardType": "study",
+      "category": "javascript",
+      "title": "console.log(data)",
+      "content": "console.log(data)",
+      "createdAt": "2026-02-17T05:14:23.359Z"
+    },
+    {
+      "id": "f114",
+      "boardType": "study",
+      "category": "javascript",
+      "title": "최신순 정렬이 될까요..",
+      "content": "되어라 얍..",
+      "createdAt": "2026-02-17T05:21:42.962Z"
     }
   ]
 }
