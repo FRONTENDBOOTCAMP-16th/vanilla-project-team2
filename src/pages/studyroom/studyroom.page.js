@@ -192,8 +192,9 @@ function renderPosts(page, data) {
 
   postListElement.innerHTML = sliceData
     .map(
+      // 리스트 클릭 -> 해당 글 읽기 페이지 연동 위해 data-id="${post.post_id}" (포스트 고유값) 추가
       (post) => `
-    <li class="main-post__item" data-category="${post.typeIndex}">
+    <li class="main-post__item" data-category="${post.typeIndex}" data-id="${post.post_id}">
       <a href="#" class="main-post__inner">
         <span class="main-post__tag">${post.type}</span>
         <div class="main-post__group">
@@ -349,3 +350,18 @@ async function init() {
 
 init()
 
+// 클릭하면 글 읽기 페이지로 이동 (data-id="${post.post_id}")
+
+postListElement.addEventListener('click', (e) => {
+  // 템플릿 리터럴에 쓰인 a href = # 로 페이지 이동X -> preventDefault() 추가
+  e.preventDefault()
+
+  const item = e.target.closest('.main-post__item')
+  if (!item) return
+
+  const postId = item.dataset.id
+  localStorage.setItem('selectedPostId', postId)
+
+  // 읽기 페이지 이동
+  location.href = '../readpost/index.html'
+})

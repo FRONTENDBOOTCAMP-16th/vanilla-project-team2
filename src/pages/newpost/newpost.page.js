@@ -1,4 +1,5 @@
 // 마크다운 라이브러리
+// sanitize 라이브러리
 
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'

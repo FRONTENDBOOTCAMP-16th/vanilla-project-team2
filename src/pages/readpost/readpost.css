@@ -69,7 +69,9 @@
 
 /* 질문 내용 */
 .post__content {
-  line-height: 2;
+  line-height: 1.6;
+  padding-block-start: 30px;
+  white-space: pre-line;
 
   .post__content--code {
     background-color: #101828;
