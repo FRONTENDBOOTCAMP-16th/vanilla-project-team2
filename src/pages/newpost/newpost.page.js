@@ -1,27 +1,40 @@
 // 마크다운 라이브러리
 
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
+import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
 document.addEventListener('DOMContentLoaded', () => {
+  const title = document.getElementById('title')
   const textarea = document.getElementById('content')
-  const preview = document.getElementById('previewContent')
+  const previewContent = document.getElementById('previewContent')
 
   marked.setOptions({ breaks: true })
 
   function renderPreview() {
-    const markdown = textarea.value.trim()
+    const markdownTitle = title.value.trim()
+    const markdownContent = textarea.value.trim()
 
-    if (!markdown) {
-      preview.innerHTML = '<p>여기에 미리보기가 표시됩니다.</p>'
+    if (!markdownTitle && !markdownContent) {
+      previewContent.innerHTML = `<h2>제목 미리보기</h2>
+      <p>내용 미리보기</p>`
       return
     }
 
-    preview.innerHTML = marked.parse(markdown)
+    // previewContent.innerHTML =
+    //   `<h2>${markdownTitle}</h2>` + marked.parse(markdownContent)
+    const rawHtml = `<h2>${markdownTitle}</h2>` + marked.parse(markdownContent)
+    const sanitizedHtml = DOMPurify.sanitize(rawHtml)
+
+    previewContent.innerHTML = sanitizedHtml
   }
 
+  title.addEventListener('input', renderPreview)
   textarea.addEventListener('input', renderPreview)
-  // renderPreview()
+  renderPreview()
 })
+
+
+
 
 // 작성완료 후 게시물 목록으로 이동
 const form = document.querySelector('.newpost__form')

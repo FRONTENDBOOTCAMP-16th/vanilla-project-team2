@@ -124,6 +124,14 @@
       "title": "qna",
       "content": "여긴 아직 작업전인데 어떻게 되려나",
       "createdAt": "2026-02-16T18:18:23.447Z"
+    },
+    {
+      "id": "878c",
+      "boardType": "study",
+      "category": "css",
+      "title": "왜 오류가 날까",
+      "content": "어제까진 잘 됏는데",
+      "createdAt": "2026-02-17T04:58:17.443Z"
     }
   ]
 }
