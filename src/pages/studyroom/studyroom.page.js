@@ -712,7 +712,7 @@ nextGroupButton.addEventListener('click', () => {
 
 firstButton.addEventListener('click', () => {
   const currentGroup = Math.ceil(currentPage / pageCount)
-  currentPage = Math.max((currentGroup - 2) * pageCount + 1, 1)
+  currentPage = (currentGroup - 1) * pageCount
   updateUI(currentDisplayData)
 })
 

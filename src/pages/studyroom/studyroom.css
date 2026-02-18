@@ -114,26 +114,33 @@ body {
     text-decoration: none;
     color: black;
     font-weight: 300;
-  }
-  .main-post__heading {
-    font-weight: 400;
-  }
-
-  .main-post__tag {
-    display: inline-block;
-    width: auto;
-    height: 24px;
-    background-color: #e0e7ff;
-    text-align: center;
-    line-height: 25px;
-    padding: 2px 11px;
-    border-radius: 20px;
-  }
-
-  .main-post__meta-box {
+    position: relative;
+    width: calc(596px - 52px - 24px);
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
   }
+}
+.main-post__heading {
+  font-weight: 400;
+}
+
+.main-post__tag {
+  display: inline-block;
+  align-self: flex-start;
+  width: auto;
+  height: 24px;
+  background-color: #e0e7ff;
+  text-align: center;
+  line-height: 25px;
+  padding: 2px 11px;
+  border-radius: 20px;
+}
+
+.main-post__meta-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
 }
 
 .pagination {
