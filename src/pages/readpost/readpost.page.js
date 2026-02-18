@@ -61,6 +61,14 @@ async function init() {
       location.href = '../studyroom/index.html'
     }
   })
+
+  // 수정
+  const editBtn = document.querySelector('.post__btn--edit')
+
+  editBtn.addEventListener('click', () => {
+    location.href = `../newpost/index.html?postId=${post.id}`
+  })
 }
+
 
 init()

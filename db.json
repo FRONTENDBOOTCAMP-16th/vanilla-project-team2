@@ -54,8 +54,8 @@
       "UID": 1088,
       "nickname": "리액트러버",
       "subject": "React Server Components 도입 전 꼭 알아야 할 것들",
-      "contents": "리액트의 패러다임이 변하고 있습니다. 서버 컴포넌트의 개념과 효율적인 상태 관리 전략을 다룹니다.",
-      "type": "React",
+      "contents": "리액트의 패러다임이 변하고 있습니다. 서버 컴포넌트의 개념과 효율적인 상태 관리 전략을 다룹니다.\n\nPUT method를 이용해서 페이지 수정하는 거 해보고 있는데...\nPATCH와의 차이점이 궁금해지네요. 현재로서는 구동은 잘 되는 듯합니다.",
+      "type": "javascript",
       "typeIndex": 4,
       "create_date": "2026-02-14T10:00:00",
       "id": "5d4c"
@@ -144,17 +144,17 @@
       "create_date": "2026-02-01T09:00:00",
       "id": "c91b"
     },
-    {
-      "id": "b632",
-      "post_id": 1771338018900,
-      "board_id": 1,
-      "UID": 0,
-      "nickname": "사용자",
-      "subject": "마크다운에 하이라이트도 적용시켜보았어요",
-      "contents": "이게 복붙 하기만 하면 된다고 그럼 퀄리티가 확 올라간다고 해서 붙여 넣긴 했는데...\n코드 자체가 장황하진 않지만 이해하기란 쉽지 않아요... \n일단 백틱 세개 쓰고 js 붙여서 태그에 따른 하이라이팅이 적용되는지 테스트 해볼게요\n\n```js\ndocument.querySelectorAll('pre code').forEach((el) => {\n  hljs.highlightElement(el)\n})\n```",
-      "type": "javascript",
-      "typeIndex": 0,
-      "create_date": "2026-02-17T14:20:18.900Z"
-    }
+      {
+        "id": "b632",
+        "post_id": 1771338018900,
+        "board_id": 1,
+        "UID": 0,
+        "nickname": "사용자",
+        "subject": "마크다운에 하이라이트도 적용시켜보았어요",
+        "contents": "이게 복붙 하기만 하면 된다고 그럼 퀄리티가 확 올라간다고 해서 붙여 넣긴 했는데...\n코드 자체가 장황하진 않지만 이해하기란 쉽지 않아요... \n일단 백틱 세개 쓰고 js 붙여서 태그에 따른 하이라이팅이 적용되는지 테스트 해볼게요\n\n```js\ndocument.querySelectorAll('pre code').forEach((el) => {\n  hljs.highlightElement(el)\n})\n```\n\n수정 이후에는 어떻게 될까요",
+        "type": "JavaScript",
+        "create_date": "2026-02-17T14:20:18.900Z",
+        "typeIndex": 3
+      }
   ]
 }
