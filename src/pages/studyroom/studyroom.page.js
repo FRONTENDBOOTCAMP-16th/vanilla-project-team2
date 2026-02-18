@@ -9,7 +9,7 @@ let postData = [
       '프론트엔드부터 백엔드까지, 올해 가장 주목받는 기술 스택과 변화하는 개발 문화를 살펴봅니다.',
     type: 'JavaScript', // '전체'에서 'JavaScript'로 변경
     typeIndex: 3,
-    create_date: '2026-02-15T15:45:00',
+    create_date: '2015-02-15T15:45:00',
   },
   {
     post_id: 11,
