@@ -94,8 +94,8 @@ body {
   }
 
   .main-post__tag {
-    display: block;
-    width: 72px;
+    display: inline-block;
+    width: auto;
     height: 24px;
     background-color: #e0e7ff;
     text-align: center;
