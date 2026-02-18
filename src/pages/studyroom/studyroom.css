@@ -120,14 +120,13 @@ body {
   }
 
   .main-post__tag {
-    display: block;
-    width: 72px;
+    display: inline-block;
+    width: auto;
     height: 24px;
     background-color: #e0e7ff;
     text-align: center;
     line-height: 25px;
-    padding-block: 2px;
-    padding-inline: 11px;
+    padding: 2px 11px;
     border-radius: 20px;
   }
 
