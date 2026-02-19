@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/src/styles/userform.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />    
+    <script type="module" src="./mypage.js" defer></script>
+  </head>
+  <body class="gray-bg">
+    <div class="user__container">
+
+      <div class="mypage__navigation">
+        <h1>마이페이지</h1>
+        <p>내 정보와 활동 내역을 확인하세요</p>
+      </div>
+
+      <div class="profile__container">
+        <div class="user__thumbnail" id="user__thumbnail">
+          <div class="profile_thumb"></div>
+          <input type="file" name="thumb" id="thumb" />
+          <label for="thumb" class="js-button">
+            <img src="/src/assets/icons/icon-photo.svg" alt="" />
+          </label>
+        </div>
+        <div class="user__profile-box">
+          <h2 class="user">***</h2>
+          <p class="expert">***</p>
+          <p class="create-date">
+            가입일 : <span>***</span>
+          </p>
+        </div>
+        <div class="user__button-wrap">
+          <a href="/src/pages/users/change_password/index.html" title="비밀번호 변경 바로가기">비밀번호 변경</a>
+          <a href="/src/pages/users/delete_user/index.html" title="회원탈퇴">회원탈퇴</a>
+        </div>
+      </div>
+
+
+      <div class="user__information__container">
+        <div class="user__activity">
+          <h2 class="sr-only">유저 활동</h2>
+          <div class="activity__item write">
+            <div class="activity__icon">
+              <img src="/src/assets/icons/Icon-post.svg" alt="" />
+            </div>
+            <p class="write__count">***</p>
+            <p class="title">작성한 글</p>
+          </div>
+          <div class="activity__item comment">
+            <div class="activity__icon">
+              <img src="/src/assets/icons/Icon-comment.svg" alt="" />
+            </div>
+            <p class="write__count">***</p>
+            <p class="title">작성한 댓글</p>
+          </div>
+          <div class="activity__item like">
+            <div class="activity__icon">
+              <img src="/src/assets/icons/Icon-like.svg" alt="" />
+            </div>
+            <p class="write__count">***</p>
+            <p class="title">받은 좋아요</p>
+          </div>
+        </div>
+
+        <div class="user__profile">
+          <div class="user__profile__header">
+            <h2>프로필 정보</h2>
+            <div class="user__modify-button" aria-label="회원 정보 수정">
+              <button type="button" id="btn_modify" class="js-button">
+                <img src="/src/assets/icons/Icon-modify.svg" alt="" />
+                <span>변경</span>
+              </button>
+              <div class="button-wrap">
+                <button type="button" id="btn_cancel" class="js-button">
+                  <img src="/src/assets/icons/Icon-cancel.svg" alt="" />
+                  <span>취소</span>
+                </button>
+                <button type="button" id="btn_submit" class="js-button save">
+                  <img src="/src/assets/icons/Icon-save.svg" alt="" />
+                  <span>적용</span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <form action="post" class="user_profile__box" id="user_profiles">
+            <div class="user__input">
+              <label for="user_nickname">
+                <span>이름</span>
+              </label>
+              <div class="input__box id">
+                <input type="text" name="user_nickname" id="user_nickname" readonly/>
+              </div>
+              <p class="error__text"></p>
+            </div>
+            <div class="user__input">
+              <label for="user_id">
+                <span>아이디</span>
+              </label>
+              <div class="input__box email">
+                <input type="email" name="user_id" id="user_id" readonly />
+              </div>
+              <p class="error__text"></p>
+            </div>
+            <div class="user__input">
+              <label for="user_phone">
+                <span>전화번호</span>
+              </label>
+              <div class="input__box phone">
+                <input
+                  type="text"
+                  name="user_phone"
+                  id="user_phone"
+                  readonly
+                />
+              </div>
+              <p class="error__text"></p>
+            </div>
+            <div class="user__input" aria-label="사용자 소개">
+              <label for="user_intro">자기소개</label>
+              <div class="text__box">
+                <textarea name="user_intro" id="user_intro" readonly></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
