@@ -1,12 +1,6 @@
 html {
   overflow-y: scroll;
 }
-body {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  /* margin: 0 auto; */
-}
 
 .container {
   background-color: #f9fafb;
@@ -121,6 +115,20 @@ body {
     display: flex;
     flex-direction: column;
     height: 100%;
+    min-height: 220px;
+  }
+  .main-post__group {
+    flex-grow: 1;
+  }
+
+  .main-post__date {
+    font-size: 13px;
+    color: #868e96; /* 날짜는 조금 연하게 */
+  }
+
+  .main-post__author-text {
+    font-size: 14px;
+    color: #212529;
   }
 }
 .main-post__heading {
@@ -142,7 +150,11 @@ body {
 .main-post__meta-box {
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
   margin-top: auto;
+  padding-top: 16px;
+  align-items: center;
+  border-top: 1px solid #f1f3f5;
 }
 
 .pagination {

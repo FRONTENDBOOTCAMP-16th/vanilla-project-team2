@@ -115,8 +115,27 @@ body {
 
   .main-post__meta-box {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 12px; /* 위아래 간격 */
     margin-top: auto;
+  }
+  .main-post__info-row {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    color: #868e96; /* 서브 정보는 연하게 */
+  }
+  .main-post__author-row {
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px solid #f1f3f5; /* 아주 연한 구분선 */
+    display: flex;
+    align-items: center;
+    margin-top: 4px;
+  }
+  .main-post__author-text {
+    font-size: 16px;
+    color: #212529; /* 이름은 다시 진하게 */
   }
 }
 .main-post__comment-count {
@@ -133,6 +152,11 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 280px;
+}
+
+.main-post__group {
+  flex-grow: 1; /* 중요! 본문 영역이 남는 공간을 차지하게 함 */
 }
 
 .pagination {
