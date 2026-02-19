@@ -6,8 +6,7 @@
     <title>바닐라 프로젝트 - 로그인</title>
     <link rel="stylesheet" href="/src/styles/userform.css" />
     <link rel="stylesheet" href="/src/styles/main.css" />
-    <script src="../../api/JWT.js" defer></script>
-    <script src="./login.js" defer></script>
+    <script type="module" src="./find_id.js" defer></script>
   </head>
   <body class="user">
     <main class="user__form">
@@ -24,7 +23,7 @@
       </div>
 
       <div class="form__container">
-        <form action="post" id="login">
+        <form action="post" id="find_id">
           <div class="user__input">
             <label for="user_nickname">
               <span>이름</span>
@@ -47,8 +46,8 @@
             <a href="../reset_password/index.html">비밀번호 초기화</a>
           </div>
           
-          <button type="button" class="form__button reset_password">
-            <span>비밀번호 초기화</span>
+          <button type="button" class="form__button find_id">
+            <span>아이디 조회</span>
           </button>
 
           <div class="flex__box">

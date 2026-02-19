@@ -3,7 +3,7 @@
 // 3. true / false 로 반환한다.
 // 4. 그 뒤에 if문으로 실행할 것.
 
-async function checkToken() {
+export async function checkToken() {
   const accessToken = localStorage.getItem('access_token')
 
   // 토큰이 없으면 실패(false)
@@ -22,12 +22,11 @@ async function checkToken() {
     })
 
     const data = await response.json()
-
+    
     if (data.status === 'success') {
-      console.log('인증 성공:', data.user_id)
-      // sessionStorage는 필요에 따라 유지
-      sessionStorage.setItem('user', data.user_id)
-      return true // 성공 시 true 반환
+      console.log('인증 및 데이터 로드 성공!')
+      // ★ 변경됨: true 대신 서버가 준 user 데이터 객체를 통째로 리턴합니다!
+      return data.data 
     } else if (data.status === 'expired') {
       console.warn('토큰 만료 감지. 갱신을 시도합니다...')
 
@@ -85,7 +84,7 @@ async function refreshAccessToken() {
     } else {
       console.error('토큰 갱신 실패:', data.message)
       localStorage.clear()
-      window.location.href = '/src/pages/users/login/index.html'
+      // window.location.href = '/src/pages/users/login/index.html'
       return false
     }
   } catch (err) {

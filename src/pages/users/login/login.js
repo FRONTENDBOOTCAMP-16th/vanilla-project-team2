@@ -1,11 +1,18 @@
+import { checkToken } from '../../../api/JWT.js'
+
+async function checkIsLoggedIn() {
+  const isLoggedIn = await checkToken()
+
+  if (isLoggedIn) {
+    alert('이미 로그인 되었습니다.')
+    window.location.href = '/src/index.html'
+  }
+}
+
+checkIsLoggedIn() 
 
 // 로그인
 const URLS = 'http://localhost/likelion/users/login.php'
-
-// 로그인 상황 확인
-const userInfo = sessionStorage.getItem('user')
-if (userInfo) window.location.href = '/index.html'
-
 
 // 변수 설정
 const loginButton = document.querySelector('.login__button')
@@ -60,11 +67,10 @@ loginButton.addEventListener('click', (e) => {
           console.log(data)
           if (data.user_id !== undefined) {
             localStorage.setItem('access_token', data.access_token)
-            localStorage.setItem('refresh_token', data.access_token)
-            sessionStorage.setItem('user', data.user_id)
+            localStorage.setItem('refresh_token', data.refresh_token)
             window.location.href = `src/pages/users/mypage/index.html`
           }
-  
+          return data = data.user_id
         })
         .catch((error) => {
           console.warn('에러: ', error)
