@@ -81,6 +81,7 @@ async function init() {
 
   // 댓글 불러오기
   async function loadComments(postId) {
+    // fetch(url) 기본값이 GET
     const res = await fetch(`http://localhost:4000/comments?post_id=${postId}`)
     const comments = await res.json()
 
@@ -94,13 +95,13 @@ async function init() {
       }
 
       list.innerHTML = comments
-        .map((c) => {
+        .map((cmt) => {
           //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
-          const avatar = c.profile_image || '/src/assets/icons/icon-user.svg'
+          const avatar = cmt.profile_image || '/src/assets/icons/icon-user.svg'
 
           return `
-                  <li class="comment__item">
-            <article class="comment__card">
+              <li class="comment__item" data-id="${cmt.id}">
+              <article class="comment__card">
               <!-- 댓글 작성자 프사 -->
               <div class="comment__avatar" >
               <img class="comment__avatar-image" src="${avatar}" alt="" />
@@ -109,15 +110,15 @@ async function init() {
               <!-- 댓글 작성자 메타 정보 -->
 
               <div class="comment__meta">
-                <span class="comment__author">${c.nickname}</span>
+                <span class="comment__author">${cmt.nickname}</span>
                 <time class="comment__time">
-                ${new Date(c.create_date).toLocaleString()}
+                ${new Date(cmt.create_date).toLocaleString()}
                   </time>
               </div>
 
               <!-- 댓글 내용 -->
               <p class="comment__text">
-                ${c.content}
+                ${cmt.content}
               </p>
             </article>
           </li>
