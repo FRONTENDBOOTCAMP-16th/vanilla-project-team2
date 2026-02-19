@@ -621,6 +621,9 @@ const renderPosts = function (page, data) {
         </div>
         <div class="main-post__meta-box">
           <span class="main-post__author-text">by ${post.nickname}</span>
+          <span class="main-post__comment-count">
+            💬 ${post.commentCount}
+        </span>
           <span class="main-post__date">${timeForToday(post.create_date)}</span>
         </div>
       </a>
@@ -718,30 +721,43 @@ updateUI(qnaData)
 // 서버 연결
 async function init() {
   try {
-    const response = await fetch('http://localhost:4000/posts')
-    if (!response.ok) throw new Error('데이터 불러오기 실패')
+    const [postResponse, commentResponse] = await Promise.all([
+      fetch('http://localhost:4000/posts'),
+      fetch('http://localhost:4000/comments'), // 👈 댓글 뭉치도 주세요!
+    ])
+    if (!postResponse.ok || !commentResponse.ok)
+      throw new Error('데이터 불러오기 실패')
 
     // const serverPosts = await response.json()
     // 최신순 정렬
-    const serverPosts = (await response.json()).sort(
-      (a, b) => new Date(b.create_date) - new Date(a.create_date),
-    )
-
+    const serverPosts = await postResponse.json()
+    const serverComments = await commentResponse
+      .json()
+      .sort((a, b) => new Date(b.create_date) - new Date(a.create_date))
     // 자습방 글만 필터
     const qnaPosts = serverPosts.filter((item) => item.board_id === 2)
 
-    qnaData = qnaPosts.map((post) => ({
-      post_id: post.post_id,
-      board_id: post.board_id, // 게시판 임시값
-      UID: post.UID, // 유저 아이디 임시값
-      nickname: post.nickname || '사용자',
-      subject: post.subject,
-      contents: post.contents,
-      type: post.type,
-      typeIndex: post.typeIndex, // 카테고리 번호 필드
-      create_date: post.create_date,
-    }))
+    qnaData = qnaPosts.map((post) => {
+      // 내 글 번호(post.post_id)와 똑같은 post_id를 가진 댓글들만 골라냅니다
+      // (형님이 보내주신 사진의 'post_id' 변수명을 여기서 씁니다!)
+      const myComments = serverComments.filter(
+        (comment) => comment.post_id === post.post_id,
+      )
 
+      return {
+        post_id: post.post_id,
+        board_id: post.board_id,
+        UID: post.UID,
+        nickname: post.nickname || '사용자',
+        subject: post.subject,
+        contents: post.contents,
+        type: post.type,
+        typeIndex: post.typeIndex,
+        create_date: post.create_date,
+        commentCount: myComments.length,
+      }
+    })
+    // console.log('최종 데이터', qnaData)
     updateUI(qnaData)
   } catch (error) {
     console.error(error)
