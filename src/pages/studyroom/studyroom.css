@@ -2,14 +2,16 @@ html {
   overflow-y: scroll;
 }
 body {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
+  /* margin: 0 auto; */
 }
 
 .container {
   background-color: #f9fafb;
   min-height: 900px;
+  margin: 0 auto;
 }
 
 .main-title__wrapper {

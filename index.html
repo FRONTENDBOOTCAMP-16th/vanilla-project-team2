@@ -3,34 +3,123 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script type="module" src="/src/main.js"></script>
-    <title>바닐라 자바스크립트 팀 프로젝트(마크업 진행중)</title>
+    <link rel="icon" href="/public/favicon.ico" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/pages/dashboard/dashboard.css" />
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/pages/dashboard/dashboard.page.js"></script>
+    <title>공통 컴퍼넌트</title>
   </head>
-  <body>
-    <!-- 마크업 연결 경로 -->
-    <a href="/src/pages/dashboard/index.html">대시보드</a>
-    <br />
-    <a href="/src/pages/login/index.html">로그인</a>
-    <br />
-    <a href="/src/pages/mypage/index.html">마이페이지</a>
-    <br />
-    <a href="/src/pages/qna/index.html">Q&A</a>
-    <br />
-    <a href="/src/pages/signup/index.html">회원가입</a>
-    <br />
-    <a href="/src/pages/studyroom/index.html">스터디룸</a>
-    <br />
-    <a href="/src/pages/newpost/index.html">글쓰기</a>
-    <br />
-    <a href="/src/pages/readpost/index.html">글읽기</a>
-    <br />
-    <a href="/src/pages/404error/index.html">404 not Found</a>
+  <body data-page="dashboard">
+    <div class="container">
+      <section class="dash-cards" aria-label="대시보드 요약 카드">
+        <!-- 오늘의 날씨 카드 -->
+        <article class="dash-card dash-card--weather">
+          <div class="dash-card__top">
+            <span class="dash-card__icon" aria-hidden="true">
+              <img src="/src/assets/icons/icon-cloud.svg" alt="" />
+            </span>
+            <span class="dash-card__label">오늘의 날씨</span>
+          </div>
 
-    <!-- 디자인 참고 -->
-    <p>디자인 참고</p>
-    <a
-      href="https://www.figma.com/design/IWbNbWsWhE4hNRy56W1pWy/%EC%82%AC%EC%9E%90%EB%93%A4%EC%9D%98-%EA%B3%B5%EB%B6%80%EB%B0%A9_-%EC%A0%95%EB%A6%AC?node-id=0-1&p=f&t=6H9QnG69lvR8e6Z9-0"
-      >디자인 참고
-    </a>
+          <h3 class="dash-card__title">
+            <span class="dash-card__text">날씨 불러오는 중...</span>
+          </h3>
+
+          <p class="dash-card__desc">공부하기 좋은 날씨입니다!</p>
+
+          <!-- 배경 원형 장식 -->
+          <span
+            class="dash-card__blob dash-card__blob--a"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="dash-card__blob dash-card__blob--b"
+            aria-hidden="true"
+          ></span>
+        </article>
+
+        <!-- 오늘의 명언 카드 -->
+        <article class="dash-card dash-card--quote">
+          <div class="dash-card__top">
+            <span class="dash-card__icon" aria-hidden="true">
+              <img src="/src/assets/icons/icon-light.svg" alt="" />
+            </span>
+            <span class="dash-card__label">오늘의 명언</span>
+          </div>
+
+          <h3 class="dash-card__title dash-card__title--quote">
+            <span class="quote-text">명언 불러오는 중...</span>
+          </h3>
+
+          <p class="dash-card__desc">&nbsp;</p>
+
+          <!-- 배경 원형 장식 -->
+          <span
+            class="dash-card__blob dash-card__blob--a"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="dash-card__blob dash-card__blob--b"
+            aria-hidden="true"
+          ></span>
+        </article>
+      </section>
+
+      <section>
+        <!-- 게시글 검색 -->
+        <form class="search-form" role="search">
+          <label for="search" class="sr-only">게시글 검색</label>
+
+          <div class="search-input">
+            <span class="search-icon" aria-hidden="true">
+              <!-- SVG 아이콘 -->
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </span>
+
+            <input
+              id="search"
+              type="search"
+              placeholder="게시글 검색..."
+              autocomplete="off"
+            />
+          </div>
+        </form>
+        <!-- // 게시글 검색 -->
+      </section>
+
+      <ul class="main-post__list" data-component="post-list"></ul>
+
+      <!-- 마크업 연결 경로 -->
+      <a href="/src/pages/dashboard/index.html">대시보드</a>
+      <br />
+      <a href="/src/pages/login/index.html">로그인</a>
+      <br />
+      <a href="/src/pages/mypage/index.html">마이페이지</a>
+      <br />
+      <a href="/src/pages/qna/index.html">Q&A</a>
+      <br />
+      <a href="/src/pages/signup/index.html">회원가입</a>
+      <br />
+      <a href="/src/pages/studyroom/index.html">스터디룸</a>
+      <br />
+      <a href="/src/pages/newpost/index.html">글쓰기</a>
+      <br />
+      <a href="/src/pages/readpost/index.html">글읽기</a>
+      <br />
+      <a href="/src/pages/404error/index.html">404 not Found</a>
+    </div>
   </body>
 </html>
