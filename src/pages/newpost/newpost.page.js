@@ -57,7 +57,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   textarea.addEventListener('input', renderPreview)
   renderPreview()
 
-  // 작성완료 후 게시물 목록으로 이동
+  // 작성(수정) 취소
+  document.querySelector('.button--ghost').addEventListener('click', () => {
+    history.back()
+  })
+
+  // 작성완료 > 게시물 목록으로 이동
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault()

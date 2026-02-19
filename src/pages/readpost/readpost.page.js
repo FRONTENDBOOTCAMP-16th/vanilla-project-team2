@@ -42,6 +42,7 @@ async function init() {
   document.querySelector('.post__title').textContent = post.subject
   document.querySelector('.post__author-name').textContent = post.nickname
   document.querySelector('.post__content').innerHTML = sanitizedHtml
+  loadComments(post.post_id)
 
   // 삭제
 
@@ -68,7 +69,90 @@ async function init() {
   editBtn.addEventListener('click', () => {
     location.href = `../newpost/index.html?postId=${post.id}`
   })
-}
 
+  //=================================댓글=================================
+
+  const commentForm = document.getElementById('comment__form')
+  const commentInput = document.getElementById('comment')
+  // 댓글 더미 데이터 제거 (댓글 템플릿 리터럴 JS작성 후 HTML에서 코드 지우기!)
+  // 아직 더미 댓글 남아 있어서 아래 댓글 숨기는 코드 작성)
+  const commentList = document.querySelector('.comment__list')
+  commentList.innerHTML = ''
+
+  // 댓글 불러오기
+  async function loadComments(postId) {
+    const res = await fetch(`http://localhost:4000/comments?post_id=${postId}`)
+    const comments = await res.json()
+
+    //답변 렌더링
+    function renderComments(comments) {
+      const list = document.querySelector('.comment__list')
+
+      if (comments.length === 0) {
+        list.innerHTML = `<p class='comment-empty'>첫 답변을 남겨보세요.</p>`
+        return
+      }
+
+      list.innerHTML = comments
+        .map((c) => {
+          //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
+          const avatar = c.profile_image || '/src/assets/icons/icon-user.svg'
+
+          return `
+                  <li class="comment__item">
+            <article class="comment__card">
+              <!-- 댓글 작성자 프사 -->
+              <div class="comment__avatar" >
+              <img class="comment__avatar-image" src="${avatar}" alt="" />
+
+              </div>
+              <!-- 댓글 작성자 메타 정보 -->
+
+              <div class="comment__meta">
+                <span class="comment__author">${c.nickname}</span>
+                <time class="comment__time">
+                ${new Date(c.create_date).toLocaleString()}
+                  </time>
+              </div>
+
+              <!-- 댓글 내용 -->
+              <p class="comment__text">
+                ${c.content}
+              </p>
+            </article>
+          </li>
+      `
+        })
+        .join('')
+    }
+
+    renderComments(comments)
+  }
+
+  // submit 이벤트
+  commentForm.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    const content = commentInput.value.trim()
+    if (!content) return
+
+    const newComment = {
+      post_id: Number(postId),
+      nickname: '사용자', //나중에 로그인 연결 currentUser.nickname,
+      // profile_image: currentUser.profile_image,
+      content,
+      create_date: new Date().toISOString(),
+    }
+
+    await fetch('http://localhost:4000/comments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newComment),
+    })
+
+    commentInput.value = ''
+    loadComments(postId)
+  })
+}
 
 init()

@@ -144,17 +144,73 @@
       "create_date": "2026-02-01T09:00:00",
       "id": "c91b"
     },
-      {
-        "id": "b632",
-        "post_id": 1771338018900,
-        "board_id": 1,
-        "UID": 0,
-        "nickname": "사용자",
-        "subject": "마크다운에 하이라이트도 적용시켜보았어요",
-        "contents": "이게 복붙 하기만 하면 된다고 그럼 퀄리티가 확 올라간다고 해서 붙여 넣긴 했는데...\n코드 자체가 장황하진 않지만 이해하기란 쉽지 않아요... \n일단 백틱 세개 쓰고 js 붙여서 태그에 따른 하이라이팅이 적용되는지 테스트 해볼게요\n\n```js\ndocument.querySelectorAll('pre code').forEach((el) => {\n  hljs.highlightElement(el)\n})\n```\n\n수정 이후에는 어떻게 될까요",
-        "type": "JavaScript",
-        "create_date": "2026-02-17T14:20:18.900Z",
-        "typeIndex": 3
-      }
+    {
+      "id": "b632",
+      "post_id": 1771338018900,
+      "board_id": 1,
+      "UID": 0,
+      "nickname": "사용자",
+      "subject": "마크다운에 하이라이트도 적용시켜보았어요",
+      "contents": "이게 복붙 하기만 하면 된다고 그럼 퀄리티가 확 올라간다고 해서 붙여 넣긴 했는데...\n코드 자체가 장황하진 않지만 이해하기란 쉽지 않아요... \n일단 백틱 세개 쓰고 js 붙여서 태그에 따른 하이라이팅이 적용되는지 테스트 해볼게요\n\n```js\ndocument.querySelectorAll('pre code').forEach((el) => {\n  hljs.highlightElement(el)\n})\n```\n\n수정 이후에는 어떻게 될까요",
+      "type": "JavaScript",
+      "create_date": "2026-02-17T14:20:18.900Z",
+      "typeIndex": 3
+    },
+    {
+      "id": "b256",
+      "post_id": 1771430453608,
+      "board_id": 2,
+      "UID": 0,
+      "nickname": "사용자",
+      "subject": "qna 첫글인가요?",
+      "contents": "테스트 중입니다!\nqna에 잘 들어가네요\n지금은 수정해서 자습방 > 기타로 옮겨보려구요\n\n다시 QNA 게시판 JS카테고리로 이동...\n글 간격 때문에요..\n<h2>목록으로 이동하는 버튼을 만드는게 좋을까요...</h2>\n이런저런 테스트중입니다\n졸립다. 아웅 평생 백수로 살면 안될까\n\n```\n/* 질문 내용 */\n.post__content {\n  line-height: 1.6;\n  padding-block-start: 30px;\n  white-space: pre-line;\n\n\n\n  .post__content--code {\n    background-color: #101828;\n    color: white;\n    border-radius: 14px;\n    padding: 24px;\n    line-height: 1.4;\n  }\n}\n\n.post__content >* {\n    margin: 0;\n  }\n\n  /* .post__content >*+* {\n    margin-block-start: 12px;\n  }\n  */\n```",
+      "type": "CSS",
+      "typeIndex": 2,
+      "create_date": "2026-02-18T16:00:53.609Z"
+    }
+  ],
+  "comments": [
+    {
+      "id": "bf84",
+      "post_id": 1771430453608,
+      "nickname": "사용자",
+      "content": "답변 테스트 해볼게요 근데... 댓글 코드는 너무 어렵네요",
+      "create_date": "2026-02-18T18:26:26.547Z"
+    },
+    {
+      "id": "a6a7",
+      "post_id": 1771430453608,
+      "nickname": "사용자",
+      "content": "사용자 사진... 희한하네요",
+      "create_date": "2026-02-18T18:26:54.911Z"
+    },
+    {
+      "id": "02ec",
+      "post_id": 1771430453608,
+      "nickname": "사용자",
+      "content": "코멘트 댓글 답변... 말을 통일 해야겠지요",
+      "create_date": "2026-02-18T18:27:23.324Z"
+    },
+    {
+      "id": "44e8",
+      "post_id": 1771430453608,
+      "nickname": "사용자",
+      "content": "디폴트 사용자 이미지를 따로 저장을 해야겠네요",
+      "create_date": "2026-02-18T18:27:47.795Z"
+    },
+    {
+      "id": "0705",
+      "post_id": 1771430453608,
+      "nickname": "사용자",
+      "content": "줄바꿈도 적용이 될런지\n되나요",
+      "create_date": "2026-02-18T18:45:00.646Z"
+    },
+    {
+      "id": "d7f0",
+      "post_id": 1771430453608,
+      "nickname": "사용자",
+      "content": "리뷰 추가해볼게요\n근데 이미지가 깨지네요",
+      "create_date": "2026-02-19T02:30:35.157Z"
+    }
   ]
 }

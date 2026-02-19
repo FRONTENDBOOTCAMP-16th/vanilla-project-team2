@@ -52,7 +52,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-block: 24px;
+  margin-block: 20px;
 
   .post__author-avatar {
     display: flex;
@@ -73,6 +73,8 @@
   padding-block-start: 30px;
   white-space: pre-line;
 
+
+
   .post__content--code {
     background-color: #101828;
     color: white;
@@ -81,6 +83,15 @@
     line-height: 1.4;
   }
 }
+
+.post__content >* {
+    margin: 0;
+  }
+
+  /* .post__content >*+* {
+    margin-block-start: 12px;
+  } */
+ 
 
 /* 댓글 */
 #comment__form{
@@ -159,6 +170,8 @@ cursor: pointer;
   .comment__text {
     grid-column: 2;
     margin-block: 8px;
+    white-space: pre-line;
+    line-height: 1.2;
   }
 
   .comment__avatar {
@@ -172,7 +185,13 @@ cursor: pointer;
     background-color: #E5E7EB;
     overflow: hidden;
     grid-row: span 2;
+
+        .comment__avatar-image {
+      width: 40%;
+      height: 40%;
+    }
   }
+
 
 
 
