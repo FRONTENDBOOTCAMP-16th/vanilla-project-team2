@@ -626,19 +626,20 @@ function renderPosts(page, data) {
     .map(
       // 리스트 클릭 -> 해당 글 읽기 페이지 연동 위해 data-id="${post.post_id}" (포스트 고유값) 추가
       (post) => `
-    <li class="main-post__item" data-category="${post.typeIndex}" data-id="${post.post_id}">
-      <a href="#" class="main-post__inner">
-        <span class="main-post__tag">${post.type}</span>
-        <div class="main-post__group">
-          <h3 class="main-post__heading">${post.subject}</h3>
-          <p class="main-post__text">${post.contents}</p>
-        </div>
-        <div class="main-post__meta-box">
-          <span class="main-post__author-text">by ${post.nickname}</span>
-          <span class="main-post__date">${timeForToday(post.create_date)}</span>
-        </div>
-      </a>
-    </li>
+   <li class="main-post__item" data-id="${post.post_id}">
+  <a href="#" class="main-post__inner">
+    <span class="main-post__tag">${post.type}</span>
+    <div class="main-post__group">
+      <h3 class="main-post__heading">${post.subject}</h3>
+      <p class="main-post__text">${post.contents}</p>
+    </div>
+    
+    <div class="main-post__meta-box">
+    <span class="main-post__author-text">by <strong>${post.nickname}</strong></span>
+        <span class="main-post__date">${timeForToday(post.create_date)}</span>
+    </div>
+  </a>
+</li>
   `,
     )
     .join('')

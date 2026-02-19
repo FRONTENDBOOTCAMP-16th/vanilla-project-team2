@@ -1,4 +1,5 @@
-// [정답] 그냥 이렇게 비워두세요!
+import { postItem } from '../../js/components/postItem.js'
+
 let qnaData = []
 
 const itemsPerPage = 8
@@ -15,21 +16,21 @@ const nextGroupButton = document.querySelector(
 )
 const searchInput = document.querySelector('#main-search__item')
 
-const timeForToday = function (value) {
-  const today = new Date()
-  const timeValue = new Date(value)
-  const betweenTime = Math.floor(
-    (today.getTime() - timeValue.getTime()) / 1000 / 60,
-  )
+// const timeForToday = function (value) {
+//   const today = new Date()
+//   const timeValue = new Date(value)
+//   const betweenTime = Math.floor(
+//     (today.getTime() - timeValue.getTime()) / 1000 / 60,
+//   )
 
-  if (betweenTime < 1) return '방금전'
-  if (betweenTime < 60) return `${betweenTime}분전`
-  const betweenTimeHour = Math.floor(betweenTime / 60)
-  if (betweenTimeHour < 24) return `${betweenTimeHour}시간전`
-  const betweenTimeDay = Math.floor(betweenTimeHour / 24)
-  if (betweenTimeDay < 365) return `${betweenTimeDay}일전`
-  return `${Math.floor(betweenTimeDay / 365)}년전`
-}
+//   if (betweenTime < 1) return '방금전'
+//   if (betweenTime < 60) return `${betweenTime}분전`
+//   const betweenTimeHour = Math.floor(betweenTime / 60)
+//   if (betweenTimeHour < 24) return `${betweenTimeHour}시간전`
+//   const betweenTimeDay = Math.floor(betweenTimeHour / 24)
+//   if (betweenTimeDay < 365) return `${betweenTimeDay}일전`
+//   return `${Math.floor(betweenTimeDay / 365)}년전`
+// }
 const renderPosts = function (page, data) {
   if (data.length === 0) {
     qnaPostUl.innerHTML = `
@@ -43,28 +44,7 @@ const renderPosts = function (page, data) {
   const endIndex = startIndex + itemsPerPage
   const sliceData = data.slice(startIndex, endIndex)
 
-  const qnaElementList = sliceData
-    .map(
-      (post) => `
-  <li class="main-post__item" data-category="${post.typeIndex}" data-id="${post.post_id}">
-      <a href="#" class="main-post__inner">
-        <span class="main-post__tag">${post.type}</span>
-        <div class="main-post__group">
-          <h3 class="main-post__heading">${post.subject}</h3>
-          <p class="main-post__text">${post.contents}</p>
-        </div>
-        <div class="main-post__meta-box">
-          <span class="main-post__author-text">by ${post.nickname}</span>
-          <span class="main-post__comment-count">
-            💬 ${post.commentCount}
-        </span>
-          <span class="main-post__date">${timeForToday(post.create_date)}</span>
-        </div>
-      </a>
-    </li>
-  `,
-    )
-    .join('')
+  const qnaElementList = sliceData.map((post) => postItem(post)).join('')
 
   qnaPostUl.innerHTML = qnaElementList
 }
