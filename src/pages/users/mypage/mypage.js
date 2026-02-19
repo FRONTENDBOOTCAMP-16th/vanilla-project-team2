@@ -1,138 +1,99 @@
 import { checkToken } from '../../../api/JWT.js'
 const URLS = 'http://localhost/likelion/users/update_user.php'
 
-// 1. 객체를 담을 변수이므로 null로 초기화하는 것이 깔끔합니다.
 let userData = null 
 
-async function initMyPage() {
+async function fetchUserData(forceRefresh = false) {
+  if (userData && !forceRefresh) return userData;
+
   const fetchedData = await checkToken()
-  
   if (fetchedData) {
-    console.log('토큰 검증 성공! 데이터를 불러옵니다.')
     userData = fetchedData 
     return userData
   } else {
-    console.warn('유효하지 않은 접근입니다.')
+    alert('유효하지 않은 접근입니다.')
     window.location.href = '/src/index.html'
   }
 }
 
-async function updateMyPage() {
-  const userDatas = await initMyPage()
-
-  console.log(userDatas)
-  if (!userDatas) { 
-    alert('로그인 되지 않은 회원입니다.')
-  }
+function renderMyPage(data) {
+  if (!data) return;
   
   const USER_NAME = document.querySelector('.user')
   const USER_PROFILE = document.querySelector('.profile_thumb')
   const USER_GRADE = document.querySelector('.expert')
   const USER_CREATE_DATE = document.querySelector('.create-date span')
 
-  USER_NAME.textContent = userDatas.user_nickname
-  USER_CREATE_DATE.textContent = userDatas.create_date
+  USER_NAME.textContent = data.user_nickname
+  USER_CREATE_DATE.textContent = data.create_date
 
   // 프로필 이미지
-  if (userDatas.user_profile) {
-    const html = `
-      <img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload/profile/${userDatas.user_profile}">
-    `
-    USER_PROFILE.innerHTML = html
+  if (data.user_profile) {
+    USER_PROFILE.innerHTML = `<img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload/profile/${data.user_profile}">`
   } else {
-    const userName = userDatas.user_nickname
-    const thumbName = userName.substring(1, 0)
-    const html = `
-      <p>${thumbName}</p>
-    `
-    USER_PROFILE.innerHTML = html
+    const thumbName = data.user_nickname.substring(0, 1) 
+    USER_PROFILE.innerHTML = `<p>${thumbName}</p>`
   }
 
-
-  
-  // 회원등급
-  switch (userDatas.user_grade) {
-    case (0) : {
-      USER_GRADE.textContent = '초급 개발자'
-      break
-    }
-    case (1): {
-      USER_GRADE.textContent = '중급 개발자'
-      break
-    }
-    case (2): {
-      USER_GRADE.textContent = '고급 개발자'
-      break
-    }
-    default : {
-      USER_GRADE.textContent = '???'
-      break
-    }
-  }
+  const grades = ['초급 개발자', '중급 개발자', '고급 개발자'];
+  USER_GRADE.textContent = grades[data.user_grade] ?? '???';
 }
 
+function renderProfileForm(data) { 
+  if (!data) return;
 
+  document.getElementById('user_nickname').value = data.user_nickname
+  document.getElementById('user_id').value = data.user_id
+  document.getElementById('user_phone').value = data.user_phone
+  document.getElementById('user_intro').innerHTML = data.user_intro
+}
+
+// --- 이벤트 리스너 및 UI 제어 ---
+const profileBox = document.querySelector('.user_profile__box')
 const modifyWrap = document.querySelector('.user__modify-button')
-const profileWrap = document.querySelector('.user_profile__box')
-const profileInputs = profileWrap.querySelectorAll('input')
+const profileInputs = profileBox.querySelectorAll('input')
 const profileIntro = document.getElementById('user_intro')
 const userProfile = document.querySelector('.user__thumbnail')
 
-modifyWrap.addEventListener('click', (e) => {
-// 1. 클릭된 요소가 '.js-button' 클래스를 가진 요소인지 확인
-  if (e.target.matches('.js-button')) {
-    if (e.target.id === 'btn_modify') {
-      console.log('변경 버튼 클릭됨!')
+function toggleEditMode(isEdit) {
+  if(isEdit) {
       modifyWrap.classList.add('is-modify')
-      for (const element of profileInputs) {
-        if (element.matches('#user_id')) continue;
-        element.readOnly = false        
-      }
-      profileIntro.readOnly = false
-
+      profileBox.classList.add('is-modify')
       userProfile.classList.add('is-modify')
-    }
-    else if (e.target.id === 'btn_submit') {
-      userProfile.classList.remove('is-modify')
+  } else {
       modifyWrap.classList.remove('is-modify')
-      profileInputs.forEach(element => {
-        element.readOnly = true
-      })
-      profileIntro.readOnly = true
-      updateProfileInfo()
-    }
-    else if (e.target.id === 'btn_cancel') {
+      profileBox.classList.remove('is-modify')
       userProfile.classList.remove('is-modify')
-      modifyWrap.classList.remove('is-modify')
-      profileInputs.forEach(element => {
-        element.readOnly = true
-      })
-      profileIntro.readOnly = true
-      updateProfile()
-    }
+  }
+  
+  profileInputs.forEach(element => {
+    if (element.id !== 'user_id') element.readOnly = !isEdit
+  })
+  profileIntro.readOnly = !isEdit
+}
+
+modifyWrap.addEventListener('click', (e) => {
+  const targetBtn = e.target.closest('.js-button'); 
+  if (!targetBtn) return;
+
+  if (targetBtn.id === 'btn_modify') {
+    toggleEditMode(true)
+  }
+  else if (targetBtn.id === 'btn_submit') {
+    toggleEditMode(false)
+    updateProfileInfo()
+  }
+  else if (targetBtn.id === 'btn_cancel') {
+    toggleEditMode(false)
+    // 나중에 안 사실이지만, 되돌리기는 저장된 데이터로 불러온다.
+    renderProfileForm(userData) 
   }
 })
 
-async function updateProfile() { 
-  const userDatas = await initMyPage()
-
-  const userNickname = document.getElementById('user_nickname')
-  const userID = document.getElementById('user_id')
-  const userPhone = document.getElementById('user_phone')
-  const userIntro = document.getElementById('user_intro')
-
-  userNickname.value = userDatas.user_nickname
-  userID.value = userDatas.user_id
-  userPhone.value = userDatas.user_phone
-  userIntro.innerHTML = userDatas.user_intro
-}
-
+// 데이터 전송 로직
 async function updateProfileInfo() {
-const form = document.getElementById('user_profiles')
-  if (!form) {
-    console.error('폼 요소를 찾을 수 없습니다.')
-    return
-  }
+  const form = document.getElementById('user_profiles')
+  if (!form) return
 
   const formData = new FormData(form);
   try {
@@ -140,15 +101,24 @@ const form = document.getElementById('user_profiles')
       method: 'POST',
       body: formData,
     });
-    const text = await response.text(); 
-    console.log('서버 응답:', text); 
-    await updateProfile(); 
-    await updateMyPage(); 
+    
+    // 성공 시, 서버에서 최신 데이터를 한 번만 다시 불러와 화면 전체를 동기화
+    await fetchUserData(true); // true: 기존 캐시를 무시하고 서버에서 새로 받아옴
+    renderProfileForm(userData); 
+    renderMyPage(userData); 
     
   } catch (error) {
     console.error('업데이트 중 에러 발생:', error);
   }
 }
+
+async function initPage() {
+  await fetchUserData(); // 데이터 1번 요청
+  renderMyPage(userData); // 화면 그림
+  renderProfileForm(userData); // 폼 그림
+}
+
+initPage();
 
 const thumb = document.getElementById('thumb')
 
@@ -163,7 +133,7 @@ async function uploadProfileImage(file) {
   const formData = new FormData()
   
   // 2. 'profile_image'라는 이름(Key)으로 파일 객체(Value)를 담습니다.
-  // PHP에서는 $_FILES['profile_image'] 로 이 파일을 꺼내게 됩니다.
+  // PHP에서는 $_FILES['profile_image'] 로 이 파일을 꺼내게 된다.
   formData.append('profile_image', file) 
 
   const accessToken = localStorage.getItem('access_token')
@@ -174,7 +144,7 @@ async function uploadProfileImage(file) {
       headers: {
         'Authorization': `Bearer ${accessToken}`, 
       },
-      body: formData, // JSON.stringify 없이 formData 객체를 그대로 넣습니다.
+      body: formData,
     })
 
     const data = await response.json()

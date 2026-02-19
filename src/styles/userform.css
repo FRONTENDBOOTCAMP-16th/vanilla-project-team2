@@ -2,6 +2,7 @@ body.user{
   padding: 0;
 }
 
+.user_profile__box
 .user__form{
   display: flex;
   flex-flow: nowrap column;
@@ -136,6 +137,13 @@ body.user{
     font-size: 14px;
   }
 
+  .user__input .info{
+    margin: 0;
+    margin-block-start: 8px; 
+    color: #6A7282;
+    font-size: 12px;
+  }
+
   .form__login{
     display: flex;
     gap: 10px;
@@ -157,7 +165,8 @@ body.user{
 }
 
 .form__button{
-  display: block;
+  display: flex; align-items: center;
+  justify-content: center;
   width: 100%;
   height: 52px;
   margin-top: 20px;
@@ -218,14 +227,32 @@ body.user{
     grid-column: 1/3;
   }
   .profile__container,
-  .user__activity,
   .user__profile{
     padding: 25px;
     border-radius: 14px;
+  }
+  .profile__container{
     background: #fff;
   }
   .user__profile{
     grid-column: 2/3;
+    background: #fff;
+  }
+
+  .user__activity{
+    display: flex;
+    gap: 16px;
+    margin-block-end: 24px;
+  }
+  .user__activity > .activity__item{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 215px;
+    height: 160px;
+    border-radius: 14px;
+    background: #fff;
   }
 }
 
@@ -271,4 +298,291 @@ body.user{
   .user__thumbnail.is-modify .js-button{
     display: flex;
   }
+}
+
+.form__container .delete_agree.delete_agree{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 14px;
+  cursor: pointer;
+  input {
+    display: none;
+  }
+  span{
+    display: block;
+    width: 18px; height: 18px;
+    border: 1px solid #ddd;
+  }
+  input:checked + span{
+    position: relative;
+    background: url(./icon/check-icon.svg) no-repeat center;
+    background-size: 85%;
+  }
+}
+
+.notice{
+  margin-block-end: 32px;
+  &.warn{
+    font-size: 14px;
+  }
+  &.warn h2{
+    margin: 0;
+    color: #9F0712;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .notice__inner{
+    margin: 16px 0 0;
+    padding: 0;
+    padding: 25px;
+    border-radius: 14px;
+    line-height: 22px 0;
+  }
+  &.warn .notice__inner{
+    border: 1px solid #ffc9c9;
+    background: #FEF2F2;
+    color: #E7000B;
+  }
+  ul{
+    margin: 16px 0 0 0;
+    padding: 0 0 0 16px;
+  }
+  &.warn li ~ li{
+    margin-block-start: 8px;
+  }
+  .notice-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    margin-inline: auto;
+    margin-block-end: 32px;
+    border-radius: 16px;
+  }
+  &.warn .notice-icon{
+    background: #FFE2E2;
+  }
+}
+
+/* 버튼 여러개 */
+
+.form_button__container{
+  display: flex;
+  gap: 16px;
+
+  & > * {
+    margin: 0;
+  }
+
+  .form__button.back_button{
+    display: flex; align-items: center;
+    justify-content: center;
+    border: 1px solid #D1D5DC;
+    background: #FFFFFF;
+    color: #364153;
+  }
+
+  .form__button.delete_button{
+    background: #ff4a53;
+    box-shadow:  0px 4px 6px rgba(251, 44, 54, 0.3);
+    filter: drop-shadow(0 10px 15px rgba(251, 44, 54, 0.3));
+  }
+}
+
+.form__information{
+  position: relative;
+  display: block;
+  margin-block-start: 32px;
+  padding: 17px 17px 17px 48px;
+  border: 1px solid #FEE685;
+  border-radius: 14px;
+  background-color: #FFFBEB;
+  font-size: 14px;
+
+  .title{
+    margin: 0;
+    margin-block-end: 8px;
+    color: #7B3306;
+  }
+  .sub-title{
+    margin: 0;
+    color: #BB4D00;
+  }
+
+  &::before{
+    content: '';
+    position: absolute;
+    top: 17px;
+    left: 17px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: url(./icon/security-Icon.svg);
+  }
+}
+
+.mypage__navigation{
+  grid-column: 1/3;
+  width: 100%;
+  max-width: 514px;
+
+  .back-btn{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    margin: 0;
+    margin-block-end: 34px;
+    color: #4A5565;
+    font-size: 14px;
+    text-decoration: none;
+  }
+
+  h1{
+    margin: 0;
+    margin-block-end: 8px;
+    font-size: 30px;
+    font-weight: 500;
+  }
+  p{
+    color: #4A5565;
+    font-size: 1rem;
+    letter-spacing: -0.03em;
+  }
+}
+
+
+/* 사용자 정보 */
+.user__profile__header{
+  display: flex;
+  justify-content: space-between;
+
+  .js-button{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    background: #fff;
+    color: #4F39F6;
+  }
+  .js-button.save{
+    background: #4F39F6;
+    color: #fff;
+  }
+
+  .button-wrap{
+    display: none;
+    gap: 16px;
+  }
+}
+
+
+.user__modify-button.is-modify{
+  .button-wrap{
+    display: flex;
+  }
+  #btn_modify{
+    display: none;
+  }
+}
+
+.user_profile__box{
+
+  .user__input label {
+      display: block;
+      margin-block-end: 8px;
+      font-size: 14px;
+  }
+  
+  input{
+    display: block;
+    width: 100%; height: 100%;
+    padding-left: 48px;
+    border: none;
+    border: none;
+    border-radius: 14px;
+    font-size: 1rem;
+  }
+
+  textarea:focus,
+  input:focus{
+    outline: none;
+  }
+
+  .text__box:focus-within,
+  .input__box:focus-within{
+    /* outline: 2px solid #4F39F6; */
+    outline: none;
+  }
+
+  &.is-modify .text__box:focus-within,
+  &.is-modify .input__box:focus-within{
+    outline: 2px solid #4F39F6;
+  }
+
+  .input__box{
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    height: 46px;
+    inline-size: 100%;
+    border: 1px solid #D1D5DC;
+    border-radius: 14px;
+    letter-spacing: -0.02em;
+    overflow: hidden;
+  }
+
+  .input__box::before{
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    z-index: 10;
+    display: block;
+    width: 20px; height: 20px;
+    background-image: url(./icon/email-icon.svg);
+    background-size: 20px;
+    translate: 0 -50%;
+  }
+
+  .input__box.id::before{
+    background-image: url(./icon/user-icon.svg);
+  }
+
+  .input__box.password::before{
+    background-image: url(./icon/password-icon.svg);
+  }
+
+  .input__box.email::before{
+    background-image: url(./icon/email-icon.svg);
+  }
+
+  .input__box.phone::before{
+    background-image: url(./icon/tel-icon.svg);
+  }
+
+  .text__box{
+    display: block;
+    box-sizing: border-box;
+    width: 100%; height: 280px;
+    padding: 15px;
+    border: none;
+    border: 1px solid #D1D5DC;
+    border-radius: 14px;
+  }
+    
+  textarea{
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 1rem;
+    resize: none;
+  }
+
 }

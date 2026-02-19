@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>바닐라 프로젝트 - 로그인</title>
+    <link rel="stylesheet" href="/src/styles/userform.css" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <script type="module" src="./login.js" defer></script>
+  </head>
+  <body class="user">
+    <main class="user__form">
+      <div class="mypage__navigation">
+        <a href="/src/pages/users/mypage/index.html" class="back-btn">
+          <img src="/src/assets/icons/back-Icon.svg" alt="" />
+          마이페이지로 돌아가기
+        </a>
+
+        <h1>비밀번호 변경</h1>
+        <p>새로운 비밀번호를 설정하세요</p>
+      </div>
+
+      <div class="form__container">
+        <form action="post" id="login">
+          <div class="user__input">
+            <label for="user_id">
+              <span>현재 비밀번호</span>
+            </label>
+            <div class="input__box email">
+              <input type="password" name="user_password" id="user_password" />
+            </div>
+            <p class="error__text"></p>
+          </div>
+          <div class="user__input">
+            <label for="user_password">
+              <span>새 비밀번호</span>
+            </label>
+            <div class="input__box password">
+              <input type="password" name="new_user_password" id="new_user_password" />
+            </div>
+            <p class="info">
+              8자 이상, 영문/숫자/특수문자 포함
+            </p>
+            <p class="error__text"></p>
+          </div>
+          <div class="user__input">
+            <label for="user_password">
+              <span>새 비밀번호 확인</span>
+            </label>
+            <div class="input__box password">
+              <input type="password" name="new_user_password_check" id="new_user_password_check" />
+            </div>
+            <p class="error__text"></p>
+          </div>
+
+          <button type="button" class="form__button login__button">
+            <span>비밀번호 변경</span>
+          </button>
+
+          <div class="form__information security">
+            <p class="title">보안 안내</p>
+            <p class="sub-title">정기적인 비밀번호 변경으로 계정을 안전하게 보호하세요.</p>
+          </div>
+        </form>
+
+      </div>
+      
+    </main>
+  </body>
+</html>
