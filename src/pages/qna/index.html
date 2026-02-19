@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/main.css" />
     <link rel="stylesheet" href="qna.css" />
+    <script type="module" src="/src/js/main.js"></script>
     <script src="qna.page.js" type="module"></script>
     <title>QnA 게시판</title>
   </head>
-  <body>
+  <body data-page="qna" data-show-header="true" data-show-footer="true">
     <main class="main-box container">
       <div class="main-title__wrapper">
         <h2 class="main-title__heading">QnA 게시판</h2>
@@ -50,7 +51,7 @@
           </div>
         </form>
       </section>
-      <ul class="main-post__list"></ul>
+      <ul class="main-post__list" data-component="post-list"></ul>
       <nav class="pagination" aria-label="게시판 페이지 네비게이션">
         <nav class="pagination" aria-label="게시판 페이지 네비게이션">
           <div

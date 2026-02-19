@@ -6,68 +6,11 @@
     <link rel="icon" href="/public/favicon.ico" />
     <link rel="stylesheet" href="/src/styles/main.css" />
     <link rel="stylesheet" href="./dashboard.css" />
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="./dashboard.page.js"></script>
     <title>공통 컴퍼넌트</title>
   </head>
   <body>
-    <!-- header -->
-    <header>
-      <div class="header-inner">
-        <!-- 로고 -->
-        <div class="logo">
-          <img
-            src="/src/assets/icons/icon-logo.svg"
-            alt="로고"
-            class="logo-icon"
-          />
-          <span class="logo-text">사자들의 공부방</span>
-        </div>
-        <!-- //로고 -->
-
-        <!-- 네비게이션 -->
-        <nav class="nav">
-          <a href="/src/pages/dashboard/index.html" class="nav-item active">
-            <img src="/src/assets/icons/icon-home.svg" alt="" />
-            <span>대시보드</span>
-          </a>
-
-          <a href="/src/pages/studyroom/index.html" class="nav-item">
-            <img src="/src/assets/icons/icon-book.svg" alt="" />
-            <span>자습방</span>
-          </a>
-
-          <a href="/src/pages/qna/index.html" class="nav-item">
-            <img src="/src/assets/icons/icon-chat.svg" alt="" />
-            <span>QnA</span>
-          </a>
-
-          <a href="/src/pages/newpost/index.html" class="nav-item write">
-            <img src="/src/assets/icons/icon-edit.svg" alt="" />
-            <span>글쓰기</span>
-          </a>
-        </nav>
-        <!-- //네비게이션 -->
-
-        <!-- 회원정보 -->
-        <div class="personal">
-          <a href="/src/pages/mypage/index.html" class="nav-item">
-            <img src="/src/assets/icons/icon-user.svg" alt="" />
-            <span>마이페이지</span>
-          </a>
-
-          <a href="/src/pages/login/index.html" class="nav-item">
-            <img src="/src/assets/icons/icon-logout.svg" alt="" />
-            <span>로그아웃</span>
-          </a>
-
-          <a href="/src/pages/login/index.html" class="nav-item login">
-            <span>로그인</span>
-          </a>
-        </div>
-        <!-- //회원정보 -->
-      </div>
-    </header>
-    <!-- //header -->
-
     <div class="container">
       <section class="dash-cards" aria-label="대시보드 요약 카드">
         <!-- 오늘의 날씨 카드 -->
@@ -80,7 +23,7 @@
           </div>
 
           <h3 class="dash-card__title">
-            날씨 아주 맑음 <span aria-hidden="true">☀️</span>
+            <span class="dash-card__text">날씨 불러오는 중...</span>
           </h3>
 
           <p class="dash-card__desc">공부하기 좋은 날씨입니다!</p>
@@ -105,9 +48,8 @@
             <span class="dash-card__label">오늘의 명언</span>
           </div>
 
-          <h3 class="dash-card__title">
-            배움에는 왕도가 없다<br />
-            아마도...? <span aria-hidden="true">🤔</span>
+          <h3 class="dash-card__title dash-card__title--quote">
+            <span class="quote-text">명언 불러오는 중...</span>
           </h3>
 
           <p class="dash-card__desc">&nbsp;</p>
@@ -155,28 +97,8 @@
             />
           </div>
         </form>
-        <!-- 게시글 검색 -->
+        <!-- // 게시글 검색 -->
       </section>
     </div>
-
-    <!-- footer -->
-    <footer class="footer">
-      <div class="footer-inner">
-        <!-- 하단 : 로고 -->
-        <div class="footer-logo">
-          <img
-            src="/src/assets/icons/icon-logo-color.svg"
-            alt="사자들의 공부방 로고"
-            class="footer-logo-icon"
-          />
-          <span class="footer-logo-text">사자들의 공부방</span>
-        </div>
-
-        <!-- 저작권 -->
-        <p class="footer-copy">© 2026 사자들의 공부방. All rights reserved.</p>
-        <!-- 저작권 -->
-      </div>
-    </footer>
-    <!-- //footer -->
   </body>
 </html>
