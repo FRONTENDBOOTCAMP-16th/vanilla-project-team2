@@ -13,20 +13,23 @@ export async function checkToken() {
   }
 
   try {
-    const response = await fetch('http://localhost/likelion/users/auth.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
+    const response = await fetch(
+      'http://localhost/likelion/users/auth.php',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${accessToken}`,
+        },
       },
-    })
+    )
 
     const data = await response.json()
-    
+
     if (data.status === 'success') {
       console.log('인증 및 데이터 로드 성공!')
       // ★ 변경됨: true 대신 서버가 준 user 데이터 객체를 통째로 리턴합니다!
-      return data.data 
+      return data.data
     } else if (data.status === 'expired') {
       console.warn('토큰 만료 감지. 갱신을 시도합니다...')
 

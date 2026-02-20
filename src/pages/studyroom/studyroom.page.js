@@ -5,24 +5,20 @@ let currentDisplayData = postData
 const itemsPerPage = 8
 const pageCount = 5
 
+// 💡 여기서 선언한 이름(postListElement)을 맨 밑 클릭 이벤트에서도 똑같이 써야 합니다!
 const postListElement = document.querySelector('.main-post__list')
 const paginationList = document.querySelector('.pagination__list')
 const firstButton = document.querySelector('.pagination__control--first')
 const prevButton = document.querySelector('.pagination__control--prev')
 const nextButton = document.querySelector('.pagination__control--next')
-const nextGroupButton = document.querySelector(
-  '.pagination__control--next-group',
-)
+const nextGroupButton = document.querySelector('.pagination__control--next-group')
 const categoryButton = document.querySelectorAll('.main-category__button')
 const searchInput = document.getElementById('main-search__item')
-console.log(searchInput)
 
 function timeForToday(value) {
   const today = new Date()
   const timeValue = new Date(value)
-  const betweenTime = Math.floor(
-    (today.getTime() - timeValue.getTime()) / 1000 / 60,
-  )
+  const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60)
   if (betweenTime < 1) return '방금전'
   if (betweenTime < 60) return `${betweenTime}분전`
   const betweenTimeHour = Math.floor(betweenTime / 60)
@@ -39,7 +35,7 @@ function renderPosts(page, data) {
         <p>검색 결과가 없습니다.</p>
       </div>
     `
-    return // 👈 데이터가 없으니 아래 로직은 실행하지 말고 여기서 끝내라는 뜻!
+    return 
   }
   const startIndex = (page - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
@@ -47,7 +43,6 @@ function renderPosts(page, data) {
 
   postListElement.innerHTML = sliceData
     .map(
-      // 리스트 클릭 -> 해당 글 읽기 페이지 연동 위해 data-id="${post.post_id}" (포스트 고유값) 추가
       (post) => `
    <li class="main-post__item" data-id="${post.post_id}">
   <a href="#" class="main-post__inner">
@@ -63,7 +58,7 @@ function renderPosts(page, data) {
     </div>
   </a>
 </li>
-  `,
+  `
     )
     .join('')
 }
@@ -98,10 +93,7 @@ function renderPagination(data) {
   paginationList.innerHTML = htmlString
 
   firstButton.classList.toggle('hidden', currentGroup === 1)
-  nextGroupButton.classList.toggle(
-    'hidden',
-    currentGroup === totalGroup || currentTotalPage === 0,
-  )
+  nextGroupButton.classList.toggle('hidden', currentGroup === totalGroup || currentTotalPage === 0)
 
   setupPaginationEvents(data)
 }
@@ -165,74 +157,64 @@ categoryButton.forEach((category) => {
   })
 })
 
-// updateUI(postData)
-// 기존 더미데이터를 실제 작성한 글이 보이도록 교체
-
-// 서버에서 글 목록 가져오기 (fetch)
-// 자습방 글만 보이게 (filter)
-// 화면이 이해하는 형태로 변환 (map)
-// 화면에 뿌리기 (uadateUI(postData))
 async function init() {
   try {
-    // const response = await fetch('http://localhost:4000/posts')
-    // if (!response.ok) throw new Error('데이터 불러오기 실패')
-    // 로컬스토리지 -> 자체 api
-    const response = await fetch(
-      'https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=1&page=1',
-    )
-    if (!response.ok) throw new Error('데이터 불러오기 실패')
-
-    const result = await response.json()
-    // 최신순 정렬
-    const serverPosts = result.data.sort(
-      (a, b) => new Date(b.create_date) - new Date(a.create_date),
-    )
-
-    // 자습방 글만 필터
-    const studyPosts = serverPosts.filter((item) => Number(item.board_id) === 1)
-
-    const typeMap = {
-      HTML: 1,
-      CSS: 2,
-      Javascript: 3,
-      React: 4,
-      기타: 5,
+    const postResponse = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=1&page=1');
+    
+    if (!postResponse.ok) {
+      throw new Error('데이터 불러오기 실패');
     }
 
-    postData = studyPosts.map((post) => ({
-      post_id: Number(post.post_id),
-      board_id: Number(post.board_id), // 게시판 임시값
-      UID: Number(post.user_id), // 유저 아이디 임시값
-      nickname: post.user_nickname || '사용자',
-      subject: post.subject,
-      contents: post.contents,
-      type: post.type,
-      typeIndex: typeMap[post.type] ?? 0,
-      create_date: post.create_date,
-    }))
+    const serverPosts = await postResponse.json();
+    console.log('서버에서 온 데이터:', serverPosts);
 
-    updateUI(postData)
+    if (!Array.isArray(serverPosts)) {
+      console.log('게시글이 없거나 데이터 형식이 다릅니다. 빈 화면을 띄웁니다.');
+      updateUI([]); 
+      return; 
+    }
+    
+    serverPosts.sort((a, b) => new Date(b.create_date) - new Date(a.create_date));
+    
+    // 💡 자습방 데이터로 필터링!
+    const studyPosts = serverPosts.filter((item) => Number(item.board_id) === 1);
+
+    postData = studyPosts.map((post) => {
+
+      return {
+        post_id: post.post_id,
+        board_id: post.board_id,
+        user_id: post.user_id,         
+        nickname: post.user_nickname || '사용자', 
+        subject: post.subject,
+        contents: post.contents,
+        type: post.type,
+        typeIndex: post.typeIndex,
+        create_date: post.create_date,
+      };
+    });
+    
+    updateUI(postData);
+
   } catch (error) {
-    console.error(error)
-    updateUI(postData)
+    console.error('에러 발생:', error);
+    updateUI([]); 
   }
 }
 
-init()
+init();
 
-// 클릭하면 글 읽기 페이지로 이동 (data-id="${post.post_id}")
-
+// ---------------------------------------------------------
+// 🚨 버그 수정: qnaPostUl -> postListElement 로 변경 완료!
 postListElement.addEventListener('click', (e) => {
-  // 템플릿 리터럴에 쓰인 a href = # 로 페이지 이동X -> preventDefault() 추가
-  e.preventDefault()
+  e.preventDefault();
 
-  const item = e.target.closest('.main-post__item')
-  if (!item) return
+  const item = e.target.closest('.main-post__item');
+  if (!item) return;
 
   const postId = item.dataset.id
   localStorage.setItem('selectedPostId', postId)
   localStorage.setItem('selectedBoardId', 1)
 
-  // 읽기 페이지 이동
-  location.href = '../readpost/index.html'
-})
+  location.href = '../readpost/index.html';
+});

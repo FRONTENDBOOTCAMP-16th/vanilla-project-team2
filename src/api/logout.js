@@ -4,7 +4,6 @@ logoutButton.addEventListener('click', () => {
   logout()
 })
 
-
 function logout() {
   const refreshToken = localStorage.getItem('refresh_token')
   fetch('http://localhost/likelion/users/logout.php', {
@@ -14,14 +13,13 @@ function logout() {
       Authorization: `Bearer ${refreshToken}`,
     },
   })
-  .then((data) => {
-    console.log(data)
-    if (data.status === 200) {
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
-      alert('로그아웃 되셨습니다.')
-    } 
-  })
-  .catch((error) => console.warn(error))
+    .then((data) => {
+      console.log(data)
+      if (data.status === 200) {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        alert('로그아웃 되셨습니다.')
+      }
+    })
+    .catch((error) => console.warn(error))
 }
-

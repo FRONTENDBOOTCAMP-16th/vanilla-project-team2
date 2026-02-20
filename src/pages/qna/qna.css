@@ -134,7 +134,7 @@ body {
     margin-top: 4px;
   }
   .main-post__author-text {
-    font-size: 16px;
+    font-size: 14px;
     color: #212529; /* 이름은 다시 진하게 */
   }
 }

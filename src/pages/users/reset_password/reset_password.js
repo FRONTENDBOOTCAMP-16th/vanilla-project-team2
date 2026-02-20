@@ -2,7 +2,7 @@ import { checkToken } from '../../../api/JWT.js'
 
 async function initMyPage() {
   const fetchedData = await checkToken()
-  
+
   if (fetchedData) {
     alert('이미 로그인하셨습니다.')
     window.location.href = '/src/index.html'
@@ -11,9 +11,9 @@ async function initMyPage() {
 
 initMyPage()
 
-
 // 로그인
-const URLS = 'http://localhost/likelion/users/reset_password.php'
+const URLS =
+  'http://localhost/likelion/users/reset_password.php'
 const form = document.getElementById('reset_pw')
 
 form.addEventListener('click', (e) => {
