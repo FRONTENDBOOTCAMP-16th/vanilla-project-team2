@@ -133,65 +133,77 @@ nextButton.addEventListener('click', () => {
 updateUI(qnaData)
 
 // 서버 연결
+
+
+
 async function init() {
   try {
-    const [postResponse, commentResponse] = await Promise.all([
-      fetch('http://localhost:4000/posts'),
-      fetch('http://localhost:4000/comments'), // 👈 댓글 뭉치도 주세요!
-    ])
-    if (!postResponse.ok || !commentResponse.ok)
-      throw new Error('데이터 불러오기 실패')
+    // 1. 게시글 데이터만 먼저 확실하게 가져옵니다. (page=1로 수정했습니다!)
+    const postResponse = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1');
+    
+    if (!postResponse.ok) {
+      throw new Error('데이터 불러오기 실패');
+    }
 
-    // const serverPosts = await response.json()
-    // 최신순 정렬
-    const serverPosts = await postResponse.json()
-    const serverComments = await commentResponse.json()
-    serverPosts.sort(
-      (a, b) => new Date(b.create_date) - new Date(a.create_date),
-    )
-    // 자습방 글만 필터
-    const qnaPosts = serverPosts.filter((item) => item.board_id === 2)
+    const serverPosts = await postResponse.json();
+    console.log('서버에서 온 데이터:', serverPosts);
 
+    // 2. 🚨 핵심 방어막: 서버가 배열 안 주고 "게시글이 없습니다." 줬을 때 터지는 것 방지
+    if (!Array.isArray(serverPosts)) {
+      console.log('게시글이 없거나 데이터 형식이 다릅니다. 빈 화면을 띄웁니다.');
+      updateUI([]); 
+      return; // 여기서 함수를 멈춥니다! (밑으로 내려가서 sort, filter 터지는 걸 막음)
+    }
+    
+    // 3. 최신순 정렬 (데이터가 배열일 때만 무사히 실행됨)
+    serverPosts.sort((a, b) => new Date(b.create_date) - new Date(a.create_date));
+    
+    // 4. 자습방 글만 필터 (board_id가 2인 것만)
+    const qnaPosts = serverPosts.filter((item) => Number(item.board_id) === 2);
+
+    // 5. 화면에 그리기 좋게 데이터 가공
     qnaData = qnaPosts.map((post) => {
-      // 내 글 번호(post.post_id)와 똑같은 post_id를 가진 댓글들만 골라냅니다
-      // (형님이 보내주신 사진의 'post_id' 변수명을 여기서 씁니다!)
-      const myComments = serverComments.filter(
-        (comment) => String(comment.post_id) === String(post.post_id),
-      )
+      // 🚧 댓글 기능은 백엔드 주소 확정 전까지 임시로 꺼둡니다.
+      // const myComments = serverComments.filter(comment => String(comment.post_id) === String(post.post_id));
+      const myComments = []; // 일단 빈 배열로 처리해서 에러 방지
 
       return {
         post_id: post.post_id,
         board_id: post.board_id,
-        UID: post.UID,
-        nickname: post.nickname || '사용자',
+        user_id: post.user_id,         // 백엔드 명세서에 맞춤 (UID -> user_id)
+        nickname: post.user_nickname || '사용자', // 백엔드 명세서에 맞춤 (nickname -> user_nickname)
         subject: post.subject,
         contents: post.contents,
         type: post.type,
-        typeIndex: post.typeIndex,
         create_date: post.create_date,
-        commentCount: myComments.length,
-      }
-    })
-    // console.log('최종 데이터', qnaData)
-    updateUI(qnaData)
+        commentCount: myComments.length, // 당분간 무조건 0으로 표시됨
+      };
+    });
+    
+    // 최종 데이터로 화면 업데이트
+    updateUI(qnaData);
+
   } catch (error) {
-    console.error(error)
-    updateUI(qnaData)
+    console.error('에러 발생:', error);
+    updateUI([]); // 네트워크 에러 나도 화면이 하얗게 멈추지 않도록 빈 화면 처리
   }
 }
 
-init()
+// 최초 실행
+init();
 
+// ---------------------------------------------------------
+// 형님이 짜신 클릭 이벤트 (완벽해서 건드릴 게 없습니다!)
 qnaPostUl.addEventListener('click', (e) => {
   // 템플릿 리터럴에 쓰인 a href = # 로 페이지 이동X -> preventDefault() 추가
-  e.preventDefault()
+  e.preventDefault();
 
-  const item = e.target.closest('.main-post__item')
-  if (!item) return
+  const item = e.target.closest('.main-post__item');
+  if (!item) return;
 
-  const postId = item.dataset.id
-  localStorage.setItem('selectedPostId', postId)
+  const postId = item.dataset.id;
+  localStorage.setItem('selectedPostId', postId);
 
   // 읽기 페이지 이동
-  location.href = '../readpost/index.html'
-})
+  location.href = '../readpost/index.html';
+});

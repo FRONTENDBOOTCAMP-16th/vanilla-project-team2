@@ -2,7 +2,7 @@ import { checkToken } from '../../../api/JWT.js'
 
 async function initMyPage() {
   const fetchedData = await checkToken()
-  
+
   if (fetchedData) {
     alert('이미 로그인하셨습니다.')
     window.location.href = '/src/index.html'
@@ -10,7 +10,8 @@ async function initMyPage() {
 }
 
 // 로그인
-const URLS = 'http://localhost/likelion/users/find_id.php'
+const URLS =
+  'http://localhost/likelion/users/find_id.php'
 const form = document.getElementById('find_id')
 
 form.addEventListener('click', (e) => {

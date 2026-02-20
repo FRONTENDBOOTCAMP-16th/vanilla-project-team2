@@ -17,7 +17,7 @@ export const postItem = (post) => {
       </div>
       
       <div class="main-post__author-row">
-        <span class="main-post__author-text">by <strong>${post.nickname}</strong></span>
+        <span class="main-post__author-text">by <strong>${post.user_nickname}</strong></span>
       </div>
     </div>
   </a>
