@@ -3,6 +3,7 @@
 
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
+import { timeForToday } from '../../js/utils/date.js'
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const postId = localStorage.getItem('selectedPostId')
@@ -49,7 +50,7 @@ async function init() {
 
   // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
   const renderer = new marked.Renderer()
-
+  console.log('원본 contents:', post.contents)
   renderer.code = function (code) {
     //   const text = typeof code === 'string' ? code : (code?.text ?? '')
     let text = ''
@@ -79,6 +80,9 @@ async function init() {
   document.querySelector('.post__title').textContent = post.subject
   document.querySelector('.post__author-name').textContent =
     post.user_nickname || post.nickname || '사용자'
+  const timeElement = document.querySelector('.post__time')
+  timeElement.textContent = timeForToday(post.create_date)
+
   document.querySelector('.post__content').innerHTML = sanitizedHtml
   loadComments(post.post_id)
 
