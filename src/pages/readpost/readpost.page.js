@@ -8,6 +8,15 @@ import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 const postId = localStorage.getItem('selectedPostId')
 const boardId = localStorage.getItem('selectedBoardId')
 
+const currentBoardId = localStorage.getItem('selectedBoardId') // 아까 저장한 1 또는 2
+const commentSection = document.getElementById('comment-area')
+
+if (currentBoardId === '1') {
+  commentSection.style.display = 'none' // 또는 .classList.add('hidden')
+} else {
+  commentSection.style.display = 'block'
+}
+
 async function init() {
   const response = await fetch(
     `https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=${boardId}&page=1`,
