@@ -40,25 +40,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   textarea.addEventListener('input', renderPreview)
   renderPreview()
 
-  //선택 글 수정
-  if (editPostId) {
-    // document.querySelector('.newpost__title').textContent = '게시글 수정'
-    // document.querySelector('.button--primary').innerHTML =
-    //   '<img src="/src/assets/icons/icon-save.svg" alt="" />수정 완료'
-    // document.title = '게시글 수정'
 
-    // const res = await fetch(`http://localhost:4000/posts/${editPostId}`)
-    // const post = await res.json()
-    // originalPost = post
-
-    // title.value = post.subject
-    // textarea.value = post.contents
-    // form.elements['categorySelect'].value = post.type
-    // form.elements['boardType'].value = post.board_id === 2 ? 'qna' : 'study'
-    console.log('수정 api 필요')
-    alert('수정 기능 준비중')
-    return
-  }
 
   // 작성(수정) 취소
   document.querySelector('.button--ghost').addEventListener('click', () => {
@@ -117,25 +99,33 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('수정 api 필요')
         alert('수정 기능 준비중')
       } else {
-        //새 글 작성
-        const data = {
-          board_id: formData.get('boardType') === 'qna' ? 2 : 1,
-          user_id: 1,
-          subject: formData.get('title'),
-          content: formData.get('content'),
-        }
+
+        const formDataToSend = new FormData()
+        formDataToSend.append(
+          'board_id',
+          formData.get('boardType') === 'qna' ? 2 : 1,
+        )
+
+        formDataToSend.append('user_id', 1)
+        formDataToSend.append('subject', formData.get('title'))
+        formDataToSend.append('contents', formData.get('content'))
+        formDataToSend.append('type', formData.get('categorySelect'))
 
         response = await fetch(
           'http://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php',
           {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+            // headers: { 'Content-Type': 'application/json' },
+            // body: JSON.stringify(data),
+            body: formDataToSend,
           },
         )
+        if (!response.ok) throw new Error('저장 실패')
+
+        const result = await response.text()
+        console.log('서버 응답:', result)
       }
 
-      if (!response.ok) throw new Error('저장 실패')
 
       alert('글이 저장되었습니다')
 
