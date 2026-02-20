@@ -1,6 +1,6 @@
 import { checkToken } from '../../../api/JWT.js'
 const URLS =
-  'http://localhost/likelion/users/update_user.php'
+  'http://leedh9276.dothome.co.kr/likelion-vanilla//users/update_user.php'
 
 let userData = null
 
@@ -30,7 +30,7 @@ function renderMyPage(data) {
 
   // 프로필 이미지
   if (data.user_profile) {
-    USER_PROFILE.innerHTML = `<img src="http://localhost/likelionusers/upload/profile/${data.user_profile}">`
+    USER_PROFILE.innerHTML = `<img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload/profile/${data.user_profile}">`
   } else {
     const thumbName = data.user_nickname.substring(0, 1)
     USER_PROFILE.innerHTML = `<p>${thumbName}</p>`
@@ -138,7 +138,7 @@ async function uploadProfileImage(file) {
 
   try {
     const response = await fetch(
-      'http://localhost/likelion/users/upload_profile.php',
+      'http://leedh9276.dothome.co.kr/likelion-vanilla//users/upload_profile.php',
       {
         method: 'POST',
         headers: {
