@@ -6,7 +6,7 @@ import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 // 수정 (값이 있으면 수정, null이면 새글 작성)
 const params = new URLSearchParams(location.search)
 const editPostId = params.get('postId')
-let originalPost = null
+// let originalPost = null
 
 // 새 글쓰기
 document.addEventListener('DOMContentLoaded', async () => {
@@ -16,26 +16,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   const previewContent = document.getElementById('previewContent')
 
   marked.setOptions({ breaks: true })
-
-  //선택 글 수정
-  if (editPostId) {
-    // document.querySelector('.newpost__title').textContent = '게시글 수정'
-    // document.querySelector('.button--primary').innerHTML =
-    //   '<img src="/src/assets/icons/icon-save.svg" alt="" />수정 완료'
-    // document.title = '게시글 수정'
-
-    // const res = await fetch(`http://localhost:4000/posts/${editPostId}`)
-    // const post = await res.json()
-    // originalPost = post
-
-    // title.value = post.subject
-    // textarea.value = post.contents
-    // form.elements['categorySelect'].value = post.type
-    // form.elements['boardType'].value = post.board_id === 2 ? 'qna' : 'study'
-    console.log('수정 api 필요')
-    alert('수정 기능 준비중')
-    return
-  }
 
   //미리보기
   function renderPreview() {
@@ -59,6 +39,26 @@ document.addEventListener('DOMContentLoaded', async () => {
   title.addEventListener('input', renderPreview)
   textarea.addEventListener('input', renderPreview)
   renderPreview()
+
+  //선택 글 수정
+  if (editPostId) {
+    // document.querySelector('.newpost__title').textContent = '게시글 수정'
+    // document.querySelector('.button--primary').innerHTML =
+    //   '<img src="/src/assets/icons/icon-save.svg" alt="" />수정 완료'
+    // document.title = '게시글 수정'
+
+    // const res = await fetch(`http://localhost:4000/posts/${editPostId}`)
+    // const post = await res.json()
+    // originalPost = post
+
+    // title.value = post.subject
+    // textarea.value = post.contents
+    // form.elements['categorySelect'].value = post.type
+    // form.elements['boardType'].value = post.board_id === 2 ? 'qna' : 'study'
+    console.log('수정 api 필요')
+    alert('수정 기능 준비중')
+    return
+  }
 
   // 작성(수정) 취소
   document.querySelector('.button--ghost').addEventListener('click', () => {
