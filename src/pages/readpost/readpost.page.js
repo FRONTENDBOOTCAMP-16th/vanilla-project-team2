@@ -19,23 +19,31 @@ if (currentBoardId === '1') {
 
 async function init() {
   const response = await fetch(
-    `https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=${boardId}&page=1`,
+    `http://leedh9276.dothome.co.kr/likelion-vanilla/board/read.php?post_id=${postId}`,
   )
 
   if (!response.ok) throw new Error('글 불러오기 실패')
 
   const result = await response.json()
-  const post = result.data[0]
 
-  // 지금 클릭한 글(post) id랑 같은 글 하나 찾아서(find) post에 넣어라
-  // const post = posts.find((post) => String(post.post_id) === String(postId))
-  // if (!post) {
-  //   console.log('해당 글 없음')
-  //   return
-  // }
+  // 💡 [수정 포인트] 상자 구조가 어떤 모양이든 찾아내는 무적 로직
+  // 1. result 자체가 배열이면 첫 번째 값
+  // 2. result.data가 있으면 그 안의 첫 번째 값 혹은 객체
+  // 3. 둘 다 아니면 result 자체를 객체로 취급
+  let post = null
+  if (Array.isArray(result)) {
+    post = result[0]
+  } else if (result.data) {
+    post = Array.isArray(result.data) ? result.data[0] : result.data
+  } else {
+    post = result
+  }
 
-  if (!post) {
-    console.log('글 없음')
+  // 콘솔로 한 번 더 확인!
+  console.log('최종 추출된 post:', post)
+
+  if (!post || Object.keys(post).length === 0) {
+    console.log('글 없음 - 데이터 구조를 확인해야 합니다.')
     return
   }
 
@@ -63,9 +71,14 @@ async function init() {
   const rawHtml = marked.parse(post.contents)
   const sanitizedHtml = DOMPurify.sanitize(rawHtml) // 사용자가 쓴 script를 읽지 않게 하기 위해서 (XSS방지)
 
-  document.querySelector('.post__category').textContent = post.type
+  document.querySelector('.post__category').textContent = Array.isArray(
+    post.type,
+  )
+    ? post.type[0]
+    : post.type
   document.querySelector('.post__title').textContent = post.subject
-  document.querySelector('.post__author-name').textContent = post.nickname
+  document.querySelector('.post__author-name').textContent =
+    post.user_nickname || post.nickname || '사용자'
   document.querySelector('.post__content').innerHTML = sanitizedHtml
   loadComments(post.post_id)
 
