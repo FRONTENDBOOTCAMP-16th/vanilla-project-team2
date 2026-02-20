@@ -6,7 +6,7 @@ logoutButton.addEventListener('click', () => {
 
 function logout() {
   const refreshToken = localStorage.getItem('refresh_token')
-  fetch('http://localhost/likelion/users/logout.php', {
+  fetch('http://leedh9276.dothome.co.kr/likelion-vanilla//users/logout.php', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

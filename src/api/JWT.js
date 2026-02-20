@@ -14,7 +14,7 @@ export async function checkToken() {
 
   try {
     const response = await fetch(
-      'http://localhost/likelion/users/auth.php',
+      'http://leedh9276.dothome.co.kr/likelion-vanilla//users/auth.php',
       {
         method: 'POST',
         headers: {
@@ -62,7 +62,7 @@ async function refreshAccessToken() {
 
   try {
     const response = await fetch(
-      'http://localhost/likelion/users/refresh.php',
+      'http://leedh9276.dothome.co.kr/likelion-vanilla//users/refresh.php',
       {
         method: 'POST',
         headers: {
