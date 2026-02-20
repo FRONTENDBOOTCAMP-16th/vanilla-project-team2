@@ -760,6 +760,7 @@ qnaPostUl.addEventListener('click', (e) => {
 
   const postId = item.dataset.id
   localStorage.setItem('selectedPostId', postId)
+    localStorage.setItem('selectedBoardId', 2)
 
   // 읽기 페이지 이동
   location.href = '../readpost/index.html'

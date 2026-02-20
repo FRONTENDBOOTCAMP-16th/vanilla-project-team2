@@ -167,6 +167,30 @@
       "type": "CSS",
       "typeIndex": 2,
       "create_date": "2026-02-18T16:00:53.609Z"
+    },
+    {
+      "id": "c774",
+      "post_id": 1771549766585,
+      "board_id": 2,
+      "UID": 0,
+      "nickname": "사용자",
+      "subject": "테스트",
+      "contents": "안될 거 같긴한데",
+      "type": "CSS",
+      "typeIndex": 2,
+      "create_date": "2026-02-20T01:09:26.585Z"
+    },
+    {
+      "id": "5491",
+      "post_id": 1771552936430,
+      "board_id": 1,
+      "UID": 0,
+      "nickname": "사용자",
+      "subject": "테스트",
+      "contents": "수정 전",
+      "type": "JavaScript",
+      "typeIndex": 3,
+      "create_date": "2026-02-20T02:02:16.430Z"
     }
   ],
   "comments": [

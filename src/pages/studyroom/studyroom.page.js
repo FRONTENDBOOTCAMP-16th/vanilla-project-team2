@@ -721,6 +721,7 @@ searchInput.addEventListener('input', () => {
   const postValue = postData.filter(({ subject }) =>
     subject.toLowerCase().includes(searchValue),
   )
+  currentPage = 1
   updateUI(postValue)
 })
 
@@ -749,27 +750,40 @@ categoryButton.forEach((category) => {
 // 화면에 뿌리기 (uadateUI(postData))
 async function init() {
   try {
-    const response = await fetch('http://localhost:4000/posts')
+    // const response = await fetch('http://localhost:4000/posts')
+    // if (!response.ok) throw new Error('데이터 불러오기 실패')
+    // 로컬스토리지 -> 자체 api
+    const response = await fetch(
+      'https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=1&page=1',
+    )
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
-    // const serverPosts = await response.json()
+    const result = await response.json()
     // 최신순 정렬
-    const serverPosts = (await response.json()).sort(
+    const serverPosts = result.data.sort(
       (a, b) => new Date(b.create_date) - new Date(a.create_date),
     )
 
     // 자습방 글만 필터
-    const studyPosts = serverPosts.filter((item) => item.board_id === 1)
+    const studyPosts = serverPosts.filter((item) => Number(item.board_id) === 1)
+
+    const typeMap = {
+      HTML: 1,
+      CSS: 2,
+      Javascript: 3,
+      React: 4,
+      기타: 5,
+    }
 
     postData = studyPosts.map((post) => ({
-      post_id: post.post_id,
-      board_id: post.board_id, // 게시판 임시값
-      UID: post.UID, // 유저 아이디 임시값
-      nickname: post.nickname || '사용자',
+      post_id: Number(post.post_id),
+      board_id: Number(post.board_id), // 게시판 임시값
+      UID: Number(post.user_id), // 유저 아이디 임시값
+      nickname: post.user_nickname || '사용자',
       subject: post.subject,
       contents: post.contents,
       type: post.type,
-      typeIndex: post.typeIndex, // 카테고리 번호 필드
+      typeIndex: typeMap[post.type] ?? 0,
       create_date: post.create_date,
     }))
 
@@ -793,6 +807,7 @@ postListElement.addEventListener('click', (e) => {
 
   const postId = item.dataset.id
   localStorage.setItem('selectedPostId', postId)
+  localStorage.setItem('selectedBoardId', 1)
 
   // 읽기 페이지 이동
   location.href = '../readpost/index.html'
