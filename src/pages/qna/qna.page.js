@@ -26,6 +26,7 @@ const renderPosts = function (page, data) {
     `
     return
   }
+
   const startIndex = (page - 1) * itemsPerPage
   const endIndex = startIndex + itemsPerPage
   const sliceData = data.slice(startIndex, endIndex)
@@ -144,11 +145,13 @@ async function init() {
         post_id: post.post_id,
         board_id: post.board_id,
         user_id: post.user_id,
-        nickname: post.user_nickname || '사용자',
+        // 💡 해결 1: postItem에서 user_nickname을 쓰니까 이름을 맞춰줘야 합니다.
+        user_nickname: post.user_nickname || post.nickname || '사용자',
         subject: post.subject,
         contents: post.contents,
         type: post.type,
-        create_date: post.create_date,
+        // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
+        create_date: post.create_date ? post.create_date.trim() : '',
         commentCount: myComments.length,
       }
     })
