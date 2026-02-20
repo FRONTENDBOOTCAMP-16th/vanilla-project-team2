@@ -6,13 +6,29 @@ import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const postId = localStorage.getItem('selectedPostId')
+const boardId = localStorage.getItem('selectedBoardId')
 
 async function init() {
-  const response = await fetch('http://localhost:4000/posts')
-  const posts = await response.json()
+  const response = await fetch(
+    `https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=${boardId}&page=1`,
+  )
+
+  if (!response.ok) throw new Error('글 불러오기 실패')
+
+  const result = await response.json()
+  const post = result.data[0]
+
   // 지금 클릭한 글(post) id랑 같은 글 하나 찾아서(find) post에 넣어라
-  const post = posts.find((post) => String(post.post_id) === String(postId))
-  if (!post) return
+  // const post = posts.find((post) => String(post.post_id) === String(postId))
+  // if (!post) {
+  //   console.log('해당 글 없음')
+  //   return
+  // }
+
+  if (!post) {
+    console.log('글 없음')
+    return
+  }
 
   // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
   const renderer = new marked.Renderer()
@@ -56,7 +72,7 @@ async function init() {
       method: 'DELETE',
     })
 
-    if (post.board_id === 2) {
+    if (Number(boardId) === 2) {
       location.href = '..qna/index.html'
     } else {
       location.href = '../studyroom/index.html'
@@ -67,7 +83,7 @@ async function init() {
   const editBtn = document.querySelector('.post__btn--edit')
 
   editBtn.addEventListener('click', () => {
-    location.href = `../newpost/index.html?postId=${post.id}`
+    location.href = `../newpost/index.html?postId=${post.post_id}`
   })
 
   //=================================댓글=================================
