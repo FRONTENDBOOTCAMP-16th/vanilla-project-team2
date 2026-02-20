@@ -1,9 +1,9 @@
 // 마크다운 라이브러리
 // sanitize 라이브러리
-
+import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
-import { timeForToday } from '../../js/utils/date.js'
+
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const postId = localStorage.getItem('selectedPostId')
@@ -49,29 +49,19 @@ async function init() {
   }
 
   // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
-  const renderer = new marked.Renderer()
-  console.log('원본 contents:', post.contents)
-  renderer.code = function (code) {
-    //   const text = typeof code === 'string' ? code : (code?.text ?? '')
-    let text = ''
+  marked.setOptions({
+    breaks: true,
+  })
 
-    if (typeof code === 'string') {
-      text = code
-    } else if (code && code.text) {
-      text = code.text
-    }
-
-    return `
-    <pre class="post__content--code">
-    <code>${text}</code>
-    </pre>
-    `
-  }
-
-  marked.use({ renderer }) // 마크다운을 html로 바꿈(marked)-> marked야 {renderer}에 있는 설정을 사용(use) //use는 설정 객체(설정들을 모아둔 상자 - 객체)를 받는 함수라 중괄호 사용
   const rawHtml = marked.parse(post.contents)
   const sanitizedHtml = DOMPurify.sanitize(rawHtml) // 사용자가 쓴 script를 읽지 않게 하기 위해서 (XSS방지)
 
+  const postContent = document.querySelector('.post__content')
+  postContent.innerHTML = sanitizedHtml
+
+  postContent.querySelectorAll('pre').forEach((pre) => {
+    pre.classList.add('post__content--code')
+  })
   document.querySelector('.post__category').textContent = Array.isArray(
     post.type,
   )
@@ -80,10 +70,14 @@ async function init() {
   document.querySelector('.post__title').textContent = post.subject
   document.querySelector('.post__author-name').textContent =
     post.user_nickname || post.nickname || '사용자'
-  const timeElement = document.querySelector('.post__time')
-  timeElement.textContent = timeForToday(post.create_date)
+  // 시간 렌더링
+  const timeElement = document.querySelector('.post__time time')
 
-  document.querySelector('.post__content').innerHTML = sanitizedHtml
+  if (post.create_date && timeElement) {
+    timeElement.textContent = timeForToday(post.create_date)
+    timeElement.setAttribute('datetime', post.create_date.replace(' ', 'T'))
+  }
+
   loadComments(post.post_id)
 
   // 삭제
