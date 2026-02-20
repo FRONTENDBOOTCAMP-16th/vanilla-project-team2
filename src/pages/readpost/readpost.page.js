@@ -1,6 +1,6 @@
 // 마크다운 라이브러리
 // sanitize 라이브러리
-
+import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
@@ -69,7 +69,14 @@ async function init() {
   document.querySelector('.post__title').textContent = post.subject
   document.querySelector('.post__author-name').textContent =
     post.user_nickname || post.nickname || '사용자'
- 
+  // 시간 렌더링
+  const timeElement = document.querySelector('.post__time time')
+
+  if (post.create_date && timeElement) {
+    timeElement.textContent = timeForToday(post.create_date)
+    timeElement.setAttribute('datetime', post.create_date.replace(' ', 'T'))
+  }
+
   loadComments(post.post_id)
 
   // 삭제
