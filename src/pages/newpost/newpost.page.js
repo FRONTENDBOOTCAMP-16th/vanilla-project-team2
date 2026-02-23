@@ -3,6 +3,7 @@
 
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
+import { checkToken } from '../../api/JWT.js'
 // 수정 (값이 있으면 수정, null이면 새글 작성)
 const params = new URLSearchParams(location.search)
 const editPostId = params.get('postId')
@@ -28,8 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       return
     }
 
-    // previewContent.innerHTML =
-    //   `<h2>${markdownTitle}</h2>` + marked.parse(markdownContent)
     const rawHtml = `<h2>${markdownTitle}</h2>` + marked.parse(markdownContent)
     const sanitizedHtml = DOMPurify.sanitize(rawHtml)
 
@@ -40,7 +39,48 @@ document.addEventListener('DOMContentLoaded', async () => {
   textarea.addEventListener('input', renderPreview)
   renderPreview()
 
+  if (editPostId) {
+    if (editPostId) {
+      const pageTitle = document.querySelector('.newpost__title')
+      const primaryBtn = document.querySelector('.button__text')
 
+      if (pageTitle) pageTitle.textContent = '게시글 수정'
+      if (primaryBtn) primaryBtn.textContent = '수정 완료'
+    }
+
+    try {
+      const response = await fetch(
+        `http://leedh9276.dothome.co.kr/likelion-vanilla/board/read.php?post_id=${editPostId}`,
+      )
+      if (!response.ok) throw new Error('게시글 불러오기 실패')
+
+      const post = await response.json()
+
+      // console.log('불러온 게시글:', post)
+
+      // 값 세팅
+      title.value = post.subject
+      textarea.value = post.contents
+
+      // 카테고리 세팅
+      document.querySelector('[name="categorySelect"]').value = post.type
+
+      // 게시판 세팅
+      const boardValue = Number(post.board_id) === 2 ? 'qna' : 'study'
+      const selector = `input[name="boardType"][value="${boardValue}"]`
+      const radio = document.querySelector(selector)
+
+      if (radio) {
+        radio.checked = true
+      }
+
+      // 미리보기 다시 렌더
+      renderPreview()
+    } catch (error) {
+      console.error(error)
+      alert('게시글을 불러오지 못했습니다')
+    }
+  }
 
   // 작성(수정) 취소
   document.querySelector('.button--ghost').addEventListener('click', () => {
@@ -53,79 +93,80 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.preventDefault()
     console.log('글 작성 폼 제출됨')
 
-    // 카테고리 문자열을 숫자로(typeIndex) 매핑하기 위한 변수
-    // 데이터값은 소문자로 통일(select value같이)하는 것이 좋음 나중에 논의 필요
-    // const categoryMap = {
-    //   HTML: 1,
-    //   CSS: 2,
-    //   JavaScript: 3,
-    //   React: 4,
-    //   기타: 5,
-    // }
     const formData = new FormData(form)
-
-    // const data = editPostId
-    // ? {
-    //     ...originalPost,
-    //     type: formData.get('categorySelect'),
-    //     // 사용자가 고른 카테고리를 그에 따른 숫자 찾아 인덱싱
-    //     typeIndex: categoryMap[formData.get('categorySelect')],
-    //     user_id: 1, //임시
-    //     board_id: formData.get('boardType') === 'qna' ? 2 : 1,
-    //     subject: formData.get('title'),
-    //     content: formData.get('content'),
-    //   }
-    // : {
-    //     post_id: Date.now(), // 임시 ID
-    //     board_id: formData.get('boardType') === 'qna' ? 2 : 1,
-    //     UID: 0,
-    //     nickname: '사용자', // 임시
-    //     subject: formData.get('title'),
-    //     contents: formData.get('content'),
-    //     type: formData.get('categorySelect'),
-    //     typeIndex: categoryMap[formData.get('categorySelect')],
-    //     create_date: new Date().toISOString(),
-    //   }
 
     try {
       let response
 
-      if (editPostId) {
-        // response = await fetch(`http://localhost:4000/posts/${editPostId}`, {
-        //   method: 'PUT',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify(data),
-        // })
-        console.log('수정 api 필요')
-        alert('수정 기능 준비중')
-      } else {
+      const userInfo = await checkToken()
 
-        const formDataToSend = new FormData()
-        formDataToSend.append(
+      if (!userInfo) {
+        alert('로그인이 필요합니다.')
+        location.href = '../users/login/index.html'
+        return
+      }
+      const accessToken = localStorage.getItem('access_token')
+
+      if (editPostId) {
+        const updatePayload = {
+          board_id: formData.get('boardType') === 'qna' ? 2 : 1,
+          user_uid: userInfo.UID,
+          user_id: userInfo.user_id,
+          subject: formData.get('title'),
+          contents: formData.get('content'),
+          type: [formData.get('categorySelect')],
+          post_id: editPostId,
+        }
+
+        response = await fetch(
+          'http://leedh9276.dothome.co.kr/likelion-vanilla/board/update.php',
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify(updatePayload),
+          },
+        )
+        console.log(localStorage.getItem('access_token'))
+
+        // headers: { 'Content-Type': 'application/json' },
+        // body: JSON.stringify(data),
+        if (!response.ok) throw new Error('수정 실패')
+
+        const result = await response.text()
+        console.log('수정 응답:', result)
+
+        if (!result.includes('success') && result !== '1') {
+          throw new Error('DB 업데이트 실패')
+        }
+      } else {
+        const writeData = new FormData()
+        writeData.append(
           'board_id',
           formData.get('boardType') === 'qna' ? 2 : 1,
         )
-
-        formDataToSend.append('user_id', 1)
-        formDataToSend.append('subject', formData.get('title'))
-        formDataToSend.append('contents', formData.get('content'))
-        formDataToSend.append('type', formData.get('categorySelect'))
+        writeData.append('user_id', userInfo.UID)
+        writeData.append('subject', formData.get('title'))
+        writeData.append('contents', formData.get('content'))
+        writeData.append('type', formData.get('categorySelect'))
 
         response = await fetch(
           'http://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php',
           {
             method: 'POST',
-            // headers: { 'Content-Type': 'application/json' },
-            // body: JSON.stringify(data),
-            body: formDataToSend,
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            body: writeData,
           },
         )
-        if (!response.ok) throw new Error('저장 실패')
+        if (!response.ok) throw new Error('수정 실패')
 
         const result = await response.text()
         console.log('서버 응답:', result)
       }
-
 
       alert('글이 저장되었습니다')
 
