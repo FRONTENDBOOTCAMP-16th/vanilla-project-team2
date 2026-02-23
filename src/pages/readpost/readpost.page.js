@@ -5,7 +5,9 @@ import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
-const postId = localStorage.getItem('selectedPostId')
+const params = new URLSearchParams(location.search)
+const postId = params.get('postId') || localStorage.getItem('selectedPostId')
+console.log('읽으려는 postId', postId)
 const boardId = localStorage.getItem('selectedBoardId')
 
 const currentBoardId = localStorage.getItem('selectedBoardId') // 아까 저장한 1 또는 2
@@ -25,6 +27,7 @@ async function init() {
   if (!response.ok) throw new Error('글 불러오기 실패')
 
   const result = await response.json()
+  console.log('서버 원본 응답:', result)
 
   // 💡 [수정 포인트] 상자 구조가 어떤 모양이든 찾아내는 무적 로직
   // 1. result 자체가 배열이면 첫 번째 값
@@ -51,7 +54,7 @@ async function init() {
     breaks: true,
   })
 
-  const rawHtml = marked.parse(post.contents)
+  const rawHtml = marked.parse(post.contents || '')
   const sanitizedHtml = DOMPurify.sanitize(rawHtml) // 사용자가 쓴 script를 읽지 않게 하기 위해서 (XSS방지)
 
   const postContent = document.querySelector('.post__content')
@@ -68,6 +71,7 @@ async function init() {
   document.querySelector('.post__title').textContent = post.subject
   document.querySelector('.post__author-name').textContent =
     post.user_nickname || post.nickname || '사용자'
+
   // 시간 렌더링
   const timeElement = document.querySelector('.post__time time')
 
