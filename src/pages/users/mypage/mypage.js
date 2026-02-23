@@ -1,6 +1,5 @@
 import { checkToken } from '../../../api/JWT.js'
-const URLS =
-  'http://leedh9276.dothome.co.kr/likelion-vanilla//users/update_user.php'
+const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/update_user.php'
 
 let userData = null
 
@@ -12,8 +11,9 @@ async function fetchUserData(forceRefresh = false) {
     userData = fetchedData
     return userData
   } else {
-    alert('유효하지 않은 접근입니다.')
-    window.location.href = '/src/index.html'
+    // alert('유효하지 않은 접근입니다.')
+    // window.location.href = '/src/index.html'
+    console.log(userData)
   }
 }
 
@@ -30,7 +30,7 @@ function renderMyPage(data) {
 
   // 프로필 이미지
   if (data.user_profile) {
-    USER_PROFILE.innerHTML = `<img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload/profile/${data.user_profile}">`
+    USER_PROFILE.innerHTML = `<img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}">`
   } else {
     const thumbName = data.user_nickname.substring(0, 1)
     USER_PROFILE.innerHTML = `<p>${thumbName}</p>`
@@ -137,14 +137,10 @@ async function uploadProfileImage(file) {
   const accessToken = localStorage.getItem('access_token')
 
   try {
-    const response = await fetch(
-      'http://leedh9276.dothome.co.kr/likelion-vanilla//users/upload_profile.php',
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: formData,
+    const response = await fetch('http://localhost/likelion/users/upload_profile.php', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`, 
       },
     )
 
@@ -161,5 +157,11 @@ async function uploadProfileImage(file) {
   }
 }
 
-updateMyPage()
+
+updateMyPage();
 updateProfile()
+
+
+
+
+

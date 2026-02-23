@@ -12,7 +12,7 @@ async function checkIsLoggedIn() {
 checkIsLoggedIn()
 
 // 로그인
-const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla//users/login.php'
+const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/login.php'
 
 // 변수 설정
 const loginButton = document.querySelector('.login__button')
