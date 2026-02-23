@@ -48,7 +48,7 @@ function bindLogout() {
 
   logoutBtn.addEventListener('click', (e) => {
     e.preventDefault()
-    localStorage.removeItem('auth')
+    localStorage.clear()
     location.href = '/src/pages/login/index.html'
   })
 }
