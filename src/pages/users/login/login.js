@@ -64,7 +64,17 @@ loginButton.addEventListener('click', (e) => {
           })
         })
         .then((data) => {
-          console.log(data)
+          if (data.code === '00') {
+            // id 변수가 이 스코프 내에 정의되어 있어야 합니다.
+            showError(id, '잘못된 아이디입니다.')
+            return
+          } else if (data.code === '01') {
+            // password 변수가 이 스코프 내에 정의되어 있어야 합니다.
+            const password = document.getElementById('user_password') // 예시
+            showError(password, '잘못된 비밀번호입니다.')
+            return
+          }
+
           if (data.user_id !== undefined) {
             localStorage.setItem('access_token', data.access_token)
             localStorage.setItem('refresh_token', data.refresh_token)
@@ -75,17 +85,6 @@ loginButton.addEventListener('click', (e) => {
         })
         .catch((error) => {
           console.warn('에러: ', error)
-          // 이제 error 객체 안에 PHP가 보낸 code가 들어있습니다.
-          if (error.code === '00') {
-            // id 변수가 이 스코프 내에 정의되어 있어야 합니다.
-            showError(id, '잘못된 아이디입니다.')
-          } else if (error.code === '01') {
-            // password 변수가 이 스코프 내에 정의되어 있어야 합니다.
-            const password = document.getElementById('user_password') // 예시
-            showError(password, '잘못된 비밀번호입니다.')
-          } else {
-            alert('알 수 없는 오류가 발생했습니다.')
-          }
         })
       break
   }
