@@ -2,7 +2,6 @@ body.user{
   padding: 0;
 }
 
-.user_profile__box
 .user__form{
   display: flex;
   flex-flow: nowrap column;
@@ -106,6 +105,7 @@ body.user{
   }
 
   .error__text{
+    padding-top: 8px;
     color: var(--red-500);
     font-size: 11px;
     font-weight: 500;
@@ -120,7 +120,7 @@ body.user{
 
 .form__container{
   width: 100%;
-  max-width: 448px;
+  max-width: 520px;
   padding: 33px;
   border-radius: 16px;
   background: #fff;
@@ -135,6 +135,10 @@ body.user{
     display: block;
     margin-block-end: 8px;
     font-size: 14px;
+  }
+
+  .user__input p{
+    margin: 0;
   }
 
   .user__input .info{
@@ -178,6 +182,13 @@ body.user{
   line-height: 52px;
   cursor: pointer;
 
+  &.white span{
+    display: block;
+    margin: auto;
+    color: #fff;
+    text-align: center;
+  }
+
   &.login span{
     display: block;
     margin: auto;
@@ -193,6 +204,14 @@ body.user{
   justify-content: center;
   font-size: 1.5rem;
   text-align: center;
+  
+  .deleted{
+    line-height: 1.5;
+  }
+  .deleted b{
+    color: #4F39F6;
+    font-weight: 600;
+  }
 
   span{
     color: #4F39F6;
@@ -232,6 +251,7 @@ body.user{
     border-radius: 14px;
   }
   .profile__container{
+    max-height: 428px;
     background: #fff;
   }
   .user__profile{
@@ -257,7 +277,6 @@ body.user{
 }
 
 .profile__container{
-
 
   .user__thumbnail{
     position: relative;
@@ -297,6 +316,67 @@ body.user{
   input{display: none;}
   .user__thumbnail.is-modify .js-button{
     display: flex;
+  }
+
+  .user{
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  .expert{
+    display: inline-block;
+    margin: 0;
+    padding: 0px 16px;
+    border-radius: 14px;
+    background: #e0e7ff;
+    color: #432DD7;
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  .create-date{
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    color: #4A5565;
+    font-size: 14px;
+  }
+
+  .user__profile-box{
+    width: 100%;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #E5E7EB;
+  }
+
+}
+
+.user__button-wrap{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding-top: 32px;
+
+  a{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 44px;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+
+  a:first-of-type{
+    background: #f3f4f6;
+    color: #0a0a0a;
+  }
+
+  a:last-of-type{
+    background: #FEF2F2;
+    color: #E7000B;
   }
 }
 
@@ -372,6 +452,7 @@ body.user{
 .form_button__container{
   display: flex;
   gap: 16px;
+  margin-block-start: 24px;
 
   & > * {
     margin: 0;
@@ -427,7 +508,7 @@ body.user{
 .mypage__navigation{
   grid-column: 1/3;
   width: 100%;
-  max-width: 514px;
+  max-width: 520px;
 
   .back-btn{
     display: flex;
@@ -455,9 +536,23 @@ body.user{
 
 
 /* 사용자 정보 */
+.profile__container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+
 .user__profile__header{
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  margin-block-end: 32px;
+
+  h2{
+    margin: 0;
+  }
 
   .js-button{
     display: flex;
@@ -508,6 +603,11 @@ body.user{
     border: none;
     border-radius: 14px;
     font-size: 1rem;
+  }
+
+  textarea:read-only,
+  input:read-only{
+    background: #F9FAFB;
   }
 
   textarea:focus,
@@ -571,15 +671,16 @@ body.user{
     display: block;
     box-sizing: border-box;
     width: 100%; height: 280px;
-    padding: 15px;
     border: none;
     border: 1px solid #D1D5DC;
     border-radius: 14px;
+    overflow: hidden;
   }
     
   textarea{
     width: 100%;
     height: 100%;
+    padding: 15px;
     border: none;
     font-size: 1rem;
     resize: none;

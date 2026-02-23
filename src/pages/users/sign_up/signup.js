@@ -8,7 +8,7 @@ if (fetchedData) {
 
 
 // 로그인
-const URLS = 'http://localhost/likelion/users/sign_up.php'
+const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/sign_up.php'
 const form = document.getElementById('signup')
 
 form.addEventListener('click', (e) => {

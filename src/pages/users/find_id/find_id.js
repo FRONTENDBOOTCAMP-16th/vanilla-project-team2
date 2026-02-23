@@ -10,7 +10,7 @@ async function initMyPage() {
 }
 
 // 로그인
-const URLS = 'http://localhost/likelion/users/find_id.php'
+const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/find_id.php'
 const form = document.getElementById('find_id')
 
 form.addEventListener('click', (e) => {

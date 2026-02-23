@@ -13,7 +13,7 @@ initMyPage()
 
 
 // 로그인
-const URLS = 'http://localhost/likelion/users/reset_password.php'
+const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/reset_password.php'
 const form = document.getElementById('reset_pw')
 
 form.addEventListener('click', (e) => {
