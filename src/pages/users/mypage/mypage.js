@@ -158,10 +158,5 @@ async function uploadProfileImage(file) {
 }
 
 
-updateMyPage();
-updateProfile()
-
-
-
 
 

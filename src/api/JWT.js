@@ -60,7 +60,6 @@ async function refreshAccessToken() {
   try {
     const response = await fetch(
       'http://leedh9276.dothome.co.kr/likelion-vanilla/users/refresh.php',
->>>>>>> feature-ldh-02
       {
         method: 'POST',
         headers: {
