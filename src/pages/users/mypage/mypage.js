@@ -137,12 +137,12 @@ async function uploadProfileImage(file) {
   const accessToken = localStorage.getItem('access_token')
 
   try {
-    const response = await fetch('http://localhost/likelion/users/upload_profile.php', {
+    const response = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${accessToken}`, 
+        'Authorization': `Bearer ${accessToken}`,
       },
-    )
+    })
 
     const data = await response.json()
 
