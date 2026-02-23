@@ -284,6 +284,27 @@
       "nickname": "사용자",
       "content": "ㅁㅇㄴㄴㅇㅁ",
       "create_date": "2026-02-20T08:45:52.804Z"
+    },
+    {
+      "id": "9179",
+      "post_id": 13,
+      "nickname": "사용자",
+      "content": "adsdsa",
+      "create_date": "2026-02-23T04:52:43.163Z"
+    },
+    {
+      "id": "b5bc",
+      "post_id": 13,
+      "nickname": "사용자",
+      "content": "?? 왜 몇갠지안보여!",
+      "create_date": "2026-02-23T04:58:59.145Z"
+    },
+    {
+      "id": "2d5c",
+      "post_id": 13,
+      "nickname": "사용자",
+      "content": "ㅁㄴㅇ",
+      "create_date": "2026-02-23T05:32:00.050Z"
     }
   ]
 }
