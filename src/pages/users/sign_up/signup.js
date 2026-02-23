@@ -81,7 +81,15 @@ form.addEventListener('click', (e) => {
                 alert('가입 완료!')
                 window.location.href = '/src/pages/users/login/index.html'
               } else {
-                alert('에러: ' + data.message)
+                if (data.message === '이미 존재하는 아이디입니다.') {
+                  showError(id, '이미 존재하는 아이디입니다.')
+                } else if (data.message === '탈퇴한 회원입니다.') {
+                  showError(id, '탈퇴한 회원입니다.')
+                } else if (data.message === '이미 존재하는 휴대폰 번호입니다.') {
+                  showError(phone, '이미 존재하는 휴대폰 번호입니다.')
+                } else {
+                  console.log(data.message)
+                }
               }
             } catch (e) {
               console.error('JSON 변환 실패. PHP 에러일 가능성 높음')
