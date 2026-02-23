@@ -13,24 +13,13 @@ export async function checkToken() {
   }
 
   try {
-<<<<<<< HEAD
-    const response = await fetch(
-      'http://leedh9276.dothome.co.kr/likelion-vanilla//users/auth.php',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        },
-=======
     const response = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/users/auth.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${accessToken}`,
->>>>>>> d780b1b (feat : 비밀번호 변경, 회원탈퇴 로직 추가 및 API 서비스 연동)
       },
-    )
+    })
 
     const data = await response.json()
 
@@ -70,11 +59,8 @@ async function refreshAccessToken() {
 
   try {
     const response = await fetch(
-<<<<<<< HEAD
-      'http://leedh9276.dothome.co.kr/likelion-vanilla//users/refresh.php',
-=======
       'http://leedh9276.dothome.co.kr/likelion-vanilla/users/refresh.php',
->>>>>>> d780b1b (feat : 비밀번호 변경, 회원탈퇴 로직 추가 및 API 서비스 연동)
+>>>>>>> feature-ldh-02
       {
         method: 'POST',
         headers: {
