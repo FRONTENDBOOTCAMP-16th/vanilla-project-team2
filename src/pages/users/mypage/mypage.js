@@ -13,6 +13,7 @@ async function fetchUserData(forceRefresh = false) {
   } else {
     alert('유효하지 않은 접근입니다.')
     window.location.href = '/src/index.html'
+    return
   }
 }
 
