@@ -11,7 +11,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve('index.html'), // 메인 홈
-        dashboard: resolve('src/pages/dashboard/index.html'), // 대시보드 페이지
         login: resolve('src/pages/users/login/index.html'), // 로그인 페이지
         mypage: resolve('src/pages/users/mypage/index.html'), // 마이페이지
         qna: resolve('src/pages/qna/index.html'), // Q&A 페이지

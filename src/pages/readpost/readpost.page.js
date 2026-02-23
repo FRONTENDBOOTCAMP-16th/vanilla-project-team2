@@ -4,7 +4,6 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
-
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const postId = localStorage.getItem('selectedPostId')
 const boardId = localStorage.getItem('selectedBoardId')
@@ -133,7 +132,7 @@ async function init() {
       list.innerHTML = comments
         .map((cmt) => {
           //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
-          const avatar = cmt.profile_image || '/src/assets/icons/icon-user.svg'
+          const avatar = cmt.profile_image || '/assets/icons/icon-user.svg'
 
           return `
               <li class="comment__item" data-id="${cmt.id}">

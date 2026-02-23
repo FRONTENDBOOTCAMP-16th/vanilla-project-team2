@@ -11,9 +11,6 @@ async function renderWeatherTitle() {
   const temp = Math.round(data.main.temp)
   const desc = data.weather?.[0]?.description ?? '날씨 정보 없음'
 
-  console.log(temp)
-  console.log(desc)
-
   const titleEl = document.querySelector(
     '.dash-card--weather .dash-card__title',
   )

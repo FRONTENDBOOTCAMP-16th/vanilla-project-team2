@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="/src/styles/userform.css" />
-    <link rel="stylesheet" href="/src/styles/main.css" />    
+    <link rel="stylesheet" href="/src/styles/main.css" />
     <script type="module" src="./mypage.js" defer></script>
   </head>
   <body class="gray-bg">
     <div class="user__container">
-
       <div class="user__header">
         <h1>마이페이지</h1>
         <p>내 정보와 활동 내역을 확인하세요</p>
@@ -21,15 +20,13 @@
           <div class="profile_thumb"></div>
           <input type="file" name="thumb" id="thumb" />
           <label for="thumb" class="js-button">
-            <img src="/src/assets/icons/icon-photo.svg" alt="" />
+            <img src="/assets/icons/icon-photo.svg" alt="" />
           </label>
         </div>
         <div class="user__profile-box">
           <h2 class="user">***</h2>
           <p class="expert">***</p>
-          <p class="create-date">
-            가입일 : <span>***</span>
-          </p>
+          <p class="create-date">가입일 : <span>***</span></p>
         </div>
         <div class="user__button-wrap">
           <a href="" title="비밀번호 변경 바로가기">비밀번호 변경</a>
@@ -40,23 +37,17 @@
       <div class="user__activity">
         <h2 class="sr-only">유저 활동</h2>
         <div class="activity__item write">
-          <div class="activity__icon">
-
-          </div>
+          <div class="activity__icon"></div>
           <p class="write__count">***</p>
           <p class="title">작성한 글</p>
         </div>
         <div class="activity__item comment">
-          <div class="activity__icon">
-
-          </div>
+          <div class="activity__icon"></div>
           <p class="write__count">***</p>
           <p class="title">작성한 댓글</p>
         </div>
         <div class="activity__item like">
-          <div class="activity__icon">
-
-          </div>
+          <div class="activity__icon"></div>
           <p class="write__count">***</p>
           <p class="title">받은 좋아요</p>
         </div>
@@ -66,22 +57,40 @@
         <div class="user__profile__header">
           <h2>프로필 정보</h2>
           <div class="user__modify-button" aria-label="회원 정보 수정">
-            <button type="button" id="btn_modify" class="js-button">변경</button>
+            <button type="button" id="btn_modify" class="js-button">
+              변경
+            </button>
             <div class="button-wrap">
-              <button type="button" id="btn_submit" class="js-button">적용</button>
-              <button type="button" id="btn_cancel" class="js-button">취소</button>
+              <button type="button" id="btn_submit" class="js-button">
+                적용
+              </button>
+              <button type="button" id="btn_cancel" class="js-button">
+                취소
+              </button>
             </div>
           </div>
         </div>
         <form action="post" class="user_profile__box" id="user_profiles">
           <div class="user__data" aria-label="사용자 이름">
-            <input type="text" name="user_nickname" id="user_nickname" value="" readonly />
+            <input
+              type="text"
+              name="user_nickname"
+              id="user_nickname"
+              value=""
+              readonly
+            />
           </div>
           <div class="user__data" aria-label="사용자 아이디">
             <input type="text" name="user_id" id="user_id" value="" readonly />
           </div>
           <div class="user__data" aria-label="사용자 휴대폰 번호">
-            <input type="text" name="user_phone" id="user_phone" value="" readonly />
+            <input
+              type="text"
+              name="user_phone"
+              id="user_phone"
+              value=""
+              readonly
+            />
           </div>
           <div class="user__data" aria-label="사용자 소개">
             <textarea name="user_intro" id="user_intro" readonly></textarea>

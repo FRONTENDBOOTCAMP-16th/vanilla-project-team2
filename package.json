@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prod": "vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "format": "prettier --write .",
     "hint": "htmlhint **/*.html",
