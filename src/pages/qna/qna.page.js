@@ -114,18 +114,14 @@ nextButton.addEventListener('click', () => {
 
 async function init() {
   try {
-    const [postResponse] = await Promise.all([
-      fetch(
-        'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
-      ),
-    ])
+    const postResponse = await fetch(
+      'https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
+    )
 
     if (!postResponse.ok) throw new Error('데이터 불러오기 실패')
 
     const responseData = await postResponse.json()
     const actualPosts = responseData.data
-    const serverComments = []
-
     if (!Array.isArray(actualPosts)) {
       updateUI([])
       return
@@ -136,23 +132,34 @@ async function init() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
-    qnaData = qnaPosts.map((post) => {
-      const myComments = serverComments.filter(
-        (comment) => String(comment.post_id) === String(post.post_id),
-      )
+    // 댓글
+    const commentsPromises = qnaPosts.map(async (post) => {
+      try {
+        const res = await fetch(
+          `https://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${post.post_id}`,
+        )
+        const result = await res.json()
+        console.log(`글번호 ${post.post_id}의 결과:`, result)
 
+        return Array.isArray(result) ? result.length : 0
+      } catch {
+        return 0
+      }
+    })
+
+    const commentsCounts = await Promise.all(commentsPromises)
+
+    qnaData = qnaPosts.map((post, index) => {
       return {
         post_id: post.post_id,
         board_id: post.board_id,
         user_id: post.user_id,
-        // 💡 해결 1: postItem에서 user_nickname을 쓰니까 이름을 맞춰줘야 합니다.
         user_nickname: post.user_nickname || post.nickname || '사용자',
         subject: post.subject,
         contents: post.contents,
         type: post.type,
-        // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
         create_date: post.create_date ? post.create_date.trim() : '',
-        commentCount: myComments.length,
+        commentCount: commentsCounts[index],
       }
     })
 
