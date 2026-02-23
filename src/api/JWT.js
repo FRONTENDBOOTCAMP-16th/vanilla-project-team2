@@ -84,7 +84,6 @@ async function refreshAccessToken() {
     } else {
       console.error('토큰 갱신 실패:', data.message)
       localStorage.clear()
-      // window.location.href = '/src/pages/users/login/index.html'
       return false
     }
   } catch (err) {
