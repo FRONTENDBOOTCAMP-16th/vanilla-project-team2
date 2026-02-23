@@ -4,7 +4,6 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
-
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const postId = localStorage.getItem('selectedPostId')
 const boardId = localStorage.getItem('selectedBoardId')
@@ -48,7 +47,6 @@ async function init() {
     return
   }
 
-  // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
   marked.setOptions({
     breaks: true,
   })
@@ -117,78 +115,87 @@ async function init() {
 
   // 댓글 불러오기
   async function loadComments(postId) {
-    // fetch(url) 기본값이 GET
-    const res = await fetch(`http://localhost:4000/comments?post_id=${postId}`)
-    const comments = await res.json()
+    // 1. 데이터 가져오기
+    const res = await fetch(
+      `https://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${postId}`,
+    )
 
-    //답변 렌더링
-    function renderComments(comments) {
+    // 2. 변수 이름을 result로 통일하거나 아래를 맞추거나!
+    const result = await res.json() // 💡 여기서 comments 대신 result로 받는게 안 헷갈립니다.
+    console.log('서버에서 온 알맹이 데이터:', result)
+    // 답변 렌더링 함수
+    const realData = result.data || result
+    function renderComments(data) {
+      // 💡 매개변수 이름을 data로 명확히!
       const list = document.querySelector('.comment__list')
 
-      if (comments.length === 0) {
+      // 💡 [방어막] 데이터가 배열인지 확인 (백엔드에서 "댓글이 없습니다"가 올 경우 대비)
+      const commentList = Array.isArray(data) ? data : []
+
+      if (commentList.length === 0) {
         list.innerHTML = `<p class='comment-empty'>첫 답변을 남겨보세요.</p>`
         return
       }
 
-      list.innerHTML = comments
+      list.innerHTML = commentList
         .map((cmt) => {
-          //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
-          const avatar = cmt.profile_image || '/src/assets/icons/icon-user.svg'
+          const avatar = cmt.profile_image || '/assets/icons/icon-user.svg' // 경로 살짝 수정
 
           return `
-              <li class="comment__item" data-id="${cmt.id}">
-              <article class="comment__card">
-              <!-- 댓글 작성자 프사 -->
-              <div class="comment__avatar" >
-              <img class="comment__avatar-image" src="${avatar}" alt="" />
-
-              </div>
-              <!-- 댓글 작성자 메타 정보 -->
-
-              <div class="comment__meta">
-                <span class="comment__author">${cmt.nickname}</span>
-                <time class="comment__time">
-                ${new Date(cmt.create_date).toLocaleString()}
-                  </time>
-              </div>
-
-              <!-- 댓글 내용 -->
-              <p class="comment__text">
-                ${cmt.content}
-              </p>
-            </article>
-          </li>
-      `
+              <li class="comment__item" data-id="${cmt.comment_id}">
+                <article class="comment__card">
+                  <div class="comment__avatar" >
+                    <img class="comment__avatar-image" src="${avatar}" alt="" />
+                  </div>
+                  <div class="comment__meta">
+                    <span class="comment__author">${cmt.user_nickname || '익명'}</span>
+                    <time class="comment__time">
+                      ${new Date(cmt.create_date).toLocaleString()}
+                    </time>
+                  </div>
+                  <p class="comment__text">
+                    ${cmt.contents}
+                  </p>
+                </article>
+              </li>
+          `
         })
         .join('')
     }
-
-    renderComments(comments)
+    renderComments(realData)
   }
 
-  // submit 이벤트
   commentForm.addEventListener('submit', async (e) => {
     e.preventDefault()
+    const contentValue = commentInput.value.trim()
+    if (!contentValue) return
 
-    const content = commentInput.value.trim()
-    if (!content) return
+    const formData = new FormData()
+    formData.append('post_id', postId)
+    formData.append('user_id', 1)
+    formData.append('content', contentValue)
 
-    const newComment = {
-      post_id: Number(postId),
-      nickname: '사용자', //나중에 로그인 연결 currentUser.nickname,
-      // profile_image: currentUser.profile_image,
-      content,
-      create_date: new Date().toISOString(),
+    try {
+      const response = await fetch(
+        'https://leedh9276.dothome.co.kr/likelion-vanilla/comment/write.php',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+      const text = await response.text()
+      console.log('서버 최종 답변:', text)
+      if (text.includes('success')) {
+        commentInput.value = ''
+
+        setTimeout(async () => {
+          await loadComments(postId)
+          console.log('실시간 반영 완료!')
+        }, 300)
+      }
+    } catch (err) {
+      console.error(err)
     }
-
-    await fetch('http://localhost:4000/comments', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newComment),
-    })
-
-    commentInput.value = ''
-    loadComments(postId)
   })
 }
 
