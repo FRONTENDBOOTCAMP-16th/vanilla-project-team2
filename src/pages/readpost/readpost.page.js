@@ -143,7 +143,8 @@ async function init() {
 
       list.innerHTML = commentList
         .map((cmt) => {
-          const avatar = cmt.profile_image || '/assets/icons/icon-user.svg' // 경로 살짝 수정
+          //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
+          const avatar = cmt.profile_image || '/src/assets/icons/icon-user.svg'
 
           return `
               <li class="comment__item" data-id="${cmt.comment_id}">

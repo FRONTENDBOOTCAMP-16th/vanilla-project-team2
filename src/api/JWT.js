@@ -1,7 +1,7 @@
-// 1. 이 JS를 부릅니다.
-// 2. checkToken() 함수를 실행.
-// 3. true / false 로 반환한다.
-// 4. 그 뒤에 if문으로 실행할 것.
+  // 1. 이 JS를 부릅니다.
+  // 2. checkToken() 함수를 실행.
+  // 3. true / false 로 반환한다.
+  // 4. 그 뒤에 if문으로 실행할 것.
 
 export async function checkToken() {
   const accessToken = localStorage.getItem('access_token')
@@ -44,50 +44,53 @@ export async function checkToken() {
       return false // 그 외 실패는 false
     }
   } catch (err) {
-    console.error('Fetch 에러:', err)
-    return false // 에러 발생 시 false
+    console.error('에러 발생!');
+    // 서버가 보낸 내용이 JSON이 아닐 경우, 텍스트로라도 찍어보기
+    const text = await response.text();
+    console.log('서버 응답 원문:', text);
+    return false;
   }
 }
 
-async function refreshAccessToken() {
-  const refreshToken = localStorage.getItem('refresh_token')
+  async function refreshAccessToken() {
+    const refreshToken = localStorage.getItem('refresh_token')
 
-  if (!refreshToken) {
-    console.error('리프레시 토큰이 없습니다. 다시 로그인하세요.')
-    return false
-  }
-
-  try {
-    const response = await fetch(
-      'http://leedh9276.dothome.co.kr/likelion-vanilla/users/refresh.php',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refresh_token: refreshToken }),
-      },
-    )
-
-    const data = await response.json()
-
-    if (data.status === 'success') {
-      console.log('토큰 갱신 성공!')
-      localStorage.setItem('access_token', data.access_token)
-
-      // 리프레시 토큰도 갱신된다면 저장 (백엔드 로직에 따라 다름)
-      if (data.refresh_token) {
-        localStorage.setItem('refresh_token', data.refresh_token)
-      }
-
-      return true
-    } else {
-      console.error('토큰 갱신 실패:', data.message)
-      localStorage.clear()
+    if (!refreshToken) {
+      console.error('리프레시 토큰이 없습니다. 다시 로그인하세요.')
       return false
     }
-  } catch (err) {
-    console.error('Refresh Fetch 에러:', err)
-    return false
+
+    try {
+      const response = await fetch(
+        'http://leedh9276.dothome.co.kr/likelion-vanilla/users/refresh.php',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refresh_token: refreshToken }),
+        },
+      )
+
+      const data = await response.json()
+
+      if (data.status === 'success') {
+        console.log('토큰 갱신 성공!')
+        localStorage.setItem('access_token', data.access_token)
+
+        // 리프레시 토큰도 갱신된다면 저장 (백엔드 로직에 따라 다름)
+        if (data.refresh_token) {
+          localStorage.setItem('refresh_token', data.refresh_token)
+        }
+
+        return true
+      } else {
+        console.error('토큰 갱신 실패:', data.message)
+        localStorage.clear()
+        return false
+      }
+    } catch (err) {
+      console.error('Refresh Fetch 에러:', err)
+      return false
+    }
   }
-}
