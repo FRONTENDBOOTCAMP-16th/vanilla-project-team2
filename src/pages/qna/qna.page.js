@@ -6,7 +6,6 @@ import { postItem } from '../../js/components/postItem.js'
 const PAGE = document.body?.dataset?.page || ''
 const IS_HOME = PAGE === 'home'
 
-// 형님과 팀원의 변수 합체!
 let currentPage = 1
 let totalPages = 1
 let currentSearch = ''
@@ -14,7 +13,6 @@ let currentCategory = 'ALL'
 const pageCount = 5
 const ITEMS_PER_PAGE = 8
 
-// DOM 참조 변수들 (팀원 분의 안전한 방식을 따름)
 let qnaPostUl = null
 let paginationList = null
 let firstButton = null
@@ -25,7 +23,6 @@ let searchInput = null
 let paginationRoot = null
 let categoryButtons = null
 
-// 💡 [형님 코드] 마크다운 제거 전용 함수
 function removeMarkdown(text) {
   if (!text) return ''
   return text
@@ -51,7 +48,6 @@ const renderPosts = function (data) {
     return
   }
 
-  // ✅ 팀원 분 코드 적용: 홈 화면이면 딱 8개만 보여주기
   const displayData = IS_HOME ? data.slice(0, ITEMS_PER_PAGE) : data
   qnaPostUl.innerHTML = displayData.map((post) => postItem(post)).join('')
 }
@@ -60,7 +56,6 @@ const renderPosts = function (data) {
 // ✅ 렌더: 페이지네이션
 // ---------------------------
 const renderPagination = function () {
-  // ✅ 팀원 분 코드 적용: 홈 화면은 페이지네이션 아예 숨김
   if (IS_HOME) {
     if (paginationRoot) paginationRoot.classList.add('hidden')
     return
@@ -105,7 +100,6 @@ const renderPagination = function () {
 // ---------------------------
 async function fetchPosts() {
   try {
-    // 💡 홈 화면일 땐 1페이지, Q&A일 땐 페이징/검색/카테고리 적용
     const url = IS_HOME
       ? `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1`
       : `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=${currentPage}&search=${currentSearch}&category=${currentCategory === 'ALL' ? '' : currentCategory}`
@@ -200,7 +194,6 @@ function bindEvents() {
     })
   }
 
-  // 홈 화면이 아닐 때만 페이지네이션 버튼 작동
   if (!IS_HOME) {
     if (nextGroupButton) {
       nextGroupButton.addEventListener('click', () => {
@@ -267,7 +260,6 @@ function start() {
   fetchPosts()
 }
 
-// 팀원 분의 안전한 시작 방식 유지
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', start)
 } else {
