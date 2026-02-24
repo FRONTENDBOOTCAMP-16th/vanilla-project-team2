@@ -2,10 +2,10 @@ import { postItem } from '../../js/components/postItem.js'
 
 let qnaData = []
 
-const itemsPerPage = 8
-const pageCount = 5
+// 💡 윗부분 수정: 스터디룸처럼 전체 페이지 수(totalPages)를 서버에서 받아옵니다!
 let currentPage = 1
-let currentDisplayData = qnaData
+let totalPages = 1
+const pageCount = 5
 
 const qnaPostUl = document.querySelector('.main-post__list')
 const paginationList = document.querySelector('.pagination__list')
@@ -17,7 +17,8 @@ const nextGroupButton = document.querySelector(
 )
 const searchInput = document.querySelector('#main-search__item')
 
-const renderPosts = function (page, data) {
+// 💡 [수정] slice 로직 완전 제거. 서버가 딱 맞게 자른 걸 그대로 보여줍니다.
+const renderPosts = function (data) {
   if (data.length === 0) {
     qnaPostUl.innerHTML = `
     <li class="main-post__no-result">
@@ -26,33 +27,18 @@ const renderPosts = function (page, data) {
     `
     return
   }
-
-  const startIndex = (page - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const sliceData = data.slice(startIndex, endIndex)
-
-  const qnaElementList = sliceData.map((post) => postItem(post)).join('')
+  const qnaElementList = data.map((post) => postItem(post)).join('')
   qnaPostUl.innerHTML = qnaElementList
 }
 
-const setupPaginationEvents = function (data) {
-  const pageButtons = document.querySelectorAll('.pagination__link')
-  pageButtons.forEach((Btn) => {
-    Btn.addEventListener('click', (e) => {
-      currentPage = Number(e.target.textContent)
-      updateUI(data)
-    })
-  })
-}
-
-const renderPagination = function (data) {
+// 💡 [수정] data.length 대신 서버가 준 totalPages를 사용해 버튼을 만듭니다.
+const renderPagination = function () {
   let htmlString = ''
-  const currentTotalPage = Math.ceil(data.length / itemsPerPage)
   const currentGroup = Math.ceil(currentPage / pageCount)
-  const totalGroup = Math.ceil(currentTotalPage / pageCount)
+  const totalGroup = Math.ceil(totalPages / pageCount)
 
   let startPage = (currentGroup - 1) * pageCount + 1
-  let endPage = Math.min(startPage + pageCount - 1, currentTotalPage)
+  let endPage = Math.min(startPage + pageCount - 1, totalPages)
 
   for (let i = startPage; i <= endPage; i++) {
     const activeClass = i === currentPage ? 'is-active' : ''
@@ -67,78 +53,76 @@ const renderPagination = function (data) {
   firstButton.classList.toggle('hidden', currentGroup === 1)
   nextGroupButton.classList.toggle(
     'hidden',
-    currentGroup === totalGroup || currentTotalPage === 0,
+    currentGroup === totalGroup || totalPages === 0,
   )
 
-  setupPaginationEvents(data)
+  const pageButtons = document.querySelectorAll('.pagination__link')
+  pageButtons.forEach((Btn) => {
+    Btn.addEventListener('click', (e) => {
+      currentPage = Number(e.target.textContent)
+      fetchQnaPosts() // 💡 버튼 누르면 서버에 새 페이지 요청!
+    })
+  })
 }
 
-const updateUI = function (data) {
-  currentDisplayData = data
-  renderPosts(currentPage, currentDisplayData)
-  renderPagination(data)
-}
-
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim()
-  const searchedData = qnaData.filter(({ subject }) =>
-    subject.toLowerCase().includes(keyword),
-  )
-  currentPage = 1
-  updateUI(searchedData)
-})
-
+// 💡 페이지 이동 버튼들도 updateUI 대신 fetchQnaPosts(서버 요청)로 변경
 nextGroupButton.addEventListener('click', () => {
-  const currentTotalPage = Math.ceil(currentDisplayData.length / itemsPerPage)
   const currentGroup = Math.ceil(currentPage / pageCount)
-  currentPage = Math.min(currentGroup * pageCount + 1, currentTotalPage)
-  updateUI(currentDisplayData)
+  currentPage = Math.min(currentGroup * pageCount + 1, totalPages)
+  fetchQnaPosts()
 })
 
 firstButton.addEventListener('click', () => {
   const currentGroup = Math.ceil(currentPage / pageCount)
   currentPage = (currentGroup - 1) * pageCount
-  updateUI(currentDisplayData)
+  fetchQnaPosts()
 })
 
 prevButton.addEventListener('click', () => {
-  currentPage = Math.max(currentPage - 1, 1)
-  updateUI(currentDisplayData)
+  if (currentPage > 1) {
+    currentPage--
+    fetchQnaPosts()
+  }
 })
 
 nextButton.addEventListener('click', () => {
-  const currentTotalPage = Math.ceil(currentDisplayData.length / itemsPerPage)
-  currentPage = Math.min(currentPage + 1, currentTotalPage)
-  updateUI(currentDisplayData)
+  if (currentPage < totalPages) {
+    currentPage++
+    fetchQnaPosts()
+  }
 })
 
-// 💡 [추가 1] 마크다운 제거 전용 함수 추가
+// 마크다운 제거 전용 함수
 function removeMarkdown(text) {
   if (!text) return ''
   return text
-    .replace(/```[\s\S]*?```/g, '') // 코드 블록 삭제
-    .replace(/`.*?`/g, '') // 인라인 코드 삭제
-    .replace(/[#*_\-~[\]()>]/g, '') // 마크다운 기호 삭제
-    .replace(/\s+/g, ' ') // 공백 정리
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`.*?`/g, '')
+    .replace(/[#*_\-~[\]()>]/g, '')
+    .replace(/\s+/g, ' ')
     .trim()
 }
 
-async function init() {
+// 💡 init 함수를 fetchQnaPosts로 변경 (재사용 목적)
+async function fetchQnaPosts() {
   try {
-    const [postResponse] = await Promise.all([
-      fetch(
-        'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
-      ),
-    ])
+    // 💡 URL에 page=${currentPage} 동적 적용!
+    const response = await fetch(
+      `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=${currentPage}`,
+    )
 
-    if (!postResponse.ok) throw new Error('데이터 불러오기 실패')
+    if (!response.ok) throw new Error('데이터 불러오기 실패')
 
-    const responseData = await postResponse.json()
+    const responseData = await response.json()
     const actualPosts = responseData.data
-    const serverComments = [] // 💡 형님이 선언한 이 배열을 이제 활용합니다!
+    const serverComments = []
+
+    // 💡 핵심: 스터디룸처럼 서버에서 알려주는 전체 페이지 수 저장!
+    totalPages = responseData.total_pages || 1
 
     if (!Array.isArray(actualPosts)) {
-      updateUI([])
+      renderPosts([])
+      renderPagination()
       return
     }
 
@@ -147,7 +131,6 @@ async function init() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
-    // 💡 [추가 2] 댓글 데이터를 가져와서 serverComments 배열에 채워주는 로직
     const commentsPromises = qnaPosts.map(async (post) => {
       try {
         const res = await fetch(
@@ -155,14 +138,11 @@ async function init() {
         )
         const result = await res.json()
         if (Array.isArray(result)) {
-          // 서버 응답이 배열이면 serverComments에 post_id와 함께 저장
           result.forEach((cmt) =>
             serverComments.push({ ...cmt, post_id: post.post_id }),
           )
         }
-      } catch (e) {
-        // 개별 댓글 로드 실패 시 무시
-      }
+      } catch (e) {}
     })
     await Promise.all(commentsPromises)
 
@@ -171,7 +151,6 @@ async function init() {
         (comment) => String(comment.post_id) === String(post.post_id),
       )
 
-      // 💡 [추가 3] 마크다운 제거 및 요약(100자) 적용
       const cleanText = removeMarkdown(post.contents)
       const summary =
         cleanText.length > 100 ? cleanText.substring(0, 100) + '...' : cleanText
@@ -180,25 +159,36 @@ async function init() {
         post_id: post.post_id,
         board_id: post.board_id,
         user_id: post.user_id,
-        // 💡 해결 1: postItem에서 user_nickname을 쓰니까 이름을 맞춰줘야 합니다.
         user_nickname: post.user_nickname || post.nickname || '사용자',
         subject: post.subject,
-        contents: summary, // 👈 post.contents 대신 깨끗하게 정리된 summary 사용
+        contents: summary,
         type: post.type,
-        // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
         create_date: post.create_date ? post.create_date.trim() : '',
         commentCount: myComments.length,
       }
     })
 
-    updateUI(qnaData)
+    // 💡 데이터 가공이 다 끝나면 화면에 그립니다
+    renderPosts(qnaData)
+    renderPagination()
   } catch (error) {
     console.error('에러 발생:', error)
-    updateUI([])
+    renderPosts([])
+    renderPagination()
   }
 }
 
-init()
+// 검색 기능 로직
+searchInput.addEventListener('input', () => {
+  const keyword = searchInput.value.toLowerCase().trim()
+  const searchedData = qnaData.filter(({ subject }) =>
+    subject.toLowerCase().includes(keyword),
+  )
+  renderPosts(searchedData)
+})
+
+// 최초 실행!
+fetchQnaPosts()
 
 qnaPostUl.addEventListener('click', (e) => {
   e.preventDefault()
