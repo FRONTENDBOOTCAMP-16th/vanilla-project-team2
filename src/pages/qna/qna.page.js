@@ -141,7 +141,9 @@ async function fetchPosts() {
             serverComments.push({ ...cmt, post_id: post.post_id }),
           )
         }
-      } catch (e) {}
+      } catch (error) {
+        console.error('댓글 로드 실패:', error)
+      }
     })
     await Promise.all(commentsPromises)
 

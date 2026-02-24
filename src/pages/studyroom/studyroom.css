@@ -1,15 +1,22 @@
 html {
   overflow-y: scroll;
 }
+.main-box {
+  padding-block: 40px;
+}
 
 .container {
   background-color: #f9fafb;
   min-height: 900px;
   margin: 0 auto;
+  width: 1024px;
+  display: flex;
+  flex-flow: nowrap column;
+  align-items: center;
 }
 
 .main-title__wrapper {
-  width: 1200px;
+  width: 1024px; /* 1200px -> 1024px */
   height: 70px;
   margin-bottom: 32px;
 
@@ -31,7 +38,7 @@ html {
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 1200px;
+  width: 1024px; /* 1200px -> 1024px */
   height: 100px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
@@ -45,9 +52,10 @@ html {
   }
 
   #main-search__item {
-    width: 1150px;
+    width: 974px; /* 1024px에 쏙 들어가도록 길이 축소 (1150px -> 974px) */
     height: 50px;
     padding-left: 48px;
+    padding-right: 28px;
     padding-block: 16px;
     border: 1px solid #d1d5dc;
     border-radius: 10px;
@@ -55,14 +63,15 @@ html {
 }
 
 .main-category__wrapper {
-  width: 1200px;
-  height: 42px;
+  width: 1024px;
+
+  margin-block: 24px;
 
   .main-category__list {
     display: flex;
     list-style-type: none;
     column-gap: 8px;
-    margin-block: 24px;
+    margin: 0;
     padding-left: 0;
   }
 
@@ -85,13 +94,25 @@ html {
   }
 }
 
+.main-post__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 5; /* 💡 딱 여기서 5줄로 제한합니다! 3으로 바꾸면 3줄 컷! */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  /* (선택) 줄 간격을 살짝 주면 더 예쁩니다 */
+  line-height: 1.5;
+}
+
 .main-post__list {
-  width: 1200px;
+  width: 1024px; /* 1200px -> 1024px */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 0px;
   column-gap: 24px;
   row-gap: 24px;
+  margin: 0px;
 
   .main-post__item {
     list-style-type: none;
@@ -99,6 +120,7 @@ html {
     border-radius: 15px;
     padding: 25px;
     background-color: #ffffff;
+    max-height: 332px;
 
     &:hover {
       background-color: #eef2ff;
@@ -111,18 +133,19 @@ html {
     color: black;
     font-weight: 300;
     position: relative;
-    width: calc(596px - 52px - 24px);
+    width: 100%; /* 💡 옛날 1200px 시절 숫자(calc) 지우고 부모에 맞게 100% 꽉 채우기! */
     display: flex;
     flex-direction: column;
     height: 100%;
     min-height: 220px;
   }
+
   .main-post__group {
     flex-grow: 1;
   }
 
   .main-post__date {
-    font-size: 13px;
+    font-size: 12px;
     color: #868e96; /* 날짜는 조금 연하게 */
   }
 
@@ -131,6 +154,7 @@ html {
     color: #212529;
   }
 }
+
 .main-post__heading {
   font-weight: 400;
 }
@@ -149,7 +173,7 @@ html {
 
 .main-post__meta-box {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* 💡 스터디룸도 양쪽 끝 정렬! */
   flex-direction: row;
   margin-top: auto;
   padding-top: 16px;
@@ -161,7 +185,7 @@ html {
   margin-top: 40px;
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 1024px; /* 100% -> 1024px로 통일 */
   margin-top: auto;
 }
 
@@ -225,14 +249,12 @@ html {
 }
 
 .main-post__no-result {
-  grid-column: 1 / -1; /* 📍 핵심: 1번 칸부터 마지막 칸까지 다 써라! */
+  grid-column: 1 / -1;
   width: 100%;
-  padding: 100px 0; /* 위아래 여백을 더 주면 훨씬 여유 있어 보입니다 */
+  padding: 100px 0;
   text-align: center;
   font-size: 1.2rem;
   color: #888;
-
-  /* 만약 세로로도 중앙에 맞추고 싶다면 아래 추가 */
   display: flex;
   justify-content: center;
   align-items: center;

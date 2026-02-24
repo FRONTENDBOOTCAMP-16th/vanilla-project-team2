@@ -1,14 +1,12 @@
 import { timeForToday } from '../../js/utils/date.js'
 
-// 상태 관리 변수들 (이제 postData 전체를 저장할 필요 없음)
 let currentPage = 1
 let currentSearch = ''
 let currentCategory = 'ALL'
-let totalPages = 1 // 서버에서 받아올 총 페이지 수
+let totalPages = 1
 
 const pageCount = 5
 
-// DOM 요소 선택 (기존과 동일)
 const postListElement = document.querySelector('.main-post__list')
 const paginationList = document.querySelector('.pagination__list')
 const firstButton = document.querySelector('.pagination__control--first')
@@ -20,27 +18,38 @@ const nextGroupButton = document.querySelector(
 const categoryButton = document.querySelectorAll('.main-category__button')
 const searchInput = document.getElementById('main-search__item')
 
-// [핵심] 서버에서 데이터를 가져오는 함수
+function removeMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`.*?`/g, '')
+    .replace(/[#*_\-~[\]()>]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 async function fetchPosts() {
   try {
-    // 1. 상태 변수를 URL 파라미터로 만듭니다.
     const url = `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=1&page=${currentPage}&search=${currentSearch}&category=${currentCategory === 'ALL' ? '' : currentCategory}`
 
     const response = await fetch(url)
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const result = await response.json()
-
-    // 2. 서버에서 준 데이터로 UI 업데이트
     totalPages = result.total_pages || 1
 
     const actualPosts = result.data.map((post) => {
-      // JSON 파싱이나 배열 처리가 필요하다면 여기서 정리
       const categories = Array.isArray(post.type) ? post.type : [post.type]
+
+      const cleanText = removeMarkdown(post.contents)
+      const summary =
+        cleanText.length > 500 ? cleanText.substring(0, 500) : cleanText
+
       return {
         ...post,
         nickname: post.user_nickname || '사용자',
         type: categories,
+        contents: summary,
       }
     })
 
@@ -53,7 +62,6 @@ async function fetchPosts() {
   }
 }
 
-// 포스트 렌더링 (slice 제거됨 - 서버가 이미 잘라서 줌)
 function renderPosts(data) {
   if (data.length === 0) {
     postListElement.innerHTML = `
@@ -69,15 +77,21 @@ function renderPosts(data) {
       (post) => `
     <li class="main-post__item" data-id="${post.post_id}">
       <a href="#" class="main-post__inner">
-        <span class="main-post__tag">${Array.isArray(post.type) ? post.type[0] : post.type}</span>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span class="main-post__tag">${Array.isArray(post.type) ? post.type[0] : post.type}</span>
+          <span class="main-post__date">${timeForToday(post.create_date)}</span>
+        </div>
+
         <div class="main-post__group">
           <h3 class="main-post__heading">${post.subject}</h3>
           <p class="main-post__text">${post.contents}</p>
         </div>
+
         <div class="main-post__meta-box">
-          <span class="main-post__author-text">by <strong>${post.nickname}</strong></span>
-          <span class="main-post__date">${timeForToday(post.create_date)}</span>
+          <span class="main-post__author-text" style="margin-left: auto;">by <strong>${post.nickname}</strong></span>
         </div>
+
       </a>
     </li>
   `,
@@ -85,7 +99,8 @@ function renderPosts(data) {
     .join('')
 }
 
-// 페이지네이션 렌더링 (서버에서 받은 totalPages 사용)
+// 페이지 네이션
+
 function renderPagination() {
   let htmlString = ''
   const currentGroup = Math.ceil(currentPage / pageCount)
@@ -104,24 +119,20 @@ function renderPagination() {
   }
   paginationList.innerHTML = htmlString
 
-  // 버튼 활성/비활성 처리
   firstButton.classList.toggle('hidden', currentGroup === 1)
   nextGroupButton.classList.toggle(
     'hidden',
     currentGroup === totalGroup || totalPages === 0,
   )
 
-  // 페이지 번호 클릭 이벤트 다시 달기
   const pageButtons = document.querySelectorAll('.pagination__link')
   pageButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
       currentPage = Number(e.target.textContent)
-      fetchPosts() // 상태 변경 후 데이터 새로 요청
+      fetchPosts()
     })
   })
 }
-
-// --- 이벤트 리스너들 ---
 
 nextButton.addEventListener('click', () => {
   if (currentPage < totalPages) {
@@ -149,14 +160,12 @@ firstButton.addEventListener('click', () => {
   fetchPosts()
 })
 
-// 검색 (디바운싱 생략, 바로 적용)
 searchInput.addEventListener('input', () => {
   currentSearch = searchInput.value.toLowerCase().trim()
-  currentPage = 1 // 검색 시 1페이지로 리셋
+  currentPage = 1
   fetchPosts()
 })
 
-// 카테고리 필터
 categoryButton.forEach((category) => {
   category.addEventListener('click', () => {
     categoryButton.forEach((btn) => btn.classList.remove('is-active'))
@@ -166,15 +175,15 @@ categoryButton.forEach((category) => {
     currentCategory =
       targetIndex === 0 ? 'ALL' : category.textContent.trim().toUpperCase()
 
-    currentPage = 1 // 카테고리 변경 시 1페이지로 리셋
+    currentPage = 1
     fetchPosts()
   })
 })
 
-// 최초 실행
 fetchPosts()
 
-// 게시글 클릭 (기존과 동일)
+// 게시글로 넘어가기
+
 postListElement.addEventListener('click', (e) => {
   e.preventDefault()
   const item = e.target.closest('.main-post__item')
