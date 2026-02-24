@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
     console.log('글 작성 폼 제출됨')
-
     const formData = new FormData(form)
 
     try {
@@ -108,13 +107,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       const accessToken = localStorage.getItem('access_token')
 
       if (editPostId) {
+        const catagories = formData.get('categorySelect')
+        // const catagoriesPayload = JSON.stringify(catagories)
+
         const updatePayload = {
           board_id: formData.get('boardType') === 'qna' ? 2 : 1,
           user_uid: userInfo.UID,
-          user_id: userInfo.user_id,
+
+          // user_id: userInfo.user_id,
           subject: formData.get('title'),
           contents: formData.get('content'),
-          type: [formData.get('categorySelect')],
+          type: catagories,
           post_id: editPostId,
         }
 
@@ -142,6 +145,9 @@ document.addEventListener('DOMContentLoaded', async () => {
           throw new Error('DB 업데이트 실패')
         }
       } else {
+        const catagories = formData.get('categorySelect')
+        // const catagoriesPayload = JSON.stringify(catagories)
+
         const writeData = new FormData()
         writeData.append(
           'board_id',
@@ -150,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         writeData.append('user_id', userInfo.UID)
         writeData.append('subject', formData.get('title'))
         writeData.append('contents', formData.get('content'))
-        writeData.append('type', formData.get('categorySelect'))
+        writeData.append('type', catagories)
 
         response = await fetch(
           'http://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php',

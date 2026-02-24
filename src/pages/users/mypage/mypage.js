@@ -114,6 +114,7 @@ async function initPage() {
   await fetchUserData() // 데이터 1번 요청
   renderMyPage(userData) // 화면 그림
   renderProfileForm(userData) // 폼 그림
+  userWriteInfo(userData)
 }
 
 initPage()
@@ -127,36 +128,60 @@ thumb.addEventListener('change', (e) => {
 })
 
 async function uploadProfileImage(file) {
-  // 1. FormData 객체 생성
-  const formData = new FormData()
+  const formData = new FormData();
+  formData.append('profile_image', file);
 
-  // 2. 'profile_image'라는 이름(Key)으로 파일 객체(Value)를 담습니다.
-  // PHP에서는 $_FILES['profile_image'] 로 이 파일을 꺼내게 된다.
-  formData.append('profile_image', file)
-
-  const accessToken = localStorage.getItem('access_token')
+  const accessToken = localStorage.getItem('access_token');
 
   try {
     const response = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
+        // Content-Type은 절대 적지 마세요! (자동 설정됨)
       },
-    })
+      body: formData // ★ 이 부분이 빠져있어서 Bad Request가 발생했습니다!
+    });
 
-    const data = await response.json()
+    const data = await response.json();
 
     if (data.status === 'success') {
-      alert('프로필 이미지가 성공적으로 변경되었습니다.')
+      alert('프로필 이미지가 성공적으로 변경되었습니다.');
+      
+      // 화면 업데이트: 서버에서 데이터를 다시 가져와서 이미지 경로를 갱신합니다.
+      await fetchUserData(true); 
+      renderMyPage(userData);
     } else {
-      console.error('업로드 실패:', data.message)
-      alert('업로드에 실패했습니다.')
+      console.error('업로드 실패:', data.message);
+      alert(`업로드 실패: ${data.message}`);
     }
   } catch (error) {
-    console.error('파일 업로드 통신 에러:', error)
+    console.error('파일 업로드 통신 에러:', error);
   }
 }
 
 
 
+async function userWriteInfo(userData) {
+  const user = userData.UID; // userData에서 UID 추출
+  const params = new URLSearchParams({ user_id: user }).toString();
 
+  try {
+    const response = await fetch(`http://leedh9276.dothome.co.kr/likelion-vanilla/board/search.php?${params}`, {
+      method: 'GET',
+    });
+
+    // 1. 봉투(response)를 뜯어서 내용물(data)을 가져옵니다.
+    const result = await response.json();
+
+    const totalPostForm = document.querySelector('.write__count')
+    const totalPostNumber = result.total_posts
+    totalPostForm.textContent = totalPostNumber
+
+    // 예: 화면에 개수 표시하기
+    // document.getElementById('count').textContent = result.total_posts;
+
+  } catch (error) {
+    console.error('데이터를 가져오는 중 에러 발생:', error);
+  }
+}
