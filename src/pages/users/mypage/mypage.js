@@ -44,6 +44,8 @@ function renderProfileForm(data) {
   if (!data) return
 
   document.getElementById('user_nickname').value = data.user_nickname
+  document.getElementById('user_id').value = data.user_id
+  document.getElementById('user_phone').value = data.user_phone
   document.getElementById('user_intro').innerHTML = data.user_intro
 }
 
