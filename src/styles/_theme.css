@@ -283,8 +283,8 @@
   --shadow-header: 0 6px 10px rgba(0, 0, 0, 0.1);
 
   /* 페이지별 타이틀 텍스트 */
-  --fs-header: 30px;
-  --fw-header: 500;
+  --fs-h1: 30px;
+  --fw-h1: 500;
 
   /* 페이지별 타이틀 설명 텍스트 */
   --fs-header-desc: 1rem;
