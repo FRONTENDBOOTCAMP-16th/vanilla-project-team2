@@ -3,6 +3,7 @@
 import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
+import { checkToken } from '../../api/JWT.js'
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const params = new URLSearchParams(location.search)
@@ -43,21 +44,33 @@ async function init() {
   }
 
   // 콘솔로 한 번 더 확인!
-  console.log('최종 추출된 post:', post)
-
-  console.log('원본 contents:', post.contents)
-  console.log('문자열 구조 확인:', JSON.stringify(post.contents))
+  // console.log('최종 추출된 post:', post)
+  // console.log('원본 contents:', post.contents)
+  // console.log('문자열 구조 확인:', JSON.stringify(post.contents))
 
   if (!post || Object.keys(post).length === 0) {
     console.log('글 없음 - 데이터 구조를 확인해야 합니다.')
     return
   }
 
-  marked.setOptions({
+  // ===== 글쓴이에게만 수정/삭제 버튼 노출 =====
+  const actions = document.querySelector('.post__actions')
 
+  try {
+    const userData = await checkToken()
+
+    if (!userData || Number(userData.UID) !== Number(post.user_id)) {
+      actions.style.display = 'none'
+    }
+  } catch {
+    // 로그인 안 한 경우
+    actions.style.display = 'none'
+  }
+
+  // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
+  marked.setOptions({
     breaks: true,
   })
-
 
   const rawHtml = marked.parse(post.contents || '')
   const sanitizedHtml = DOMPurify.sanitize(rawHtml) // 사용자가 쓴 script를 읽지 않게 하기 위해서 (XSS방지)

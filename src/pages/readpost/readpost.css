@@ -224,6 +224,7 @@ cursor: pointer;
       align-items: center;
       justify-content: flex-end;
       gap: 16px;
+      padding-block-start: 70px;
       
     
       .post__btn {
