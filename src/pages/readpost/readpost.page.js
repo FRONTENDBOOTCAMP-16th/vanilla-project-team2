@@ -45,14 +45,19 @@ async function init() {
   // 콘솔로 한 번 더 확인!
   console.log('최종 추출된 post:', post)
 
+  console.log('원본 contents:', post.contents)
+  console.log('문자열 구조 확인:', JSON.stringify(post.contents))
+
   if (!post || Object.keys(post).length === 0) {
     console.log('글 없음 - 데이터 구조를 확인해야 합니다.')
     return
   }
 
   marked.setOptions({
+
     breaks: true,
   })
+
 
   const rawHtml = marked.parse(post.contents || '')
   const sanitizedHtml = DOMPurify.sanitize(rawHtml) // 사용자가 쓴 script를 읽지 않게 하기 위해서 (XSS방지)

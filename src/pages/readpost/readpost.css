@@ -43,7 +43,7 @@
 }
 
 .post__title {
-  margin-block: 30px;
+  margin-block: 20px 64px;
   font-weight: var(--fw-header);
   font-size: var(--fs-header);
 
@@ -59,7 +59,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-block: 20px;
+  margin-block: 6px;
 
   .post__author-avatar {
     display: flex;
@@ -78,8 +78,8 @@
 .post__content {
 
   line-height: 1.6;
-  padding-block-start: 30px;
-  white-space: pre-line;
+  padding-block-start: 60px;
+  /* white-space: pre-line; */
 
 
 
@@ -102,6 +102,14 @@
     margin: 0;
   }
 
+  .post__content p {
+    margin: 1em 0;
+    line-height: 1.6;
+  }
+
+  .post__content pre {
+  margin: 1.2em 0;
+}
   /* .post__content >*+* {
     margin-block-start: 12px;
   } */
