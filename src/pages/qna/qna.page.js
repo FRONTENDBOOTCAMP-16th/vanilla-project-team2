@@ -198,17 +198,15 @@ function bindEvents() {
 async function init() {
   try {
     const postResponse = await fetch(
-<<<<<<< HEAD
-      'https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
-=======
       'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
->>>>>>> feature-hk-01
     )
 
     if (!postResponse.ok) throw new Error('데이터 불러오기 실패')
 
     const responseData = await postResponse.json()
     const actualPosts = responseData.data
+    const serverComments = []
+
     if (!Array.isArray(actualPosts)) {
       updateUI([])
       return
@@ -219,24 +217,11 @@ async function init() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
-    // 댓글
-    const commentsPromises = qnaPosts.map(async (post) => {
-      try {
-        const res = await fetch(
-          `https://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${post.post_id}`,
-        )
-        const result = await res.json()
-        console.log(`글번호 ${post.post_id}의 결과:`, result)
+    qnaData = qnaPosts.map((post) => {
+      const myComments = serverComments.filter(
+        (comment) => String(comment.post_id) === String(post.post_id),
+      )
 
-        return Array.isArray(result) ? result.length : 0
-      } catch {
-        return 0
-      }
-    })
-
-    const commentsCounts = await Promise.all(commentsPromises)
-
-    qnaData = qnaPosts.map((post, index) => {
       return {
         post_id: post.post_id,
         board_id: post.board_id,
@@ -245,13 +230,8 @@ async function init() {
         subject: post.subject,
         contents: post.contents,
         type: post.type,
-<<<<<<< HEAD
-        create_date: post.create_date ? post.create_date.trim() : '',
-        commentCount: commentsCounts[index],
-=======
         create_date: post.create_date ? String(post.create_date).trim() : '',
         commentCount: myComments.length,
->>>>>>> feature-hk-01
       }
     })
 
