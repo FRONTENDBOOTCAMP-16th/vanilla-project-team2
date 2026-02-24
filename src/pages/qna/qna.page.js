@@ -112,14 +112,14 @@ nextButton.addEventListener('click', () => {
   updateUI(currentDisplayData)
 })
 
-// 💡 [추가 1] 마크다운 제거 함수 추가
+// 💡 [추가 1] 마크다운 제거 전용 함수 추가
 function removeMarkdown(text) {
   if (!text) return ''
   return text
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/`.*?`/g, '')
-    .replace(/[#*_\-~[\]()>]/g, '')
-    .replace(/\s+/g, ' ')
+    .replace(/```[\s\S]*?```/g, '') // 코드 블록 삭제
+    .replace(/`.*?`/g, '') // 인라인 코드 삭제
+    .replace(/[#*_\-~[\]()>]/g, '') // 마크다운 기호 삭제
+    .replace(/\s+/g, ' ') // 공백 정리
     .trim()
 }
 
@@ -135,7 +135,7 @@ async function init() {
 
     const responseData = await postResponse.json()
     const actualPosts = responseData.data
-    const serverComments = []
+    const serverComments = [] // 💡 형님이 선언한 이 배열을 이제 활용합니다!
 
     if (!Array.isArray(actualPosts)) {
       updateUI([])
@@ -147,7 +147,7 @@ async function init() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
-    // 💡 [추가 2] 형님이 만든 serverComments 빈 배열에 실제 댓글 데이터를 꽉꽉 채워주는 로직 추가
+    // 💡 [추가 2] 댓글 데이터를 가져와서 serverComments 배열에 채워주는 로직
     const commentsPromises = qnaPosts.map(async (post) => {
       try {
         const res = await fetch(
@@ -155,27 +155,26 @@ async function init() {
         )
         const result = await res.json()
         if (Array.isArray(result)) {
+          // 서버 응답이 배열이면 serverComments에 post_id와 함께 저장
           result.forEach((cmt) =>
             serverComments.push({ ...cmt, post_id: post.post_id }),
           )
         }
-      } catch (error) {
-        // 에러 무시
+      } catch (e) {
+        // 개별 댓글 로드 실패 시 무시
       }
     })
-    await Promise.all(commentsPromises) // 댓글 다 가져올 때까지 잠깐 대기!
+    await Promise.all(commentsPromises)
 
     qnaData = qnaPosts.map((post) => {
       const myComments = serverComments.filter(
         (comment) => String(comment.post_id) === String(post.post_id),
       )
 
-      // 💡 [추가 3] 마크다운 지우고 100자로 자르기
-      const cleanContents = removeMarkdown(post.contents)
+      // 💡 [추가 3] 마크다운 제거 및 요약(100자) 적용
+      const cleanText = removeMarkdown(post.contents)
       const summary =
-        cleanContents.length > 100
-          ? cleanContents.substring(0, 100) + '...'
-          : cleanContents
+        cleanText.length > 100 ? cleanText.substring(0, 100) + '...' : cleanText
 
       return {
         post_id: post.post_id,
@@ -184,7 +183,7 @@ async function init() {
         // 💡 해결 1: postItem에서 user_nickname을 쓰니까 이름을 맞춰줘야 합니다.
         user_nickname: post.user_nickname || post.nickname || '사용자',
         subject: post.subject,
-        contents: summary, // 💡 요 부분만 원래 post.contents에서 필터링된 summary로 쏙 바꿨습니다!
+        contents: summary, // 👈 post.contents 대신 깨끗하게 정리된 summary 사용
         type: post.type,
         // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
         create_date: post.create_date ? post.create_date.trim() : '',
