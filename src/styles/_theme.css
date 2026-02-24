@@ -275,7 +275,8 @@
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12); */
 
   /* 배경색 */
-  --color-bg: #F9FAFB; 
+  .gray-bg 
+  { background-color: #F9FAFB };
 
   /* 카드 박스 그림자 */
   --shadow-box: 0 0 5px rgba(0, 0, 0, 0.1);

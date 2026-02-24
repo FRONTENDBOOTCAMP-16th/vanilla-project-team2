@@ -1,6 +1,19 @@
+
+
 .container {
-  background-color: var(--gray-50);
+  /* background-color: var(--gray-50); */
   margin: auto;
+}
+
+.newpost__title {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-h1);
+}
+
+.newpost__desc{
+  font-size:   var(--fs-header-desc);
+  letter-spacing : var(--ls-header-desc);
+  color: var(--color-desc);
 }
 
 .newpost__form {
@@ -104,3 +117,5 @@
   color: #ffffff;
   border: none;
 }
+
+
