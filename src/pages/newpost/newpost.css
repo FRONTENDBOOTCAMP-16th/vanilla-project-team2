@@ -4,13 +4,15 @@
 
 .container {
   /* background-color: var(--gray-50); */
-  /* background-color: var(--gray-50); */
   margin: auto;
+  padding-block: 40px;
 }
 
 .newpost__title {
   font-size: var(--fs-h1);
   font-weight: var(--fw-h1);
+  /* padding-top: 40px; */
+  margin: 0;
 }
 
 .newpost__desc{
@@ -19,16 +21,6 @@
   color: var(--color-desc);
 }
 
-.newpost__title {
-  font-size: var(--fs-h1);
-  font-weight: var(--fw-h1);
-}
-
-.newpost__desc{
-  font-size:   var(--fs-header-desc);
-  letter-spacing : var(--ls-header-desc);
-  color: var(--color-desc);
-}
 
 .newpost__form {
   display: flex;

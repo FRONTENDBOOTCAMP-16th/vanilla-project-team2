@@ -275,7 +275,7 @@
   --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12); */
 
   /* 배경색 */
-  .color-bg { background-color:  #F9FAFB}; 
+  .gray-bg { background-color:  #F9FAFB}; 
 
   /*  */
   .element.style { min-height:  calc(100dvh-180px) };
