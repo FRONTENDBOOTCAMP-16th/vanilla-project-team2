@@ -4,6 +4,7 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 import { checkToken } from '../../api/JWT.js'
+const PROFILE_BASE_URL = 'http://leedh9276.dothome.co.kr/user/uploads/profile/'
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const params = new URLSearchParams(location.search)
@@ -87,8 +88,28 @@ async function init() {
     ? post.type[0]
     : post.type
   document.querySelector('.post__title').textContent = post.subject
-  document.querySelector('.post__author-name').textContent =
-    post.user_nickname || post.nickname || '사용자'
+  const authorNickname = post.user_nickname || post.nickname || '사용자'
+  document.querySelector('.post__author-name').textContent = authorNickname
+  const authorAvatar = document.querySelector('.post__author-avatar')
+  const firstChar = authorNickname.charAt(0)
+
+  // 작성자 프로필 이미지
+  // if (post.profile_image) {
+  //   authorAvatar.innerHTML = `
+  //     <img class="comment__avatar-image" src= "${post.profile_image}" alt="${authorNickname}" />`
+  // } else {
+  //   authorAvatar.innerHTML = `
+  //     <span class="comment__avatar-initial"> ${firstChar} </span>`
+  // }
+  if (post.user_profile) {
+    authorAvatar.innerHTML = `
+    <img class="comment__avatar-image"
+         src="http://leedh9276.dothome.co.kr/user/uploads/profile/${post.user_profile}"
+         alt="${authorNickname}" />`
+  } else {
+    authorAvatar.innerHTML = `
+    <span class="comment__avatar-initial">${firstChar}</span>`
+  }
 
   // 시간 렌더링
   const timeElement = document.querySelector('.post__time time')
@@ -104,18 +125,63 @@ async function init() {
 
   const deleteBtn = document.querySelector('.post__btn--delete')
 
+  // deleteBtn.addEventListener('click', async () => {
+  //   const ok = confirm('정말 글을 삭제하시겠습니까?')
+  //   if (!ok) return
+
+  //   await fetch(`http://localhost:4000/posts/${post.id}`, {
+  //     method: 'DELETE',
+  //   })
+
+  //   if (Number(boardId) === 2) {
+  //     location.href = '..qna/index.html'
+  //   } else {
+  //     location.href = '../studyroom/index.html'
+  //   }
+  // })
   deleteBtn.addEventListener('click', async () => {
     const ok = confirm('정말 글을 삭제하시겠습니까?')
     if (!ok) return
 
-    await fetch(`http://localhost:4000/posts/${post.id}`, {
-      method: 'DELETE',
-    })
+    try {
+      const userData = await checkToken()
+      const uid = userData?.UID
 
-    if (Number(boardId) === 2) {
-      location.href = '..qna/index.html'
-    } else {
-      location.href = '../studyroom/index.html'
+      if (!uid) {
+        alert('로그인이 필요합니다.')
+        return
+      }
+
+      const response = await fetch(
+        'http://leedh9276.dothome.co.kr/likelion-vanilla/board/delete.php',
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: uid,
+            post_id: [post.post_id],
+          }),
+        },
+      )
+
+      const result = await response.text()
+      console.log('삭제 응답:', result)
+
+      if (result.includes('success')) {
+        alert('삭제 완료')
+
+        if (Number(boardId) === 2) {
+          location.href = '../qna/index.html'
+        } else {
+          location.href = '../studyroom/index.html'
+        }
+      } else {
+        alert('삭제 실패')
+      }
+    } catch (err) {
+      console.error(err)
     }
   })
 
@@ -159,29 +225,35 @@ async function init() {
         return
       }
 
+      //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
+
       list.innerHTML = commentList
         .map((cmt) => {
-          //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
-          const avatar = cmt.profile_image || '/src/assets/icons/icon-user.svg'
+          const nickname = cmt.user_nickname || '익명'
+          const firstChar = nickname.charAt(0)
 
           return `
-              <li class="comment__item" data-id="${cmt.comment_id}">
-                <article class="comment__card">
-                  <div class="comment__avatar" >
-                    <img class="comment__avatar-image" src="${avatar}" alt="" />
-                  </div>
-                  <div class="comment__meta">
-                    <span class="comment__author">${cmt.user_nickname || '익명'}</span>
-                    <time class="comment__time">
-                      ${new Date(cmt.create_date).toLocaleString()}
-                    </time>
-                  </div>
-                  <p class="comment__text">
-                    ${cmt.contents}
-                  </p>
-                </article>
-              </li>
-          `
+      <li class="comment__item" data-id="${cmt.comment_id}">
+        <article class="comment__card">
+          <div class="comment__avatar">
+            ${
+              cmt.user_profile
+                ? `<img class="comment__avatar-image" src="${PROFILE_BASE_URL}${cmt.user_profile}" alt="${nickname}" />`
+                : `<span class="comment__avatar-initial">${firstChar}</span>`
+            }
+          </div>
+          <div class="comment__meta">
+            <span class="comment__author">${nickname}</span>
+            <time class="comment__time">
+              ${new Date(cmt.create_date).toLocaleString()}
+            </time>
+          </div>
+          <p class="comment__text">
+            ${cmt.contents}
+          </p>
+        </article>
+      </li>
+    `
         })
         .join('')
     }

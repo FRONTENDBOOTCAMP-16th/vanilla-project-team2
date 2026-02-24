@@ -1,6 +1,6 @@
 .container {
-  background-color: #f9fafb;
   margin: auto;
+  padding-block: 40px;
 }
 
 
@@ -9,7 +9,7 @@
   background-color: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  box-shadow: var(--shadow-sm);
+  /* box-shadow: var(--shadow-box); */
   margin-block: 24px;
   padding: 32px;
 
@@ -17,6 +17,7 @@
     width: 100%;
   }
 }
+
 
 /* 글쓰기 헤더 */
 .post__title-group{
@@ -37,15 +38,16 @@
   display: inline-flex;
   align-items: center;
   margin-left: auto;
+  font-size: var(--fs-time);
   
   gap: 4px;
-  padding-inline: 8px;
+
 }
 
 .post__title {
-  margin-block: 20px 64px;
-  font-weight: var(--fw-header);
-  font-size: var(--fs-header);
+  margin-block: 20px 78px;
+  font-weight: var(--fw-h1);
+  font-size: var(--fs-h1);
 
 }
 
@@ -78,7 +80,7 @@
 .post__content {
 
   line-height: 1.6;
-  padding-block-start: 60px;
+  padding-block: 40px;
   /* white-space: pre-line; */
 
 
@@ -152,7 +154,7 @@
   );
   color: #ffffff;
   border: none;
-  box-shadow: var(--shadow-md);
+  /* box-shadow: var(--shadow-box); */
 cursor: pointer;
   
 }
@@ -184,8 +186,9 @@ cursor: pointer;
     grid-column: 2;
 
     .comment__time {
-      font-size: 14px;
+      font-size: var(--fs-time);
       color: #6A7282;
+      margin-left: auto;
     }
   }
 
@@ -214,6 +217,11 @@ cursor: pointer;
     }
   }
 
+  .comment__avatar-initial {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+  }
 
 
 

@@ -301,8 +301,8 @@
   --fs-h2: 1.5em;
   --fw-h2: bold;
 
-  /* 페이지별 기본 텍스트 */
-  --fs-text: 14px
+  /* 페이지별 기본 텍스트 > 너무 작아서 일단 주석 처리*/
+  /* --fs-text: 14px */
 
 
   /* color-scheme: light dark; */
