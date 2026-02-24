@@ -275,6 +275,18 @@ body.user{
     border-radius: 14px;
     background: #fff;
   }
+
+  .activity__item > .write__count{
+    margin: 8px 0 12px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .activity__item > .title{
+    margin: 0;
+    font-size: 16px;
+    font-weight: 400;
+  }
 }
 
 .profile__container{

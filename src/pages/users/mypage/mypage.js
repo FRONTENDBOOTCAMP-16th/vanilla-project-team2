@@ -44,7 +44,7 @@ function renderProfileForm(data) {
   if (!data) return
 
   document.getElementById('user_nickname').value = data.user_nickname
-  document.getElementById('user_intro').innerHTML = data.user_intro
+  document.getElementById('user_intro').value = data.user_intro // ✅ value로 수정
 }
 
 // --- 이벤트 리스너 및 UI 제어 ---
@@ -93,16 +93,21 @@ async function updateProfileInfo() {
   if (!form) return
 
   const formData = new FormData(form)
+  
+  // ✅ 여기에 user_id를 강제로 추가해 줍니다!
+  // userData.UID 또는 userData.user_id (가지고 계신 데이터 구조에 맞게 작성)
+  formData.append('user_id', userData.user_id) // 혹시 식별자가 UID라면 userData.UID 로 적어주세요.
+
   try {
     const response = await fetch(URLS, {
       method: 'POST',
       body: formData,
     })
 
-    // 성공 시, 서버에서 최신 데이터를 한 번만 다시 불러와 화면 전체를 동기화
-    await fetchUserData(true) // true: 기존 캐시를 무시하고 서버에서 새로 받아옴
+    await fetchUserData(true)
     renderProfileForm(userData)
     renderMyPage(userData)
+    alert('프로필이 성공적으로 수정되었습니다.') // 성공 알림 추가
   } catch (error) {
     console.error('업데이트 중 에러 발생:', error)
   }
@@ -126,10 +131,10 @@ thumb.addEventListener('change', (e) => {
 })
 
 async function uploadProfileImage(file) {
-  const formData = new FormData();
-  formData.append('profile_image', file);
+  const formData = new FormData()
+  formData.append('profile_image', file)
 
-  const accessToken = localStorage.getItem('access_token');
+  const accessToken = localStorage.getItem('access_token')
 
   try {
     const response = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php', {
@@ -139,47 +144,50 @@ async function uploadProfileImage(file) {
         // Content-Type은 절대 적지 마세요! (자동 설정됨)
       },
       body: formData // ★ 이 부분이 빠져있어서 Bad Request가 발생했습니다!
-    });
+    })
 
-    const data = await response.json();
+    const data = await response.json()
 
     if (data.status === 'success') {
-      alert('프로필 이미지가 성공적으로 변경되었습니다.');
+      alert('프로필 이미지가 성공적으로 변경되었습니다.')
       
       // 화면 업데이트: 서버에서 데이터를 다시 가져와서 이미지 경로를 갱신합니다.
-      await fetchUserData(true); 
-      renderMyPage(userData);
+      await fetchUserData(true) 
+      renderMyPage(userData)
     } else {
-      console.error('업로드 실패:', data.message);
-      alert(`업로드 실패: ${data.message}`);
+      console.error('업로드 실패:', data.message)
+      alert(`업로드 실패: ${data.message}`)
     }
   } catch (error) {
-    console.error('파일 업로드 통신 에러:', error);
+    console.error('파일 업로드 통신 에러:', error)
   }
 }
 
 
 
 async function userWriteInfo(userData) {
-  const user = userData.UID; // userData에서 UID 추출
-  const params = new URLSearchParams({ user_id: user }).toString();
+    const user = userData.UID
+    const formData = new FormData()
+    formData.append('user_id', user) // PHP의 $_POST['user_id']로 들어감
 
-  try {
-    const response = await fetch(`http://leedh9276.dothome.co.kr/likelion-vanilla/board/search.php?${params}`, {
-      method: 'GET',
-    });
+    try {
+      const response = await fetch(`http://leedh9276.dothome.co.kr/likelion-vanilla/users/user_posts.php`, {
+        method: 'POST',
+        body: formData // ✅ 객체 대신 FormData를 넣습니다.
+      })
 
     // 1. 봉투(response)를 뜯어서 내용물(data)을 가져옵니다.
-    const result = await response.json();
+    const result = await response.json()
+    console.log(result)
 
-    const totalPostForm = document.querySelector('.write__count')
-    const totalPostNumber = result.total_posts
+    const totalPostForm = document.querySelector('.write .write__count')
+    const totalCommentForm = document.querySelector('.comment .write__count')
+    const totalPostNumber = result.post_count
+    const totalCommentNumber = result.comment_count
     totalPostForm.textContent = totalPostNumber
-
-    // 예: 화면에 개수 표시하기
-    // document.getElementById('count').textContent = result.total_posts;
+    totalCommentForm.textContent = totalCommentNumber
 
   } catch (error) {
-    console.error('데이터를 가져오는 중 에러 발생:', error);
+    console.error('데이터를 가져오는 중 에러 발생:', error)
   }
 }
