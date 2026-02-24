@@ -160,6 +160,7 @@ firstButton.addEventListener('click', () => {
   fetchPosts()
 })
 
+// 검색 (디바운싱 생략, 바로 적용)
 searchInput.addEventListener('input', () => {
   currentSearch = searchInput.value.toLowerCase().trim()
   currentPage = 1

@@ -113,8 +113,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const updatePayload = {
           board_id: formData.get('boardType') === 'qna' ? 2 : 1,
           user_uid: userInfo.UID,
-
-          // user_id: userInfo.user_id,
+          user_id: userInfo.user_id,
           subject: formData.get('title'),
           contents: formData.get('content'),
           type: catagories,
