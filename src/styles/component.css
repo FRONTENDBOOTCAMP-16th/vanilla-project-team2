@@ -3,7 +3,7 @@ header
 ==================================================*/
 
 header {
-  width: 1400px;
+  /* width: 1400px; */
   border-bottom: 1px solid #e5e7eb;
   margin: 0 auto;
 }
@@ -11,11 +11,13 @@ header {
 .header-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 12px 20px;
-
+  padding: 12px 0px;
   display: flex;
   align-items: center;
   gap: 32px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
 /* 로고 */
@@ -47,7 +49,7 @@ header {
   display: flex;
   align-items: space-between;
   gap: 8px;
-  margin-left: auto;
+  /* margin-left: auto; */
 }
 
 .nav-item {
@@ -79,26 +81,30 @@ header {
 }
 
 /* 글쓰기 버튼 */
-.nav-item.write {
+/* .nav-item.write {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: #fff;
-}
+} */
 
-.nav-item.write img {
+/* .nav-item.write img {
   filter: brightness(0) invert(1);
-}
+} */
 
 /* 회원정보 */
 .personal {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-left: auto;
+  /* margin-left: auto; */
 }
 
-.nav-item.login {
+.nav-item.btn__blue {
   background: linear-gradient(135deg, #6366f1, #8b5cf6);
   color: #fff;
+}
+
+.logout img {
+  filter: brightness(0) invert(1);
 }
 
 /* ==================================================
@@ -111,7 +117,7 @@ footer
 .footer-inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 16px 20px;
+  padding: 16px 0px;
 
   display: flex;
   align-items: center;

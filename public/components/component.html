@@ -12,10 +12,17 @@
     <header>
       <div class="header-inner">
         <!-- 로고 -->
-        <div class="logo">
-          <img src="/assets/icons/icon-logo.svg" alt="로고" class="logo-icon" />
-          <span class="logo-text">사자들의 공부방</span>
-        </div>
+        <a href="/src/pages/dashboard/index.html">
+          <div class="logo">
+            <img
+              src="/assets/icons/icon-logo.svg"
+              alt="로고"
+              class="logo-icon"
+            />
+            <span class="logo-text">사자들의 공부방</span>
+          </div>
+        </a>
+
         <!-- //로고 -->
 
         <!-- 네비게이션 -->
@@ -53,14 +60,14 @@
             <span>마이페이지</span>
           </a>
 
-          <a href="#" class="nav-item" data-role="logout">
+          <a href="#" class="nav-item btn__blue logout" data-role="logout">
             <img src="/assets/icons/icon-logout.svg" alt="" />
             <span>로그아웃</span>
           </a>
 
           <a
             href="/src/pages/users/login/index.html"
-            class="nav-item login"
+            class="nav-item btn__blue"
             data-role="login"
           >
             <span>로그인</span>
