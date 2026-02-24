@@ -26,7 +26,7 @@ function renderMyPage(data) {
   const USER_CREATE_DATE = document.querySelector('.create-date span')
 
   USER_NAME.textContent = data.user_nickname
-  USER_CREATE_DATE.textContent = data.create_date
+  USER_CREATE_DATE.textContent = data.create_date.split(' ')[0]
 
   // 프로필 이미지
   if (data.user_profile) {
@@ -44,7 +44,6 @@ function renderProfileForm(data) {
   if (!data) return
 
   document.getElementById('user_nickname').value = data.user_nickname
-  document.getElementById('user_id').value = data.user_id
   document.getElementById('user_phone').value = data.user_phone
   document.getElementById('user_intro').innerHTML = data.user_intro
 }

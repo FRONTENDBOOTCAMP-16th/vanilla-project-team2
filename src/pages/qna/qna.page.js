@@ -243,7 +243,7 @@ async function init() {
         type: post.type,
         // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
         create_date: post.create_date ? post.create_date.trim() : '',
-        commentCount: myComments.length,
+        commentCount: commentsCounts[index] || 0,
       }
     })
 
