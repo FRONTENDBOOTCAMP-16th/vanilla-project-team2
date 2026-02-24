@@ -198,7 +198,7 @@ function bindEvents() {
 async function init() {
   try {
     const postResponse = await fetch(
-      'https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
+      'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
     )
 
     if (!postResponse.ok) throw new Error('데이터 불러오기 실패')
