@@ -1,38 +1,73 @@
 import { postItem } from '../../js/components/postItem.js'
 
-let qnaData = []
+// ---------------------------
+// ✅ 모드 판별 (home vs qna)
+// ---------------------------
+const PAGE = document.body?.dataset?.page || ''
+const IS_HOME = PAGE === 'home'
 
-// 💡 윗부분 수정: 스터디룸처럼 전체 페이지 수(totalPages)를 서버에서 받아옵니다!
+// 형님과 팀원의 변수 합체!
 let currentPage = 1
 let totalPages = 1
+let currentSearch = ''
+let currentCategory = 'ALL'
 const pageCount = 5
+const ITEMS_PER_PAGE = 8
 
-const qnaPostUl = document.querySelector('.main-post__list')
-const paginationList = document.querySelector('.pagination__list')
-const firstButton = document.querySelector('.pagination__control--first')
-const prevButton = document.querySelector('.pagination__control--prev')
-const nextButton = document.querySelector('.pagination__control--next')
-const nextGroupButton = document.querySelector(
-  '.pagination__control--next-group',
-)
-const searchInput = document.querySelector('#main-search__item')
+// DOM 참조 변수들 (팀원 분의 안전한 방식을 따름)
+let qnaPostUl = null
+let paginationList = null
+let firstButton = null
+let prevButton = null
+let nextButton = null
+let nextGroupButton = null
+let searchInput = null
+let paginationRoot = null
+let categoryButtons = null
 
-// 💡 [수정] slice 로직 완전 제거. 서버가 딱 맞게 자른 걸 그대로 보여줍니다.
+// 💡 [형님 코드] 마크다운 제거 전용 함수
+function removeMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`.*?`/g, '')
+    .replace(/[#*_\-~[\]()>]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+// ---------------------------
+// ✅ 렌더: 게시글
+// ---------------------------
 const renderPosts = function (data) {
-  if (data.length === 0) {
+  if (!qnaPostUl) return
+
+  if (!data || data.length === 0) {
     qnaPostUl.innerHTML = `
-    <li class="main-post__no-result">
-      <p>검색 결과가 없습니다.</p>
-    </li>
+      <li class="main-post__no-result">
+        <p>검색 결과가 없습니다.</p>
+      </li>
     `
     return
   }
-  const qnaElementList = data.map((post) => postItem(post)).join('')
-  qnaPostUl.innerHTML = qnaElementList
+
+  // ✅ 팀원 분 코드 적용: 홈 화면이면 딱 8개만 보여주기
+  const displayData = IS_HOME ? data.slice(0, ITEMS_PER_PAGE) : data
+  qnaPostUl.innerHTML = displayData.map((post) => postItem(post)).join('')
 }
 
-// 💡 [수정] data.length 대신 서버가 준 totalPages를 사용해 버튼을 만듭니다.
+// ---------------------------
+// ✅ 렌더: 페이지네이션
+// ---------------------------
 const renderPagination = function () {
+  // ✅ 팀원 분 코드 적용: 홈 화면은 페이지네이션 아예 숨김
+  if (IS_HOME) {
+    if (paginationRoot) paginationRoot.classList.add('hidden')
+    return
+  }
+
+  if (!paginationList || !firstButton || !nextGroupButton) return
+
   let htmlString = ''
   const currentGroup = Math.ceil(currentPage / pageCount)
   const totalGroup = Math.ceil(totalPages / pageCount)
@@ -57,70 +92,33 @@ const renderPagination = function () {
   )
 
   const pageButtons = document.querySelectorAll('.pagination__link')
-  pageButtons.forEach((Btn) => {
-    Btn.addEventListener('click', (e) => {
+  pageButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
       currentPage = Number(e.target.textContent)
-      fetchQnaPosts() // 💡 버튼 누르면 서버에 새 페이지 요청!
+      fetchPosts()
     })
   })
 }
 
-// 💡 페이지 이동 버튼들도 updateUI 대신 fetchQnaPosts(서버 요청)로 변경
-nextGroupButton.addEventListener('click', () => {
-  const currentGroup = Math.ceil(currentPage / pageCount)
-  currentPage = Math.min(currentGroup * pageCount + 1, totalPages)
-  fetchQnaPosts()
-})
-
-firstButton.addEventListener('click', () => {
-  const currentGroup = Math.ceil(currentPage / pageCount)
-  currentPage = (currentGroup - 1) * pageCount
-  fetchQnaPosts()
-})
-
-prevButton.addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--
-    fetchQnaPosts()
-  }
-})
-
-nextButton.addEventListener('click', () => {
-  if (currentPage < totalPages) {
-    currentPage++
-    fetchQnaPosts()
-  }
-})
-
-// 마크다운 제거 전용 함수
-function removeMarkdown(text) {
-  if (!text) return ''
-  return text
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/`.*?`/g, '')
-    .replace(/[#*_\-~[\]()>]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
-
-// 💡 init 함수를 fetchQnaPosts로 변경 (재사용 목적)
-async function fetchQnaPosts() {
+// ---------------------------
+// ✅ 데이터 로드 (형님의 서버 통신 방식)
+// ---------------------------
+async function fetchPosts() {
   try {
-    // 💡 URL에 page=${currentPage} 동적 적용!
-    const response = await fetch(
-      `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=${currentPage}`,
-    )
+    // 💡 홈 화면일 땐 1페이지, Q&A일 땐 페이징/검색/카테고리 적용
+    const url = IS_HOME
+      ? `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1`
+      : `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=${currentPage}&search=${currentSearch}&category=${currentCategory === 'ALL' ? '' : currentCategory}`
 
+    const response = await fetch(url)
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const responseData = await response.json()
-    const actualPosts = responseData.data
+    totalPages = responseData.total_pages || 1
+    const actualPosts = responseData.data || []
     const serverComments = []
 
-    // 💡 핵심: 스터디룸처럼 서버에서 알려주는 전체 페이지 수 저장!
-    totalPages = responseData.total_pages || 1
-
-    if (!Array.isArray(actualPosts)) {
+    if (!Array.isArray(actualPosts) || actualPosts.length === 0) {
       renderPosts([])
       renderPagination()
       return
@@ -131,6 +129,7 @@ async function fetchQnaPosts() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
+    // 댓글 갯수 가져오기
     const commentsPromises = qnaPosts.map(async (post) => {
       try {
         const res = await fetch(
@@ -146,30 +145,25 @@ async function fetchQnaPosts() {
     })
     await Promise.all(commentsPromises)
 
-    qnaData = qnaPosts.map((post) => {
+    // 형님의 데이터 가공 로직 적용
+    const finalData = qnaPosts.map((post) => {
       const myComments = serverComments.filter(
         (comment) => String(comment.post_id) === String(post.post_id),
       )
-
       const cleanText = removeMarkdown(post.contents)
       const summary =
-        cleanText.length > 100 ? cleanText.substring(0, 100) + '...' : cleanText
+        cleanText.length > 500 ? cleanText.substring(0, 500) : cleanText
 
       return {
-        post_id: post.post_id,
-        board_id: post.board_id,
-        user_id: post.user_id,
+        ...post,
         user_nickname: post.user_nickname || post.nickname || '사용자',
-        subject: post.subject,
         contents: summary,
-        type: post.type,
-        create_date: post.create_date ? post.create_date.trim() : '',
+        create_date: post.create_date ? String(post.create_date).trim() : '',
         commentCount: myComments.length,
       }
     })
 
-    // 💡 데이터 가공이 다 끝나면 화면에 그립니다
-    renderPosts(qnaData)
+    renderPosts(finalData)
     renderPagination()
   } catch (error) {
     console.error('에러 발생:', error)
@@ -178,25 +172,102 @@ async function fetchQnaPosts() {
   }
 }
 
-// 검색 기능 로직
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim()
-  const searchedData = qnaData.filter(({ subject }) =>
-    subject.toLowerCase().includes(keyword),
-  )
-  renderPosts(searchedData)
-})
+// ---------------------------
+// ✅ 이벤트 연결
+// ---------------------------
+function bindEvents() {
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      currentSearch = searchInput.value.toLowerCase().trim()
+      currentPage = 1
+      fetchPosts()
+    })
+  }
 
-// 최초 실행!
-fetchQnaPosts()
+  if (categoryButtons) {
+    categoryButtons.forEach((category) => {
+      category.addEventListener('click', () => {
+        categoryButtons.forEach((btn) => btn.classList.remove('is-active'))
+        category.classList.add('is-active')
+        const targetIndex = Number(category.dataset.index)
+        currentCategory =
+          targetIndex === 0 ? 'ALL' : category.textContent.trim().toUpperCase()
+        currentPage = 1
+        fetchPosts()
+      })
+    })
+  }
 
-qnaPostUl.addEventListener('click', (e) => {
-  e.preventDefault()
-  const item = e.target.closest('.main-post__item')
-  if (!item) return
+  // 홈 화면이 아닐 때만 페이지네이션 버튼 작동
+  if (!IS_HOME) {
+    if (nextGroupButton) {
+      nextGroupButton.addEventListener('click', () => {
+        const currentGroup = Math.ceil(currentPage / pageCount)
+        currentPage = Math.min(currentGroup * pageCount + 1, totalPages)
+        fetchPosts()
+      })
+    }
+    if (firstButton) {
+      firstButton.addEventListener('click', () => {
+        const currentGroup = Math.ceil(currentPage / pageCount)
+        currentPage = (currentGroup - 1) * pageCount
+        fetchPosts()
+      })
+    }
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--
+          fetchPosts()
+        }
+      })
+    }
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++
+          fetchPosts()
+        }
+      })
+    }
+  }
 
-  const postId = item.dataset.id
-  localStorage.setItem('selectedPostId', postId)
-  localStorage.setItem('selectedBoardId', 2)
-  location.href = '../readpost/index.html'
-})
+  if (qnaPostUl) {
+    qnaPostUl.addEventListener('click', (e) => {
+      e.preventDefault()
+      const item = e.target.closest('.main-post__item')
+      if (!item) return
+      const postId = item.dataset.id
+      localStorage.setItem('selectedPostId', postId)
+      localStorage.setItem('selectedBoardId', 2)
+
+      // ✅ 팀원 분이 수정한 절대경로 URL 유지
+      location.href = '/src/pages/readpost/index.html'
+    })
+  }
+}
+
+// ---------------------------
+// ✅ 앱 시작 (DOM 로드 타이밍 안전)
+// ---------------------------
+function start() {
+  qnaPostUl = document.querySelector('.main-post__list')
+  paginationList = document.querySelector('.pagination__list')
+  firstButton = document.querySelector('.pagination__control--first')
+  prevButton = document.querySelector('.pagination__control--prev')
+  nextButton = document.querySelector('.pagination__control--next')
+  nextGroupButton = document.querySelector('.pagination__control--next-group')
+  searchInput = document.querySelector('#main-search__item')
+  paginationRoot = document.querySelector('.pagination')
+  categoryButtons = document.querySelectorAll('.main-category__button')
+
+  bindEvents()
+  fetchPosts()
+}
+
+// 팀원 분의 안전한 시작 방식 유지
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', start)
+} else {
+  start()
+}

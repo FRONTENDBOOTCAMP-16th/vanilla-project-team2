@@ -11,12 +11,12 @@
     <script type="module" src="/src/js/main.js"></script>
     <script type="module" src="/src/pages/qna/qna.page.js"></script>
     <script type="module" src="/src/pages/dashboard/dashboard.page.js"></script>
-    <!-- <script type="module" src="/src/js/utils/date.js"></script> -->
-    <!-- <script type="module" src="/src/api/logout.js"></script> -->
+
     <title>사자들의 공부방</title>
   </head>
   <body data-page="home" class="gray-bg">
     <div class="container">
+      <!-- 대시보드 -->
       <section class="dash-cards" aria-label="대시보드 요약 카드">
         <!-- 오늘의 날씨 카드 -->
         <article class="dash-card dash-card--weather">
@@ -70,7 +70,9 @@
           ></span>
         </article>
       </section>
+      <!-- //대시보드 -->
 
+      <!-- 검색 -->
       <section class="main-search__wrapper">
         <form class="main-search__inner">
           <div class="main-search__group">
@@ -107,9 +109,11 @@
           </div>
         </form>
       </section>
+      <!-- //검색 -->
 
       <!-- qna 리스트 -->
       <ul class="main-post__list" data-component="post-list"></ul>
+      <!-- //qna 리스트 -->
     </div>
   </body>
 </html>

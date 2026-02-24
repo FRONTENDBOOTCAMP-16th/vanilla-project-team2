@@ -19,6 +19,10 @@
 }
 
 /* 글쓰기 헤더 */
+.post__title-group{
+   display: flex;
+  align-items: center;
+}
 
 .post__category {
   background-color: #e0e7ff;
@@ -32,14 +36,17 @@
 .post__time {
   display: inline-flex;
   align-items: center;
+  margin-left: auto;
+  
   gap: 4px;
   padding-inline: 8px;
 }
 
 .post__title {
-  margin-block: 16px;
-  font-weight: 500;
-  font-size: 30px;
+  margin-block: 30px;
+  font-weight: var(--fw-header);
+  font-size: var(--fs-header);
+
 }
 
 .post__meta {
@@ -207,7 +214,7 @@ cursor: pointer;
     .post__actions {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       gap: 16px;
       
     
