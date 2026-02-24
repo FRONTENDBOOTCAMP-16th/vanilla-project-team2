@@ -53,7 +53,7 @@ function bindLogout() {
       localStorage.clear()
 
       // ✅ 여기만 "배포된 로그인 경로"로 바꾸기
-      location.href = '/login/index.html' // ← 너희 dist 기준으로 수정!
+      location.href = '/login/index.html'
     },
     { once: true },
   )
@@ -71,7 +71,46 @@ function initByPage() {
   }
 }
 
+function setActiveNav() {
+  const nav = document.querySelector('nav.nav')
+  if (!nav) return
+
+  const links = Array.from(nav.querySelectorAll('a.nav-item'))
+  if (links.length === 0) return
+
+  // 현재 경로 (쿼리스트링/해시 제거)
+  const currentPath = location.pathname.replace(/\/+$/, '')
+
+  // 모든 active 제거
+  links.forEach((a) => a.classList.remove('active'))
+
+  // 1) href와 pathname이 정확히 일치하는 링크 찾기
+  let activeLink = links.find((a) => {
+    const href = a.getAttribute('href')
+    if (!href) return false
+    const hrefPath = new URL(href, location.origin).pathname.replace(/\/+$/, '')
+    return hrefPath === currentPath
+  })
+
+  // 2) 정확히 일치가 없으면 "폴더 index.html" 케이스 보정
+  // 예: /src/pages/qna/ 로 들어왔는데 실제 파일은 /src/pages/qna/index.html 인 경우
+  if (!activeLink) {
+    activeLink = links.find((a) => {
+      const href = a.getAttribute('href')
+      if (!href) return false
+      const hrefPath = new URL(href, location.origin).pathname.replace(
+        /\/+$/,
+        '',
+      )
+      return currentPath.endsWith(hrefPath.replace('/index.html', ''))
+    })
+  }
+
+  if (activeLink) activeLink.classList.add('active')
+}
+
 await loadLayout()
+setActiveNav()
 controlAuthUI()
 bindLogout()
 initByPage()
