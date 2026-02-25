@@ -1,3 +1,4 @@
+//
 const AUTH_ENDPOINT = import.meta.env.VITE_API_AUTH_ENDPOINT
 const REFRESH_ENDPOINT = import.meta.env.VITE_API_REFRESH_ENDPOINT
 const MAX_RETRIES = 3
