@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/src/styles/main.css" />
+    <link rel="stylesheet" href="/src/pages/dashboard/dashboard.css" />
+    <link rel="stylesheet" href="/src/pages/qna/qna.css" />
+
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/pages/qna/qna.page.js"></script>
+    <script type="module" src="/src/pages/dashboard/dashboard.page.js"></script>
+
+    <title>사자들의 공부방</title>
+  </head>
+  <body data-page="home" class="gray-bg">
+    <div class="container">
+      <!-- 대시보드 -->
+      <section class="dash-cards" aria-label="대시보드 요약 카드">
+        <!-- 오늘의 날씨 카드 -->
+        <article class="dash-card dash-card--weather">
+          <div class="dash-card__top">
+            <span class="dash-card__icon" aria-hidden="true">
+              <img src="/assets/icons/icon-cloud.svg" alt="" />
+            </span>
+            <span class="dash-card__label">오늘의 날씨</span>
+          </div>
+
+          <h3 class="dash-card__title">
+            <span class="dash-card__text">날씨 불러오는 중...</span>
+          </h3>
+
+          <p class="dash-card__desc">공부하기 좋은 날씨입니다!</p>
+
+          <!-- 배경 원형 장식 -->
+          <span
+            class="dash-card__blob dash-card__blob--a"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="dash-card__blob dash-card__blob--b"
+            aria-hidden="true"
+          ></span>
+        </article>
+
+        <!-- 오늘의 명언 카드 -->
+        <article class="dash-card dash-card--quote">
+          <div class="dash-card__top">
+            <span class="dash-card__icon" aria-hidden="true">
+              <img src="/assets/icons/icon-light.svg" alt="" />
+            </span>
+            <span class="dash-card__label">오늘의 명언</span>
+          </div>
+
+          <h3 class="dash-card__title dash-card__title--quote">
+            <span class="quote-text">명언 불러오는 중...</span>
+          </h3>
+
+          <p class="dash-card__desc">&nbsp;</p>
+
+          <!-- 배경 원형 장식 -->
+          <span
+            class="dash-card__blob dash-card__blob--a"
+            aria-hidden="true"
+          ></span>
+          <span
+            class="dash-card__blob dash-card__blob--b"
+            aria-hidden="true"
+          ></span>
+        </article>
+      </section>
+      <!-- //대시보드 -->
+
+      <!-- 검색 -->
+      <section class="main-search__wrapper">
+        <form class="main-search__inner">
+          <div class="main-search__group">
+            <svg
+              class="main-search__icon"
+              width="17"
+              height="17"
+              viewBox="0 0 17 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M15.8333 15.8333L12.25 12.25"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <label class="sr-only" for="main-search__item">게시글 검색</label>
+            <input
+              type="search"
+              id="main-search__item"
+              name="main-search__item"
+              placeholder="질문 검색..."
+            />
+          </div>
+        </form>
+      </section>
+      <!-- //검색 -->
+
+      <!-- qna 리스트 -->
+      <ul class="main-post__list" data-component="post-list"></ul>
+      <!-- //qna 리스트 -->
+    </div>
+  </body>
+</html>
