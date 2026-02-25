@@ -270,69 +270,6 @@ function bindEvents() {
 }
 
 // ---------------------------
-// ✅ 데이터 로드
-// ---------------------------
-async function init() {
-  try {
-    const postResponse = await fetch(
-      'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
-    )
-
-    if (!postResponse.ok) throw new Error('데이터 불러오기 실패')
-
-    const responseData = await postResponse.json()
-    const actualPosts = responseData.data
-    if (!Array.isArray(actualPosts)) {
-      updateUI([])
-      return
-    }
-
-    actualPosts.sort(
-      (a, b) => new Date(b.create_date) - new Date(a.create_date),
-    )
-    const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
-
-    // 댓글
-    const commentsPromises = qnaPosts.map(async (post) => {
-      try {
-        const res = await fetch(
-          `https://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${post.post_id}`,
-        )
-        const result = await res.json()
-        console.log(`글번호 ${post.post_id}의 결과:`, result)
-
-        return Array.isArray(result) ? result.length : 0
-      } catch {
-        return 0
-      }
-    })
-
-    const commentsCounts = await Promise.all(commentsPromises)
-
-    qnaData = qnaPosts.map((post, index) => {
-      return {
-        post_id: post.post_id,
-        board_id: post.board_id,
-        user_id: post.user_id,
-        user_nickname: post.user_nickname || post.nickname || '사용자',
-        subject: post.subject,
-        contents: post.contents,
-        type: post.type,
-        // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
-        create_date: post.create_date ? post.create_date.trim() : '',
-        commentCount: commentsCounts[index] || 0,
-      }
-    })
-
-    currentPage = 1
-    updateUI(qnaData)
-  } catch (error) {
-    console.error('에러 발생:', error)
-    updateUI([])
-  }
-}
-
-// ---------------------------
 // ✅ 앱 시작 (DOM 로드 타이밍 안전)
 // ---------------------------
 function start() {
