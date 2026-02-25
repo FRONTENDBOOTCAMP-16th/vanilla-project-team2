@@ -74,6 +74,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         radio.checked = true
       }
 
+      // 수정 모드에서는 게시판 변경 불가 (자습방에 댓글 노출 안함)
+      const boardRadios = document.querySelectorAll('input[name="boardType"]')
+
+      boardRadios.forEach((r) => {
+        r.style.cursor = 'not-allowed'
+        r.parentElement.style.opacity = '0.6'
+        r.tabIndex = -1
+
+        // 값 변경 방지
+        r.addEventListener('change', () => {
+          boardRadios.forEach((radio) => {
+            radio.checked = radio.value === boardValue
+          })
+        })
+      })
+
       // 미리보기 다시 렌더
       renderPreview()
     } catch (error) {
