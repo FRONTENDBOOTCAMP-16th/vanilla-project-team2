@@ -246,10 +246,7 @@ async function init() {
       // 💡 [방어막] 데이터가 배열인지 확인 (백엔드에서 "댓글이 없습니다"가 올 경우 대비)
       const commentList = Array.isArray(data) ? data : []
 
-      if (commentList.length === 0) {
-        list.innerHTML = `<p class='comment-empty'>첫 답변을 남겨보세요.</p>`
-        return
-      }
+
 
       //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
 

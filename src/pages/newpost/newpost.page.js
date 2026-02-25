@@ -5,31 +5,17 @@ import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 import { checkToken } from '../../api/JWT.js'
 
-// // 유저가 아니라면 되돌리기
-// function userInit() {
-//   const user = await checkToken(); // 유저 확인 로직
 
-//   if (!user) {
-//     alert('로그인이 필요합니다.');
-//     window.location.href = '/src/pages/users/login/index.html';
-//     return; // 이제 함수 안이므로 정상 작동합니다.
-//   }
-
-//   // 로그인했을 때만 실행될 나머지 코드들...
-//   console.log('로그인 성공, 페이지 로드를 시작합니다.');
-// }
-
-// userInit();
-
+// 유저가 아니라면 되돌리기
 async function userInit() {
   const user = await checkToken()
 
   if (!user) {
     alert('로그인이 필요합니다.')
     window.location.href = '/src/pages/users/login/index.html'
-    return
+    return // 이제 함수 안이므로 정상 작동합니다
   }
-
+  // 로그인했을 때만 실행될 나머지 코드들...
   console.log('로그인 성공')
 }
 

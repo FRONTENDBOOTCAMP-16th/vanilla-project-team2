@@ -131,6 +131,7 @@
 
   .post__content pre {
   margin: 1.2em 0;
+  font-size: var(--fs-text-sm);
 }
 
  
