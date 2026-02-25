@@ -5,7 +5,28 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
-const PROFILE_BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/'
+const PROFILE_BASE_URL =
+  'https://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/'
+
+//글, 댓글 작성자 프로필 이미지 가져오기
+function renderAvatar(profile, name) {
+  const firstChar = name.charAt(0)
+
+  if (profile) {
+    return `
+      <div class="avatar">
+        <img class="avatar__image"
+             src="${PROFILE_BASE_URL}${profile}"
+             alt="${name}" />
+      </div>
+    `
+  }
+  return `
+    <div class="avatar avatar--initial">
+      ${firstChar}
+    </div>
+  `
+}
 
 // 로그인한 회원만 글에 접근
 async function userInit() {
@@ -111,25 +132,8 @@ async function init() {
   const authorNickname = post.user_nickname || post.nickname || '사용자'
   document.querySelector('.post__author-name').textContent = authorNickname
   const authorAvatar = document.querySelector('.post__author-avatar')
-  const firstChar = authorNickname.charAt(0)
 
-  // 작성자 프로필 이미지
-  // if (post.profile_image) {
-  //   authorAvatar.innerHTML = `
-  //     <img class="comment__avatar-image" src= "${post.profile_image}" alt="${authorNickname}" />`
-  // } else {
-  //   authorAvatar.innerHTML = `
-  //     <span class="comment__avatar-initial"> ${firstChar} </span>`
-  // }
-  if (post.user_profile) {
-    authorAvatar.innerHTML = `
-    <img class="comment__avatar-image"
-         src="${PROFILE_BASE_URL}${post.user_profile}"
-         alt="${authorNickname}" />`
-  } else {
-    authorAvatar.innerHTML = `
-    <span class="comment__avatar-initial">${firstChar}</span>`
-  }
+  authorAvatar.innerHTML = renderAvatar(post.user_profile, authorNickname)
 
   // 시간 렌더링
   const timeElement = document.querySelector('.post__time time')
@@ -252,18 +256,14 @@ async function init() {
       list.innerHTML = commentList
         .map((cmt) => {
           const nickname = cmt.user_nickname || '익명'
-          const firstChar = nickname.charAt(0)
+
           console.log(cmt)
 
           return `
       <li class="comment__item" data-id="${cmt.comment_id}">
         <article class="comment__card">
           <div class="comment__avatar">
-            ${
-              cmt.user_profile
-                ? `<img class="comment__avatar-image" src="${PROFILE_BASE_URL}${cmt.user_profile}" alt="${nickname}" />`
-                : `<span class="comment__avatar-initial">${firstChar}</span>`
-            }
+            ${renderAvatar(cmt.user_profile, nickname)}
           </div>
           <div class="comment__meta">
             <span class="comment__author">${nickname}</span>
