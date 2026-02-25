@@ -58,6 +58,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 17px;
+  font-weight: 500;
 }
 
 .post__author {
@@ -154,6 +156,7 @@
   border: 1px solid lightgray;
   border-radius: 12px;
   padding: 12px;
+  line-height: 1.4;
 
 }
 
@@ -193,16 +196,16 @@ cursor: pointer;
     display: grid;
     grid-template-columns: 40px 1fr;
     column-gap: 16px;
-
     
- 
   }
+
 
   .comment__meta {
     display: flex;
     align-items: center;
     gap: 8px;
     grid-column: 2;
+    font-weight: 500;
 
     .comment__time {
       font-size: var(--fs-time);
@@ -213,9 +216,10 @@ cursor: pointer;
 
   .comment__text {
     grid-column: 2;
-    margin-block: 8px;
+    margin-top: 0px;
     white-space: pre-line;
-    line-height: 1.2;
+    line-height: 1.4;
+
   }
 
 

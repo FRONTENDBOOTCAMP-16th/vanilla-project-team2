@@ -1,15 +1,17 @@
 // 마크다운 라이브러리
 // sanitize 라이브러리
-
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 import { checkToken } from '../../api/JWT.js'
 
+const params = new URLSearchParams(location.search)
+const editPostId = params.get('postId')
+const BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla'
 
-// 유저가 아니라면 되돌리기
-async function userInit() {
+// 글쓰기, 수정하기 페이지 진입시 회원 검증
+document.addEventListener('DOMContentLoaded', async () => {
   const user = await checkToken()
-
+  // 유저가 아니라면 되돌리기
   if (!user) {
     alert('로그인이 필요합니다.')
     window.location.href = '/src/pages/users/login/index.html'
@@ -17,27 +19,22 @@ async function userInit() {
   }
   // 로그인했을 때만 실행될 나머지 코드들...
   console.log('로그인 성공')
-}
 
-userInit()
+  //==========================================================================================
 
-// 수정 (값이 있으면 수정, null이면 새글 작성)
-const params = new URLSearchParams(location.search)
-const editPostId = params.get('postId')
-// let originalPost = null
-
-
-
-// 새 글쓰기
-document.addEventListener('DOMContentLoaded', async () => {
   const form = document.querySelector('.newpost__form')
   const title = document.getElementById('title')
+  const pageTitle = document.querySelector('.newpost__title')
+  const primaryBtn = document.querySelector('.button__text')
+  const titleDesc = document.querySelector('.newpost__desc')
   const textarea = document.getElementById('content')
   const previewContent = document.getElementById('previewContent')
+  const categorySelect = document.querySelector('[name="categorySelect"]')
 
+  // 마크다운 줄바꿈 허용
   marked.setOptions({ breaks: true })
 
-  //미리보기
+  // 미리보기
   function renderPreview() {
     const markdownTitle = title.value.trim()
     const markdownContent = textarea.value.trim()
@@ -47,7 +44,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p>내용 미리보기</p>`
       return
     }
-
+    // 마크다운 XSS방지 sanitizing
     const rawHtml = `<h2>${markdownTitle}</h2>` + marked.parse(markdownContent)
     const sanitizedHtml = DOMPurify.sanitize(rawHtml)
 
@@ -58,55 +55,46 @@ document.addEventListener('DOMContentLoaded', async () => {
   textarea.addEventListener('input', renderPreview)
   renderPreview()
 
+  // 수정 모드일 경우, 수정하려는 글 데이터 가져오기
   if (editPostId) {
-    if (editPostId) {
-      const pageTitle = document.querySelector('.newpost__title')
-      const primaryBtn = document.querySelector('.button__text')
-
-      if (pageTitle) pageTitle.textContent = '게시글 수정'
-      if (primaryBtn) primaryBtn.textContent = '수정 완료'
-    }
-
     try {
+      //read.php에 postId고유값을 보내서 해당 글 데이터를 JSON 형태로 GET(-> 기본값) 메서드로 받아오기
       const response = await fetch(
-        `http://leedh9276.dothome.co.kr/likelion-vanilla/board/read.php?post_id=${editPostId}`,
+        `${BASE_URL}/board/read.php?post_id=${editPostId}`,
       )
-      if (!response.ok) throw new Error('게시글 불러오기 실패')
 
+      if (!response.ok) throw new Error('게시글 불러오기 실패')
+      //json
       const post = await response.json()
 
-      // console.log('불러온 게시글:', post)
+      // 타이틀, 페이지 헤드, 버튼 문구 변경
+      document.title = '글 수정 - 아기사자 공부방'
+      if (pageTitle) pageTitle.textContent = '게시글 수정'
+      if (primaryBtn) primaryBtn.textContent = '수정 완료'
+      if (titleDesc)
+        titleDesc.textContent =
+          '내가 쓴 글을 수정합니다. (※게시판 이동은 불가합니다.)'
 
       // 값 세팅
       title.value = post.subject
       textarea.value = post.contents
-
-      // 카테고리 세팅
-      document.querySelector('[name="categorySelect"]').value = post.type
+      categorySelect.value = post.type
 
       // 게시판 세팅
       const boardValue = Number(post.board_id) === 2 ? 'qna' : 'study'
-      const selector = `input[name="boardType"][value="${boardValue}"]`
-      const radio = document.querySelector(selector)
-
+      const radio = document.querySelector(
+        `input[name="boardType"][value="${boardValue}"]`,
+      )
+      // 라디오버튼 값이 존재하면 체크
       if (radio) {
         radio.checked = true
       }
 
       // 수정 모드에서는 게시판 변경 불가 (자습방에 댓글 노출 안함)
       const boardRadios = document.querySelectorAll('input[name="boardType"]')
-
+      // 라디오 버튼이 두개니까 forEach로 하나씩 꺼내와서 disabled 시켜줘야 함.
       boardRadios.forEach((r) => {
-        r.style.cursor = 'not-allowed'
-        r.parentElement.style.opacity = '0.6'
-        r.tabIndex = -1
-
-        // 값 변경 방지
-        r.addEventListener('change', () => {
-          boardRadios.forEach((radio) => {
-            radio.checked = radio.value === boardValue
-          })
-        })
+        r.disabled = true
       })
 
       // 미리보기 다시 렌더
@@ -122,100 +110,76 @@ document.addEventListener('DOMContentLoaded', async () => {
     history.back()
   })
 
-  // 작성완료 > 게시물 목록으로 이동
+  //==========================================================================================
+
+  // 작성완료 버튼 -> 게시물 목록으로 이동
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault()
-    console.log('글 작성 폼 제출됨')
+
     const formData = new FormData(form)
+    const accessToken = localStorage.getItem('access_token')
 
+    // 에러날 경우 대비 하여 await 보다 상위에서 보호
     try {
-      let response
+      // 수정할 경우
+      if (editPostId) {
+        // payload(body)가 값을 가짐 (!= null)
+        const updatePayload = {
+          board_id: formData.get('boardType') === 'qna' ? 2 : 1,
+          user_uid: user.UID,
+          user_id: user.user_id,
+          subject: formData.get('title'),
+          contents: formData.get('content'),
+          type: formData.get('categorySelect'),
+          post_id: editPostId,
+        }
+        // 서버의 update.php 를 페치한다 (PATCH 메소드, JSON 방식으로)
+        const response = await fetch(`${BASE_URL}/board/update.php`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify(updatePayload),
+        })
+        // 만약 네트워크 실패(->catch)가 아닌 400-500과 같은 오류일 경우,
+        if (!response.ok) throw new Error('수정 실패')
 
-      const userInfo = await checkToken()
-
-      if (!userInfo) {
-        alert('로그인이 필요합니다.')
-        window.location.href = '/src/pages/users/login/index.html';
-        return
+        // 글 작성 (editPostId 가 없는 경우,)
+      } else {
+        // 생성된 데이터를 담을 formData를 만듦
+        // key : value(서버의 칼럼명)
+        const writeData = new FormData()
+        writeData.append(
+          'board_id',
+          formData.get('boardType') === 'qna' ? 2 : 1,
+        )
+        writeData.append('user_id', user.UID)
+        writeData.append('subject', formData.get('title'))
+        writeData.append('contents', formData.get('content'))
+        writeData.append('type', formData.get('categorySelect'))
+        // 서버의 write.php에 POST 메서드로 새롭게 만든 폼을 보내기 위해 writeData를 만듦
+        const response = await fetch(`${BASE_URL}/board/write.php`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          // formData의 이름 (JSON으로 보낼 땐 문자열화 해서 보내고 formData로 보낼땐 변수로 만들어 보냄)
+          body: writeData,
+        })
+        // catch가 아닌 400-500 에러일 경우 (네트워크가 실패한 경우: fetch > catch, 400 - 500 은 네트워크 실패가 X)
+        if (!response.ok) throw new Error('작성 실패')
       }
-      const accessToken = localStorage.getItem('access_token')
-
-console.log('현재 로그인 유저:', userInfo)
-console.log('토큰:', accessToken)
-
-if (editPostId) {
-  const catagories = formData.get('categorySelect')
-  // const catagoriesPayload = JSON.stringify(catagories)
-
-  const updatePayload = {
-    board_id: formData.get('boardType') === 'qna' ? 2 : 1,
-    user_uid: userInfo.UID,
-    user_id: userInfo.user_id,
-    subject: formData.get('title'),
-    contents: formData.get('content'),
-    type: catagories,
-    post_id: editPostId,
-  }
-
-  response = await fetch(
-    'http://leedh9276.dothome.co.kr/likelion-vanilla/board/update.php',
-    {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(updatePayload),
-    },
-  )
-  console.log(localStorage.getItem('access_token'))
-
-
-  if (!response.ok) throw new Error('수정 실패')
-
-  const result = await response.text()
-  console.log('수정 응답:', result)
-
-  if (!result.includes('success') && result !== '1') {
-    throw new Error('DB 업데이트 실패')
-  }
-} else {
-  const catagories = formData.get('categorySelect')
-
-  const writeData = new FormData()
-  writeData.append('board_id', formData.get('boardType') === 'qna' ? 2 : 1)
-  writeData.append('user_id', userInfo.UID)
-  writeData.append('subject', formData.get('title'))
-  writeData.append('contents', formData.get('content'))
-  writeData.append('type', catagories)
-
-  response = await fetch(
-    'http://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php',
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: writeData,
-    },
-  )
-  if (!response.ok) throw new Error('수정 실패')
-
-  const result = await response.text()
-  console.log('서버 응답:', result)
-}
-
-      alert('글이 저장되었습니다')
 
       // 작성 완료 후 선택한 게시판 리스트로 이동
-      // src 폴더는 배포 후 사라지므로  상대경로를 이용하여 이동시킴 (location.href = `/src/pages/${board}/index.html` ❌)
+      alert('글이 저장되었습니다')
+      // 작성 후 이동할 게시판 리스트 경로 설정 (폼데이터에 선택되어 들어간 게시판)
       const board = formData.get('boardType')
-
       location.href =
         board === 'qna' ? '../qna/index.html' : '../studyroom/index.html'
 
-      // form.reset()
+      // 네트워크 실패시 에러 알럿
     } catch (error) {
       console.error(error)
       alert('에러 발생')
