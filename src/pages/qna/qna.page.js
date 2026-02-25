@@ -63,14 +63,11 @@ const renderPagination = function () {
 
   if (!paginationList || !firstButton || !nextGroupButton) return
 
-  // 💡 [핵심 추가] 검색 결과가 0개면 전체를 숨기고 함수 종료
-  // totalPages가 0이거나 데이터가 아예 없을 때를 대비합니다.
-  if (totalPages === 0 || totalPages === undefined) {
+  if (totalPages === 0 || !totalPages) {
     paginationList.innerHTML = ''
-    if (paginationRoot) paginationRoot.classList.add('hidden') // 아예 숨김
+    if (paginationRoot) paginationRoot.classList.add('hidden')
     return
   } else {
-    // 결과가 있으면 다시 보이게 처리
     if (paginationRoot) paginationRoot.classList.remove('hidden')
   }
 
@@ -80,11 +77,6 @@ const renderPagination = function () {
 
   let startPage = (currentGroup - 1) * pageCount + 1
   let endPage = Math.min(startPage + pageCount - 1, totalPages)
-
-  // 💡 [추가 확인] 만약 데이터가 있는데 totalPages가 0으로 오면 1로 보정해서 숫자 1은 나오게 함
-  if (totalPages > 0 && startPage > endPage) {
-    endPage = startPage
-  }
 
   for (let i = startPage; i <= endPage; i++) {
     const activeClass = i === currentPage ? 'is-active' : ''
@@ -96,22 +88,17 @@ const renderPagination = function () {
   }
   paginationList.innerHTML = htmlString
 
-  // 💡 [수정] 1페이지일 때 '맨 처음으로'와 '이전' 버튼 숨기기
-  firstButton.classList.toggle('hidden', currentPage === 1)
+  firstButton.classList.toggle('hidden', currentGroup === 1)
 
   if (prevButton) {
     prevButton.classList.toggle('hidden', currentPage === 1)
   }
 
-  // 💡 [수정] 마지막 페이지일 때 '다음' 버튼 숨기기
   if (nextButton) {
     nextButton.classList.toggle('hidden', currentPage === totalPages)
   }
 
-  nextGroupButton.classList.toggle(
-    'hidden',
-    currentGroup === totalGroup || totalPages === 0,
-  )
+  nextGroupButton.classList.toggle('hidden', currentGroup === totalGroup)
 
   const pageButtons = document.querySelectorAll('.pagination__link')
   pageButtons.forEach((btn) => {
@@ -123,7 +110,7 @@ const renderPagination = function () {
 }
 
 // ---------------------------
-// ✅ 데이터 로드 (형님의 서버 통신 방식)
+// ✅ 데이터 로드
 // ---------------------------
 async function fetchPosts() {
   try {
@@ -168,7 +155,6 @@ async function fetchPosts() {
     })
     await Promise.all(commentsPromises)
 
-    // 형님의 데이터 가공 로직 적용
     const finalData = qnaPosts.map((post) => {
       const myComments = serverComments.filter(
         (comment) => String(comment.post_id) === String(post.post_id),
@@ -232,7 +218,7 @@ function bindEvents() {
     if (firstButton) {
       firstButton.addEventListener('click', () => {
         const currentGroup = Math.ceil(currentPage / pageCount)
-        currentPage = (currentGroup - 1) * pageCount
+        currentPage = Math.max(1, (currentGroup - 1) * pageCount)
         fetchPosts()
       })
     }
@@ -263,7 +249,6 @@ function bindEvents() {
       localStorage.setItem('selectedPostId', postId)
       localStorage.setItem('selectedBoardId', 2)
 
-      // ✅ 팀원 분이 수정한 절대경로 URL 유지
       location.href = '/src/pages/readpost/index.html'
     })
   }
