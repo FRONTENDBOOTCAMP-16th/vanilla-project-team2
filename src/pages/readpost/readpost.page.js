@@ -5,15 +5,23 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
-const PROFILE_BASE_URL = 'http://leedh9276.dothome.co.kr/user/uploads/profile/'
+const PROFILE_BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/'
 
 // 로그인한 회원만 글에 접근
-const user = await checkToken()
+async function userInit() {
+  const user = await checkToken(); // 유저 확인 로직
 
-if (!user) {
-  alert('로그인이 필요합니다.')
-  window.location.href = '/src/index.html'
+  if (!user) {
+    alert('로그인이 필요합니다.');
+    window.location.href = '/src/index.html';
+    return; // 이제 함수 안이므로 정상 작동합니다.
+  }
+
+  // 로그인했을 때만 실행될 나머지 코드들...
+  console.log('로그인 성공, 페이지 로드를 시작합니다.');
 }
+
+userInit();
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const params = new URLSearchParams(location.search)
@@ -115,7 +123,7 @@ async function init() {
   if (post.user_profile) {
     authorAvatar.innerHTML = `
     <img class="comment__avatar-image"
-         src="http://leedh9276.dothome.co.kr/user/uploads/profile/${post.user_profile}"
+         src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${post.user_profile}"
          alt="${authorNickname}" />`
   } else {
     authorAvatar.innerHTML = `
@@ -276,9 +284,10 @@ async function init() {
     const contentValue = commentInput.value.trim()
     if (!contentValue) return
 
+
     const formData = new FormData()
     formData.append('post_id', postId)
-    formData.append('user_id', 1)
+    formData.append('user_id', user.UID)
     formData.append('content', contentValue)
 
     try {

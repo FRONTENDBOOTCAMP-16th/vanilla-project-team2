@@ -79,7 +79,7 @@ loginButton.addEventListener('click', (e) => {
             localStorage.setItem('access_token', data.access_token)
             localStorage.setItem('refresh_token', data.refresh_token)
             localStorage.setItem('auth', true)
-            window.location.href = `src/pages/users/mypage/index.html`
+            window.location.href = `/src/pages/users/mypage/index.html`
           }
           return (data = data.user_id)
         })
