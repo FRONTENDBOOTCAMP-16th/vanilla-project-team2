@@ -287,6 +287,8 @@ async function init() {
 
 
     const formData = new FormData()
+    const user = await checkToken()
+    
     formData.append('post_id', postId)
     formData.append('user_id', user.UID)
     formData.append('content', contentValue)
