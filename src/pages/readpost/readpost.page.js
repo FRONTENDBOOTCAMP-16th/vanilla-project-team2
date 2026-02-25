@@ -166,13 +166,13 @@ async function init() {
       const response = await fetch(
         'http://leedh9276.dothome.co.kr/likelion-vanilla/board/delete.php',
         {
-          method: 'DELETE',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             user_id: uid,
-            post_id: [post.post_id],
+            post_id: post.post_id,
           }),
         },
       )
