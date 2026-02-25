@@ -11,18 +11,19 @@
   </head>
   <body data-page="studyroom" data-show-header="true" data-show-footer="true">
     <div class="container">
-      <main class="main-box container gray-bg">
-        <div class="main-title__wrapper">
-          <h2 class="main-title__heading">자습방</h2>
-          <p class="main-title__text">
+      <main class="studyroom container studyroom--gray-bg">
+        <div class="studyroom__header">
+          <h2 class="studyroom__title">자습방</h2>
+          <p class="studyroom__description">
             학습한 내용을 정리하고 복습하며 성장하세요
           </p>
         </div>
-        <section class="main-search__wrapper">
-          <form class="main-search__inner">
-            <div class="main-search__group">
+
+        <section class="search">
+          <form class="search__form">
+            <div class="search__group">
               <svg
-                class="main-search__icon"
+                class="search__icon"
                 width="17"
                 height="17"
                 viewBox="0 0 17 17"
@@ -44,21 +45,23 @@
                   stroke-linejoin="round"
                 />
               </svg>
-              <label class="sr-only" for="main-search__item">게시글 검색</label>
+              <label class="sr-only" for="search__input">게시글 검색</label>
               <input
+                class="search__input"
                 type="search"
-                id="main-search__item"
-                name="main-search__item"
+                id="search__input"
+                name="search__input"
                 placeholder="게시글 검색..."
               />
             </div>
           </form>
         </section>
-        <div class="main-category__wrapper">
-          <ul class="main-category__list">
-            <li class="main-category__item">
+
+        <div class="category">
+          <ul class="category__list">
+            <li class="category__item">
               <button
-                class="main-category__button is-active"
+                class="category__button category__button--active"
                 data-index="0"
                 data-topic="전체"
                 type="button"
@@ -66,9 +69,9 @@
                 전체
               </button>
             </li>
-            <li class="main-category__item">
+            <li class="category__item">
               <button
-                class="main-category__button"
+                class="category__button"
                 data-index="1"
                 data-topic="HTML"
                 type="button"
@@ -76,9 +79,9 @@
                 HTML
               </button>
             </li>
-            <li class="main-category__item">
+            <li class="category__item">
               <button
-                class="main-category__button"
+                class="category__button"
                 data-index="2"
                 data-topic="CSS"
                 type="button"
@@ -86,9 +89,9 @@
                 CSS
               </button>
             </li>
-            <li class="main-category__item">
+            <li class="category__item">
               <button
-                class="main-category__button"
+                class="category__button"
                 data-index="3"
                 data-topic="JavaScript"
                 type="button"
@@ -96,9 +99,9 @@
                 JAVASCRIPT
               </button>
             </li>
-            <li class="main-category__item">
+            <li class="category__item">
               <button
-                class="main-category__button"
+                class="category__button"
                 data-index="4"
                 data-topic="React"
                 type="button"
@@ -106,9 +109,9 @@
                 REACT
               </button>
             </li>
-            <li class="main-category__item">
+            <li class="category__item">
               <button
-                class="main-category__button"
+                class="category__button"
                 data-index="5"
                 data-topic="기타"
                 type="button"
@@ -118,14 +121,19 @@
             </li>
           </ul>
         </div>
-        <div class="main-post__wrapper">
-          <ul class="main-post__list"></ul>
+
+        <div class="post">
+          <ul class="post__list"></ul>
         </div>
+
         <nav class="pagination" aria-label="게시판 페이지 네비게이션">
-          <div style="display: flex; align-items: center; gap: 6px">
+          <div
+            class="pagination__inner"
+            style="display: flex; align-items: center; gap: 6px"
+          >
             <button
               type="button"
-              class="pagination__control pagination__control--first hidden"
+              class="pagination__button pagination__button--first pagination__button--hidden"
               aria-label="처음 페이지"
             >
               <svg
@@ -144,7 +152,7 @@
             </button>
             <button
               type="button"
-              class="pagination__control pagination__control--prev"
+              class="pagination__button pagination__button--prev"
               aria-label="이전 페이지"
             >
               <svg
@@ -165,7 +173,7 @@
 
             <button
               type="button"
-              class="pagination__control pagination__control--next"
+              class="pagination__button pagination__button--next"
               aria-label="다음 페이지"
             >
               <svg
@@ -183,7 +191,7 @@
             </button>
             <button
               type="button"
-              class="pagination__control pagination__control--next-group hidden"
+              class="pagination__button pagination__button--next-group pagination__button--hidden"
               aria-label="다음 5페이지"
             >
               <svg
