@@ -3,7 +3,7 @@ import { checkToken } from '../../../api/JWT.js'
 const fetchedData = await checkToken()
 if (fetchedData) {
   alert('이미 로그인 되어 있습니다.')
-  window.location.href = '/src/index.html'
+  window.location.href = '/index.html'
 }
 
 // 로그인
