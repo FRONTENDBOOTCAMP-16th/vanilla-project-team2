@@ -72,6 +72,7 @@ async function init() {
   }
 
   console.log('user_id', post.user_id)
+  console.log('작성자 user_profile:', post.user_profile)
 
   // ===== 글쓴이에게만 수정/삭제 버튼 노출 =====
   const actions = document.querySelector('.post__actions')
@@ -123,7 +124,7 @@ async function init() {
   if (post.user_profile) {
     authorAvatar.innerHTML = `
     <img class="comment__avatar-image"
-         src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${post.user_profile}"
+         src="${PROFILE_BASE_URL}${post.user_profile}"
          alt="${authorNickname}" />`
   } else {
     authorAvatar.innerHTML = `
@@ -233,6 +234,7 @@ async function init() {
     console.log('서버에서 온 알맹이 데이터:', result)
     // 답변 렌더링 함수
     const realData = result.data || result
+    console.log('댓글 데이터 확인:', realData)
     function renderComments(data) {
       // 💡 매개변수 이름을 data로 명확히!
       const list = document.querySelector('.comment__list')
@@ -251,6 +253,7 @@ async function init() {
         .map((cmt) => {
           const nickname = cmt.user_nickname || '익명'
           const firstChar = nickname.charAt(0)
+          console.log(cmt)
 
           return `
       <li class="comment__item" data-id="${cmt.comment_id}">
