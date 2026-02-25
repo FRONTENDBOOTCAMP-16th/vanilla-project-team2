@@ -106,72 +106,72 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
       const accessToken = localStorage.getItem('access_token')
 
-      if (editPostId) {
-        const catagories = formData.get('categorySelect')
-        // const catagoriesPayload = JSON.stringify(catagories)
+console.log('현재 로그인 유저:', userInfo)
+console.log('토큰:', accessToken)
 
-        const updatePayload = {
-          board_id: formData.get('boardType') === 'qna' ? 2 : 1,
-          user_uid: userInfo.UID,
-          user_id: userInfo.user_id,
-          subject: formData.get('title'),
-          contents: formData.get('content'),
-          type: catagories,
-          post_id: editPostId,
-        }
+if (editPostId) {
+  const catagories = formData.get('categorySelect')
+  // const catagoriesPayload = JSON.stringify(catagories)
 
-        response = await fetch(
-          'http://leedh9276.dothome.co.kr/likelion-vanilla/board/update.php',
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(updatePayload),
-          },
-        )
-        console.log(localStorage.getItem('access_token'))
+  const updatePayload = {
+    board_id: formData.get('boardType') === 'qna' ? 2 : 1,
+    user_uid: userInfo.UID,
+    user_id: userInfo.user_id,
+    subject: formData.get('title'),
+    contents: formData.get('content'),
+    type: catagories,
+    post_id: editPostId,
+  }
 
-        // headers: { 'Content-Type': 'application/json' },
-        // body: JSON.stringify(data),
-        if (!response.ok) throw new Error('수정 실패')
+  response = await fetch(
+    'http://leedh9276.dothome.co.kr/likelion-vanilla/board/update.php',
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(updatePayload),
+    },
+  )
+  console.log(localStorage.getItem('access_token'))
 
-        const result = await response.text()
-        console.log('수정 응답:', result)
+  // headers: { 'Content-Type': 'application/json' },
+  // body: JSON.stringify(data),
+  if (!response.ok) throw new Error('수정 실패')
 
-        if (!result.includes('success') && result !== '1') {
-          throw new Error('DB 업데이트 실패')
-        }
-      } else {
-        const catagories = formData.get('categorySelect')
-        // const catagoriesPayload = JSON.stringify(catagories)
+  const result = await response.text()
+  console.log('수정 응답:', result)
 
-        const writeData = new FormData()
-        writeData.append(
-          'board_id',
-          formData.get('boardType') === 'qna' ? 2 : 1,
-        )
-        writeData.append('user_id', userInfo.UID)
-        writeData.append('subject', formData.get('title'))
-        writeData.append('contents', formData.get('content'))
-        writeData.append('type', catagories)
+  if (!result.includes('success') && result !== '1') {
+    throw new Error('DB 업데이트 실패')
+  }
+} else {
+  const catagories = formData.get('categorySelect')
+  // const catagoriesPayload = JSON.stringify(catagories)
 
-        response = await fetch(
-          'http://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php',
-          {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-            body: writeData,
-          },
-        )
-        if (!response.ok) throw new Error('수정 실패')
+  const writeData = new FormData()
+  writeData.append('board_id', formData.get('boardType') === 'qna' ? 2 : 1)
+  writeData.append('user_id', userInfo.UID)
+  writeData.append('subject', formData.get('title'))
+  writeData.append('contents', formData.get('content'))
+  writeData.append('type', catagories)
 
-        const result = await response.text()
-        console.log('서버 응답:', result)
-      }
+  response = await fetch(
+    'http://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: writeData,
+    },
+  )
+  if (!response.ok) throw new Error('수정 실패')
+
+  const result = await response.text()
+  console.log('서버 응답:', result)
+}
 
       alert('글이 저장되었습니다')
 

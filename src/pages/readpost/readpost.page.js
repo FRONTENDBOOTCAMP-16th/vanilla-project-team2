@@ -1,10 +1,19 @@
 // 마크다운 라이브러리
 // sanitize 라이브러리
+import { checkToken } from '../../api/JWT.js'
 import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
-import { checkToken } from '../../api/JWT.js'
+
 const PROFILE_BASE_URL = 'http://leedh9276.dothome.co.kr/user/uploads/profile/'
+
+// 로그인한 회원만 글에 접근
+const user = await checkToken()
+
+if (!user) {
+  alert('로그인이 필요합니다.')
+  window.location.href = '/src/index.html'
+}
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const params = new URLSearchParams(location.search)
@@ -53,6 +62,8 @@ async function init() {
     console.log('글 없음 - 데이터 구조를 확인해야 합니다.')
     return
   }
+
+  console.log('user_id', post.user_id)
 
   // ===== 글쓴이에게만 수정/삭제 버튼 노출 =====
   const actions = document.querySelector('.post__actions')
