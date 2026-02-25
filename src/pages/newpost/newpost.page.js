@@ -171,8 +171,7 @@ if (editPostId) {
   )
   console.log(localStorage.getItem('access_token'))
 
-  // headers: { 'Content-Type': 'application/json' },
-  // body: JSON.stringify(data),
+
   if (!response.ok) throw new Error('수정 실패')
 
   const result = await response.text()
@@ -183,7 +182,6 @@ if (editPostId) {
   }
 } else {
   const catagories = formData.get('categorySelect')
-  // const catagoriesPayload = JSON.stringify(catagories)
 
   const writeData = new FormData()
   writeData.append('board_id', formData.get('boardType') === 'qna' ? 2 : 1)
