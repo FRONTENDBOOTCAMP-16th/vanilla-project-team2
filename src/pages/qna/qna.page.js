@@ -63,12 +63,28 @@ const renderPagination = function () {
 
   if (!paginationList || !firstButton || !nextGroupButton) return
 
+  // 💡 [핵심 추가] 검색 결과가 0개면 전체를 숨기고 함수 종료
+  // totalPages가 0이거나 데이터가 아예 없을 때를 대비합니다.
+  if (totalPages === 0 || totalPages === undefined) {
+    paginationList.innerHTML = ''
+    if (paginationRoot) paginationRoot.classList.add('hidden') // 아예 숨김
+    return
+  } else {
+    // 결과가 있으면 다시 보이게 처리
+    if (paginationRoot) paginationRoot.classList.remove('hidden')
+  }
+
   let htmlString = ''
   const currentGroup = Math.ceil(currentPage / pageCount)
   const totalGroup = Math.ceil(totalPages / pageCount)
 
   let startPage = (currentGroup - 1) * pageCount + 1
   let endPage = Math.min(startPage + pageCount - 1, totalPages)
+
+  // 💡 [추가 확인] 만약 데이터가 있는데 totalPages가 0으로 오면 1로 보정해서 숫자 1은 나오게 함
+  if (totalPages > 0 && startPage > endPage) {
+    endPage = startPage
+  }
 
   for (let i = startPage; i <= endPage; i++) {
     const activeClass = i === currentPage ? 'is-active' : ''
@@ -80,7 +96,18 @@ const renderPagination = function () {
   }
   paginationList.innerHTML = htmlString
 
-  firstButton.classList.toggle('hidden', currentGroup === 1)
+  // 💡 [수정] 1페이지일 때 '맨 처음으로'와 '이전' 버튼 숨기기
+  firstButton.classList.toggle('hidden', currentPage === 1)
+
+  if (prevButton) {
+    prevButton.classList.toggle('hidden', currentPage === 1)
+  }
+
+  // 💡 [수정] 마지막 페이지일 때 '다음' 버튼 숨기기
+  if (nextButton) {
+    nextButton.classList.toggle('hidden', currentPage === totalPages)
+  }
+
   nextGroupButton.classList.toggle(
     'hidden',
     currentGroup === totalGroup || totalPages === 0,
@@ -108,7 +135,7 @@ async function fetchPosts() {
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const responseData = await response.json()
-    totalPages = responseData.total_pages || 1
+    totalPages = responseData.total_pages
     const actualPosts = responseData.data || []
     const serverComments = []
 

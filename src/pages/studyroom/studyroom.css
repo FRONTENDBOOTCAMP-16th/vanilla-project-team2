@@ -9,25 +9,21 @@ html {
   background-color: #f9fafb;
   min-height: 900px;
   margin: 0 auto;
-  width: 1024px;
-  display: flex;
-  flex-flow: nowrap column;
-  align-items: center;
 }
 
 .main-title__wrapper {
-  width: 1024px; /* 1200px -> 1024px */
   height: 70px;
   margin-bottom: 32px;
 
   .main-title__heading {
-    font-size: 30px;
-    font-weight: 400;
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-h2);
     margin: 0px;
   }
 
   .main-title__text {
-    font-size: 16px;
+    font-size: var(--fs-header-desc);
+    color: var(--color-desc);
     margin: 0px;
     margin-top: 9px;
   }
@@ -38,11 +34,12 @@ html {
   justify-content: center;
   align-items: center;
   position: relative;
-  width: 1024px; /* 1200px -> 1024px */
+  width: 100%;
+
   height: 100px;
   border: 1px solid #e5e7eb;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-box);
   background-color: #ffffff;
 
   .main-search__icon {
@@ -52,7 +49,7 @@ html {
   }
 
   #main-search__item {
-    width: 974px; /* 1024px에 쏙 들어가도록 길이 축소 (1150px -> 974px) */
+    width: 1150px; /* 1024px에 쏙 들어가도록 길이 축소 (1150px -> 974px) */
     height: 50px;
     padding-left: 48px;
     padding-right: 28px;
@@ -63,9 +60,8 @@ html {
 }
 
 .main-category__wrapper {
-  width: 1024px;
-
-  margin-block: 24px;
+  margin-block: 16px;
+  width: 100%;
 
   .main-category__list {
     display: flex;
@@ -76,11 +72,16 @@ html {
   }
 
   .main-category__button {
+    box-shadow: var(--shadow-box);
     padding-block: 7px;
     padding-inline: 15px;
     background-color: #ffffff;
     border: 1px solid #d1d5dc;
     border-radius: 10px;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 20px;
+    font-weight: 500;
   }
   .main-category__button:not(.is-active):hover {
     background-color: #eef2ff;
@@ -106,7 +107,6 @@ html {
 }
 
 .main-post__list {
-  width: 1024px; /* 1200px -> 1024px */
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 0px;
@@ -115,12 +115,13 @@ html {
   margin: 0px;
 
   .main-post__item {
+    box-shadow: var(--shadow-box);
     list-style-type: none;
     border: 1px solid #e5e7eb;
     border-radius: 15px;
     padding: 25px;
     background-color: #ffffff;
-    max-height: 332px;
+    height: 332px;
 
     &:hover {
       background-color: #eef2ff;
@@ -133,7 +134,7 @@ html {
     color: black;
     font-weight: 300;
     position: relative;
-    width: 100%; /* 💡 옛날 1200px 시절 숫자(calc) 지우고 부모에 맞게 100% 꽉 채우기! */
+    width: 100%;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -145,12 +146,12 @@ html {
   }
 
   .main-post__date {
-    font-size: 12px;
-    color: #868e96; /* 날짜는 조금 연하게 */
+    font-size: var(--fs-time);
+    color: #868e96;
   }
 
   .main-post__author-text {
-    font-size: 14px;
+    font-size: var(--fs-text);
     color: #212529;
   }
 }
@@ -185,7 +186,7 @@ html {
   margin-top: 40px;
   display: flex;
   justify-content: center;
-  width: 1024px; /* 100% -> 1024px로 통일 */
+
   margin-top: auto;
 }
 
@@ -206,7 +207,7 @@ html {
   border: 1px solid transparent;
   background-color: transparent;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: var(--fs-text);
   font-weight: 500;
   color: #6b7280;
   cursor: pointer;
@@ -253,7 +254,7 @@ html {
   width: 100%;
   padding: 100px 0;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: var(--fs-text);
   color: #888;
   display: flex;
   justify-content: center;
