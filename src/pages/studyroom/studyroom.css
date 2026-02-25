@@ -1,7 +1,8 @@
 html {
   overflow-y: scroll;
 }
-.main-box {
+
+.studyroom {
   padding-block: 40px;
 }
 
@@ -11,17 +12,17 @@ html {
   margin: 0 auto;
 }
 
-.main-title__wrapper {
+.studyroom__header {
   height: 70px;
   margin-bottom: 32px;
 
-  .main-title__heading {
+  .studyroom__title {
     font-size: var(--fs-h2);
     font-weight: var(--fw-h2);
     margin: 0px;
   }
 
-  .main-title__text {
+  .studyroom__description {
     font-size: var(--fs-header-desc);
     color: var(--color-desc);
     margin: 0px;
@@ -29,7 +30,7 @@ html {
   }
 }
 
-.main-search__wrapper {
+.search {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -42,14 +43,14 @@ html {
   box-shadow: var(--shadow-box);
   background-color: #ffffff;
 
-  .main-search__icon {
+  .search__icon {
     position: absolute;
     top: 40px;
     left: 44px;
   }
 
-  #main-search__item {
-    width: 1150px; /* 1024px에 쏙 들어가도록 길이 축소 (1150px -> 974px) */
+  .search__input {
+    width: 1150px;
     height: 50px;
     padding-left: 48px;
     padding-right: 28px;
@@ -59,11 +60,11 @@ html {
   }
 }
 
-.main-category__wrapper {
+.category {
   margin-block: 16px;
   width: 100%;
 
-  .main-category__list {
+  .category__list {
     display: flex;
     list-style-type: none;
     column-gap: 8px;
@@ -71,7 +72,7 @@ html {
     padding-left: 0;
   }
 
-  .main-category__button {
+  .category__button {
     box-shadow: var(--shadow-box);
     padding-block: 7px;
     padding-inline: 15px;
@@ -83,30 +84,29 @@ html {
     line-height: 20px;
     font-weight: 500;
   }
-  .main-category__button:not(.is-active):hover {
+
+  .category__button:not(.category__button--active):hover {
     background-color: #eef2ff;
     color: #4f39f6;
     border-color: #4f39f6;
   }
 
-  .is-active {
+  .category__button--active {
     background-color: #4f39f6;
     color: #ffffff;
   }
 }
 
-.main-post__text {
+.post__text {
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* 💡 딱 여기서 5줄로 제한합니다! 3으로 바꾸면 3줄 컷! */
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  /* (선택) 줄 간격을 살짝 주면 더 예쁩니다 */
   line-height: 1.5;
 }
 
-.main-post__list {
+.post__list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 0px;
@@ -114,7 +114,7 @@ html {
   row-gap: 24px;
   margin: 0px;
 
-  .main-post__item {
+  .post__item {
     box-shadow: var(--shadow-box);
     list-style-type: none;
     border: 1px solid #e5e7eb;
@@ -129,7 +129,7 @@ html {
     }
   }
 
-  .main-post__inner {
+  .post__inner {
     text-decoration: none;
     color: black;
     font-weight: 300;
@@ -141,26 +141,26 @@ html {
     min-height: 220px;
   }
 
-  .main-post__group {
+  .post__group {
     flex-grow: 1;
   }
 
-  .main-post__date {
+  .post__date {
     font-size: var(--fs-time);
     color: #868e96;
   }
 
-  .main-post__author-text {
+  .post__author-text {
     font-size: var(--fs-text);
     color: #212529;
   }
 }
 
-.main-post__heading {
+.post__heading {
   font-weight: 400;
 }
 
-.main-post__tag {
+.post__tag {
   display: inline-block;
   align-self: flex-start;
   width: auto;
@@ -172,9 +172,9 @@ html {
   border-radius: 20px;
 }
 
-.main-post__meta-box {
+.post__meta-box {
   display: flex;
-  justify-content: space-between; /* 💡 스터디룸도 양쪽 끝 정렬! */
+  justify-content: space-between;
   flex-direction: row;
   margin-top: auto;
   padding-top: 16px;
@@ -186,8 +186,13 @@ html {
   margin-top: 40px;
   display: flex;
   justify-content: center;
-
   margin-top: auto;
+
+  .pagination__inner {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
 }
 
 .pagination__list {
@@ -198,7 +203,7 @@ html {
   list-style: none;
 }
 
-.pagination button {
+.pagination__button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -214,26 +219,26 @@ html {
   transition: all 0.2s ease;
 }
 
-.pagination button:hover:not(:disabled) {
+.pagination__button:hover:not(:disabled) {
   background-color: #f3f0ff;
   color: #4f39f6;
   border-color: #e0e7ff;
 }
 
-.pagination__link.is-active {
+.pagination__link--active {
   background-color: #4f39f6;
   color: #ffffff;
   font-weight: 700;
   border-color: #4f39f6;
 }
 
-.pagination__link.is-active:hover {
+.pagination__link--active:hover {
   background-color: #4f39f6;
   color: #ffffff;
   cursor: default;
 }
 
-.pagination button:disabled {
+.pagination__button:disabled {
   color: #d1d5db;
   cursor: not-allowed;
   pointer-events: none;
@@ -245,11 +250,11 @@ html {
   stroke-width: 2px;
 }
 
-.pagination button.hidden {
+.pagination__button--hidden {
   display: none;
 }
 
-.main-post__no-result {
+.post__no-result {
   grid-column: 1 / -1;
   width: 100%;
   padding: 100px 0;

@@ -73,11 +73,11 @@
       <!-- //대시보드 -->
 
       <!-- 검색 -->
-      <section class="main-search__wrapper">
-        <form class="main-search__inner">
-          <div class="main-search__group">
+      <section class="search">
+        <form class="search__form">
+          <div class="search__group">
             <svg
-              class="main-search__icon"
+              class="search__icon"
               width="17"
               height="17"
               viewBox="0 0 17 17"
@@ -99,20 +99,19 @@
                 stroke-linejoin="round"
               />
             </svg>
-            <label class="sr-only" for="main-search__item">게시글 검색</label>
+            <label class="sr-only" for="search__input">게시글 검색</label>
             <input
+              class="search__input"
               type="search"
-              id="main-search__item"
-              name="main-search__item"
+              id="search__input"
+              name="search__input"
               placeholder="질문 검색..."
             />
           </div>
         </form>
       </section>
-      <!-- //검색 -->
 
-      <!-- qna 리스트 -->
-      <ul class="main-post__list" data-component="post-list"></ul>
+      <ul class="post__list" data-component="post-list"></ul>
       <!-- //qna 리스트 -->
     </div>
   </body>

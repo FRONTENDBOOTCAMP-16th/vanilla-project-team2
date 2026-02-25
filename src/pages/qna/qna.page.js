@@ -1,8 +1,5 @@
 import { postItem } from '../../js/components/postItem.js'
 
-// ---------------------------
-// ✅ 모드 판별 (home vs qna)
-// ---------------------------
 const PAGE = document.body?.dataset?.page || ''
 const IS_HOME = PAGE === 'home'
 
@@ -33,15 +30,12 @@ function removeMarkdown(text) {
     .trim()
 }
 
-// ---------------------------
-// ✅ 렌더: 게시글
-// ---------------------------
 const renderPosts = function (data) {
   if (!qnaPostUl) return
 
   if (!data || data.length === 0) {
     qnaPostUl.innerHTML = `
-      <li class="main-post__no-result">
+      <li class="post__no-result">
         <p>검색 결과가 없습니다.</p>
       </li>
     `
@@ -52,12 +46,10 @@ const renderPosts = function (data) {
   qnaPostUl.innerHTML = displayData.map((post) => postItem(post)).join('')
 }
 
-// ---------------------------
-// ✅ 렌더: 페이지네이션
-// ---------------------------
 const renderPagination = function () {
   if (IS_HOME) {
-    if (paginationRoot) paginationRoot.classList.add('hidden')
+    if (paginationRoot)
+      paginationRoot.classList.add('pagination__button--hidden')
     return
   }
 
@@ -65,40 +57,47 @@ const renderPagination = function () {
 
   if (totalPages === 0 || !totalPages) {
     paginationList.innerHTML = ''
-    if (paginationRoot) paginationRoot.classList.add('hidden')
+    if (paginationRoot)
+      paginationRoot.classList.add('pagination__button--hidden')
     return
   } else {
-    if (paginationRoot) paginationRoot.classList.remove('hidden')
+    if (paginationRoot)
+      paginationRoot.classList.remove('pagination__button--hidden')
   }
 
   let htmlString = ''
   const currentGroup = Math.ceil(currentPage / pageCount)
   const totalGroup = Math.ceil(totalPages / pageCount)
-
-  let startPage = (currentGroup - 1) * pageCount + 1
-  let endPage = Math.min(startPage + pageCount - 1, totalPages)
+  const startPage = (currentGroup - 1) * pageCount + 1
+  const endPage = Math.min(startPage + pageCount - 1, totalPages)
 
   for (let i = startPage; i <= endPage; i++) {
-    const activeClass = i === currentPage ? 'is-active' : ''
+    const activeClass = i === currentPage ? 'pagination__link--active' : ''
     htmlString += `
       <li class="pagination__item">
-        <button type="button" class="pagination__link ${activeClass}">${i}</button>
+        <button type="button" class="pagination__button pagination__link ${activeClass}">${i}</button>
       </li>
     `
   }
   paginationList.innerHTML = htmlString
 
-  firstButton.classList.toggle('hidden', currentGroup === 1)
+  firstButton.classList.toggle('pagination__button--hidden', currentGroup === 1)
 
   if (prevButton) {
-    prevButton.classList.toggle('hidden', currentPage === 1)
+    prevButton.classList.toggle('pagination__button--hidden', currentPage === 1)
   }
 
   if (nextButton) {
-    nextButton.classList.toggle('hidden', currentPage === totalPages)
+    nextButton.classList.toggle(
+      'pagination__button--hidden',
+      currentPage === totalPages,
+    )
   }
 
-  nextGroupButton.classList.toggle('hidden', currentGroup === totalGroup)
+  nextGroupButton.classList.toggle(
+    'pagination__button--hidden',
+    currentGroup === totalGroup,
+  )
 
   const pageButtons = document.querySelectorAll('.pagination__link')
   pageButtons.forEach((btn) => {
@@ -109,9 +108,6 @@ const renderPagination = function () {
   })
 }
 
-// ---------------------------
-// ✅ 데이터 로드
-// ---------------------------
 async function fetchPosts() {
   try {
     const url = IS_HOME
@@ -137,7 +133,6 @@ async function fetchPosts() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
-    // 댓글 갯수 가져오기
     const commentsPromises = qnaPosts.map(async (post) => {
       try {
         const res = await fetch(
@@ -181,9 +176,6 @@ async function fetchPosts() {
   }
 }
 
-// ---------------------------
-// ✅ 이벤트 연결
-// ---------------------------
 function bindEvents() {
   if (searchInput) {
     searchInput.addEventListener('input', () => {
@@ -196,8 +188,10 @@ function bindEvents() {
   if (categoryButtons) {
     categoryButtons.forEach((category) => {
       category.addEventListener('click', () => {
-        categoryButtons.forEach((btn) => btn.classList.remove('is-active'))
-        category.classList.add('is-active')
+        categoryButtons.forEach((btn) =>
+          btn.classList.remove('category__button--active'),
+        )
+        category.classList.add('category__button--active')
         const targetIndex = Number(category.dataset.index)
         currentCategory =
           targetIndex === 0 ? 'ALL' : category.textContent.trim().toUpperCase()
@@ -243,30 +237,26 @@ function bindEvents() {
   if (qnaPostUl) {
     qnaPostUl.addEventListener('click', (e) => {
       e.preventDefault()
-      const item = e.target.closest('.main-post__item')
+      const item = e.target.closest('.post__item')
       if (!item) return
       const postId = item.dataset.id
       localStorage.setItem('selectedPostId', postId)
       localStorage.setItem('selectedBoardId', 2)
-
       location.href = '/src/pages/readpost/index.html'
     })
   }
 }
 
-// ---------------------------
-// ✅ 앱 시작 (DOM 로드 타이밍 안전)
-// ---------------------------
 function start() {
-  qnaPostUl = document.querySelector('.main-post__list')
+  qnaPostUl = document.querySelector('.post__list')
   paginationList = document.querySelector('.pagination__list')
-  firstButton = document.querySelector('.pagination__control--first')
-  prevButton = document.querySelector('.pagination__control--prev')
-  nextButton = document.querySelector('.pagination__control--next')
-  nextGroupButton = document.querySelector('.pagination__control--next-group')
-  searchInput = document.querySelector('#main-search__item')
+  firstButton = document.querySelector('.pagination__button--first')
+  prevButton = document.querySelector('.pagination__button--prev')
+  nextButton = document.querySelector('.pagination__button--next')
+  nextGroupButton = document.querySelector('.pagination__button--next-group')
+  searchInput = document.querySelector('#search__input')
   paginationRoot = document.querySelector('.pagination')
-  categoryButtons = document.querySelectorAll('.main-category__button')
+  categoryButtons = document.querySelectorAll('.category__button')
 
   bindEvents()
   fetchPosts()
