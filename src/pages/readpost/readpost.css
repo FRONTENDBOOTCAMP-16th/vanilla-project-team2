@@ -221,6 +221,17 @@ cursor: pointer;
 
   }
 
+  .comment__actions{
+    justify-self: end;
+
+  }
+
+    .comment__actions button{
+
+    background-color: #fff;
+    border: 1px solid #6A7282;
+    border-radius: 10px
+  }
 
     
     /* 작성자 편집 버튼 활성화 */
