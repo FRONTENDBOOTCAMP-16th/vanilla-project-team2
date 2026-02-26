@@ -45,7 +45,7 @@ https://www.notion.so/euid/311b02dcf1d8802497cdef3bd4580e10
 
 담당 : 김한결
 
-### 7. main.js ⭐
+### 7. main.js ⭐ ✅
 
 ```
 // 모든 걸 멈추지 말고 필요한 것만 기다리게 하기
@@ -200,7 +200,7 @@ export async function handleLogout() {
 
 담당 : 이동헌
 
-### 10. header, footer 컴포넌트 분류하기 ⭐
+### 10. header, footer 컴포넌트 분류하기 ⭐✅
 
 - 분리하기
 - 분리하고 구조 설정 후에 logout. js 불러오기
@@ -259,7 +259,7 @@ export function renderMyPage(data) {
 위 내용과 상동
 
 - 네트워크 호출하는 방식 변경하기 async-await
-  담당 : 이동헌
+  담당 : 사민재
 
 ### 13. Readme.md ⭐
 
