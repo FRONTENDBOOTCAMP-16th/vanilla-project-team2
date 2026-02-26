@@ -1,5 +1,5 @@
 import { postItem } from '../../js/components/postItem.js'
-import { checkToken } from '../../api/JWT.js'
+// import { checkToken } from '../../api/JWT.js'
 
 let userData = null
 
