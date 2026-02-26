@@ -5,8 +5,8 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
-
-const BASE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla'
+const PROFILE_BASE_URL =
+  'https://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/'
 
 //글, 댓글 작성자 프로필 이미지 가져오기
 function renderAvatar(profile, name) {
@@ -16,7 +16,7 @@ function renderAvatar(profile, name) {
     return `
       <div class="avatar">
         <img class="avatar__image"
-             src="${BASE_URL}/users/uploads/profile/${profile}"
+             src="${PROFILE_BASE_URL}${profile}"
              alt="${name}" />
       </div>
     `
@@ -30,19 +30,19 @@ function renderAvatar(profile, name) {
 
 // 로그인한 회원만 글에 접근
 async function userInit() {
-  const user = await checkToken() // 유저 확인 로직
+  const user = await checkToken(); // 유저 확인 로직
 
   if (!user) {
-    alert('로그인이 필요합니다.')
-    window.location.href = '/src/pages/users/login/index.html'
-    return // 이제 함수 안이므로 정상 작동합니다.
+    alert('로그인이 필요합니다.');
+    window.location.href = '/src/pages/users/login/index.html';
+    return; // 이제 함수 안이므로 정상 작동합니다.
   }
 
   // 로그인했을 때만 실행될 나머지 코드들...
-  console.log('로그인 성공, 페이지 로드를 시작합니다.')
+  console.log('로그인 성공, 페이지 로드를 시작합니다.');
 }
 
-userInit()
+userInit();
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const params = new URLSearchParams(location.search)
@@ -60,10 +60,12 @@ if (currentBoardId === '1') {
 }
 
 async function init() {
-  const response = await fetch(`${BASE_URL}/board/read.php?post_id=${postId}`)
+  const response = await fetch(
+    `http://leedh9276.dothome.co.kr/likelion-vanilla/board/read.php?post_id=${postId}`,
+  )
 
   if (!response.ok) throw new Error('글 불러오기 실패')
-  const currentUser = await checkToken()
+
   const result = await response.json()
   console.log('서버 원본 응답:', result)
 
@@ -141,12 +143,26 @@ async function init() {
     timeElement.setAttribute('datetime', post.create_date.replace(' ', 'T'))
   }
 
-  loadComments(post.post_id, currentUser)
+  loadComments(post.post_id)
 
   // 삭제
 
   const deleteBtn = document.querySelector('.post__btn--delete')
 
+  // deleteBtn.addEventListener('click', async () => {
+  //   const ok = confirm('정말 글을 삭제하시겠습니까?')
+  //   if (!ok) return
+
+  //   await fetch(`http://localhost:4000/posts/${post.id}`, {
+  //     method: 'DELETE',
+  //   })
+
+  //   if (Number(boardId) === 2) {
+  //     location.href = '..qna/index.html'
+  //   } else {
+  //     location.href = '../studyroom/index.html'
+  //   }
+  // })
   deleteBtn.addEventListener('click', async () => {
     const ok = confirm('정말 글을 삭제하시겠습니까?')
     if (!ok) return
@@ -157,20 +173,23 @@ async function init() {
 
       if (!uid) {
         alert('로그인이 필요합니다.')
-        window.location.href = '/src/pages/users/login/index.html'
+        window.location.href = '/src/pages/users/login/index.html';
         return
       }
 
-      const response = await fetch(`${BASE_URL}/board/delete.php`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        'http://leedh9276.dothome.co.kr/likelion-vanilla/board/delete.php',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: uid,
+            post_id: post.post_id,
+          }),
         },
-        body: JSON.stringify({
-          user_id: uid,
-          post_id: post.post_id,
-        }),
-      })
+      )
 
       const result = await response.text()
       console.log('삭제 응답:', result)
@@ -208,9 +227,11 @@ async function init() {
   commentList.innerHTML = ''
 
   // 댓글 불러오기
-  async function loadComments(postId, currentUser) {
+  async function loadComments(postId) {
     // 1. 데이터 가져오기
-    const res = await fetch(`${BASE_URL}/comment/read.php?post_id=${postId}`)
+    const res = await fetch(
+      `https://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${postId}`,
+    )
 
     // 2. 변수 이름을 result로 통일하거나 아래를 맞추거나!
     const result = await res.json() // 💡 여기서 comments 대신 result로 받는게 안 헷갈립니다.
@@ -218,51 +239,48 @@ async function init() {
     // 답변 렌더링 함수
     const realData = result.data || result
     console.log('댓글 데이터 확인:', realData)
-    function renderComments(data, currentUser) {
-      //  매개변수 이름을 data로 명확히!
+    function renderComments(data) {
+      // 💡 매개변수 이름을 data로 명확히!
       const list = document.querySelector('.comment__list')
 
-      // [방어막] 데이터가 배열인지 확인 (백엔드에서 "댓글이 없습니다"가 올 경우 대비)
+      // 💡 [방어막] 데이터가 배열인지 확인 (백엔드에서 "댓글이 없습니다"가 올 경우 대비)
       const commentList = Array.isArray(data) ? data : []
-      console.log('현재유저:', currentUser)
+
+      if (commentList.length === 0) {
+        list.innerHTML = `<p class='comment-empty'>첫 답변을 남겨보세요.</p>`
+        return
+      }
+
+      //빌드 시 src폴더 읽지 못함 assets폴더 public으로 옮겨서 경로 수정 필요!
+
       list.innerHTML = commentList
         .map((cmt) => {
-          console.log('댓글 작성자:', cmt.UID)
+          const nickname = cmt.user_nickname || '익명'
+
           console.log(cmt)
-          const isOwner =
-            currentUser && Number(currentUser.UID) === Number(cmt.UID)
 
           return `
       <li class="comment__item" data-id="${cmt.comment_id}">
         <article class="comment__card">
           <div class="comment__avatar">
-            ${renderAvatar(cmt.user_profile, cmt.user_nickname)}
+            ${renderAvatar(cmt.user_profile, nickname)}
           </div>
           <div class="comment__meta">
-            <span class="comment__author">${cmt.user_nickname}</span>
+            <span class="comment__author">${nickname}</span>
             <time class="comment__time">
               ${new Date(cmt.create_date).toLocaleString()}
             </time>
           </div>
           <p class="comment__text">
             ${cmt.contents}
-            </p>
-            ${
-              isOwner
-                ? `
-            <div class = "comment__actions">
-            <button class = "comment__edit">수정</button>
-            <button class = "comment__delete">삭제</button>
-            </div>`
-                : ''
-            }
+          </p>
         </article>
       </li>
     `
         })
         .join('')
     }
-    renderComments(realData, currentUser)
+    renderComments(realData)
   }
 
   commentForm.addEventListener('submit', async (e) => {
@@ -270,25 +288,27 @@ async function init() {
     const contentValue = commentInput.value.trim()
     if (!contentValue) return
 
-    const formData = new FormData()
-    const user = await checkToken()
 
+    const formData = new FormData()
     formData.append('post_id', postId)
     formData.append('user_id', user.UID)
     formData.append('content', contentValue)
 
     try {
-      const response = await fetch(`${BASE_URL}/comment/write.php`, {
-        method: 'POST',
-        body: formData,
-      })
+      const response = await fetch(
+        'https://leedh9276.dothome.co.kr/likelion-vanilla/comment/write.php',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
       const text = await response.text()
       console.log('서버 최종 답변:', text)
       if (text.includes('success')) {
         commentInput.value = ''
 
         setTimeout(async () => {
-          await loadComments(postId, currentUser)
+          await loadComments(postId)
           console.log('실시간 반영 완료!')
         }, 300)
       }

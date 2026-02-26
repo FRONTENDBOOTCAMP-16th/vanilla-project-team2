@@ -42,23 +42,22 @@
   align-items: center;
   margin-left: auto;
   font-size: var(--fs-time);
+  
   gap: 4px;
 
 }
 
-/* .post__title {
+.post__title {
   margin-block: 20px 78px;
   font-weight: var(--fw-h1);
   font-size: var(--fs-h1);
 
-} */
+}
 
 .post__meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 17px;
-  font-weight: 500;
 }
 
 .post__author {
@@ -132,7 +131,6 @@
 
   .post__content pre {
   margin: 1.2em 0;
-  font-size: var(--fs-text-sm);
 }
 
  
@@ -155,7 +153,6 @@
   border: 1px solid lightgray;
   border-radius: 12px;
   padding: 12px;
-  line-height: 1.4;
 
 }
 
@@ -195,16 +192,16 @@ cursor: pointer;
     display: grid;
     grid-template-columns: 40px 1fr;
     column-gap: 16px;
-    
-  }
 
+    
+ 
+  }
 
   .comment__meta {
     display: flex;
     align-items: center;
     gap: 8px;
     grid-column: 2;
-    font-weight: 500;
 
     .comment__time {
       font-size: var(--fs-time);
@@ -215,23 +212,11 @@ cursor: pointer;
 
   .comment__text {
     grid-column: 2;
-    margin-top: 0px;
+    margin-block: 8px;
     white-space: pre-line;
-    line-height: 1.4;
-
+    line-height: 1.2;
   }
 
-  .comment__actions{
-    justify-self: end;
-
-  }
-
-    .comment__actions button{
-
-    background-color: #fff;
-    border: 1px solid #6A7282;
-    border-radius: 10px
-  }
 
     
     /* 작성자 편집 버튼 활성화 */

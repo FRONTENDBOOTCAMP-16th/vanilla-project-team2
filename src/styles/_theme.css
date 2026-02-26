@@ -269,27 +269,16 @@
   --pink-900: hsl(var(--pink-900-values));
   --pink-950: hsl(var(--pink-950-values));
 
+/* 
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12); */
 
   /* 배경색 */
   .gray-bg { background-color:  #F9FAFB}; 
 
-  /* 푸터 */
+  /*  */
   .element.style { min-height:  calc(100dvh-180px) };
-
-  /* 타이틀 */
-  .head {
-  font-size: var(--fs-h1);
-  font-weight: var(--fw-h1);
-  margin: 0;
-}
-
-/* 타이틀 설명 */
-.description{
-  font-size:   var(--fs-header-desc);
-  letter-spacing : var(--ls-header-desc);
-  color: var(--color-desc);
-}
-
 
   /* 카드 박스 그림자 */
   --shadow-box: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -312,9 +301,9 @@
   --fs-h2: 1.5em;
   --fw-h2: bold;
 
-  /* 작은 본문 텍스트 */
-  --fs-text-sm: 14px
+  /* 페이지별 기본 텍스트 > 너무 작아서 일단 주석 처리*/
+  /* --fs-text: 14px */
 
 
-
+  /* color-scheme: light dark; */
 }

@@ -1,13 +1,19 @@
+
+
+
+
 .container {
+  /* background-color: var(--gray-50); */
   margin: auto;
   padding-block: 40px;
 }
 
-/* .newpost__title {
+.newpost__title {
   font-size: var(--fs-h1);
   font-weight: var(--fw-h1);
+  /* padding-top: 40px; */
   margin: 0;
-} */
+}
 
 .newpost__desc{
   font-size:   var(--fs-header-desc);
@@ -71,6 +77,17 @@
     }
   }
 
+  /* .editor-btn {
+    appearance: none;
+    display: inline-flex;
+    padding: 8px;
+    padding-inline: 14px;
+    cursor: pointer;
+
+    background: lightgray;
+    border-radius: 12px;
+    border: none;
+  } */
 
   .newpost__preview {
     background: var(--gray-50);

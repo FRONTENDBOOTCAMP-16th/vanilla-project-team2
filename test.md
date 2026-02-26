@@ -14,7 +14,7 @@ https://www.notion.so/euid/311b02dcf1d8802497cdef3bd4580e10
 
 담당 : 사민재
 
-### 2. 스타일 파일 사용하지 않는 파일 삭제 ⭐ ✅
+### 2. 스타일 파일 사용하지 않는 파일 삭제 ⭐
 
 - reset css가 중복 적용됨
 
@@ -26,7 +26,7 @@ https://www.notion.so/euid/311b02dcf1d8802497cdef3bd4580e10
 
 담당 : 김효경, 이동헌
 
-### 4. db. json 파일 삭제 ⭐ ✅
+### 4. db. json 파일 삭제 ⭐
 
 - 가상 데이터 뿌려서 테스트하던 db 다 삭제하기
 
