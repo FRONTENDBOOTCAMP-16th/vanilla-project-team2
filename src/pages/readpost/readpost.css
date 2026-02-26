@@ -42,17 +42,16 @@
   align-items: center;
   margin-left: auto;
   font-size: var(--fs-time);
-  
   gap: 4px;
 
 }
 
-.post__title {
+/* .post__title {
   margin-block: 20px 78px;
   font-weight: var(--fw-h1);
   font-size: var(--fs-h1);
 
-}
+} */
 
 .post__meta {
   display: flex;

@@ -16,18 +16,18 @@ html {
   height: 70px;
   margin-bottom: 32px;
 
-  .studyroom__title {
+  /* .studyroom__title {
     font-size: var(--fs-h2);
     font-weight: var(--fw-h2);
     margin: 0px;
-  }
+  } */
 
-  .studyroom__description {
+  /* .studyroom__description {
     font-size: var(--fs-header-desc);
     color: var(--color-desc);
     margin: 0px;
     margin-top: 9px;
-  }
+  } */
 }
 
 .search {

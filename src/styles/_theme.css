@@ -277,8 +277,23 @@
   /* 배경색 */
   .gray-bg { background-color:  #F9FAFB}; 
 
-  /*  */
+  /* 푸터 */
   .element.style { min-height:  calc(100dvh-180px) };
+
+  /* 타이틀 */
+  .head {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-h1);
+  margin: 0;
+}
+
+/* 타이틀 설명 */
+.description{
+  font-size:   var(--fs-header-desc);
+  letter-spacing : var(--ls-header-desc);
+  color: var(--color-desc);
+}
+
 
   /* 카드 박스 그림자 */
   --shadow-box: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -305,5 +320,5 @@
   --fs-text-sm: 14px
 
 
-  /* color-scheme: light dark; */
+
 }
