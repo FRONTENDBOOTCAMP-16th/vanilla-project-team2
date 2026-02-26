@@ -25,7 +25,6 @@ let currentCategory = 'ALL'
 let totalPages = 1
 const pageCount = 5
 
-// 클래스명은 형님이 바꾸신 그대로 유지한다고 하셨으니, 변수명과 매칭만 잘 되어있는지 확인하세요!
 const postListElement = document.querySelector('.post__list')
 const paginationList = document.querySelector('.pagination__list')
 const firstButton = document.querySelector('.pagination__button--first')
@@ -53,8 +52,6 @@ async function fetchPosts() {
     await fetchUserData(true)
 
     // 위의 함수가 실행되면 토큰 안에 있는 정보를 뱉어라
-    console.log(userData)
-
     const token = localStorage.getItem('token')
 
     const formData = new FormData()
