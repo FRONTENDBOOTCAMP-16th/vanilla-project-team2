@@ -1,11 +1,17 @@
-# 🦁lion-study-room
+# 🦁Lion Study Room
 
 조장 : 김한결  
 조원 : 김효경, 사민재, 이동헌
 
 ## 🏷️주제
 
-서로에게 동기부여가 되기 위한 공부방
+스터디 참여자들이 학습 현황을 확인하고,  
+질문(QnA)과 게시글 작성을 통해 소통할 수 있는 바닐라 JavaScript 기반 학습 커뮤니티 웹 서비스입니다.
+
+## 🔗 Demo
+
+- 배포 주소 : http://leedh9207.dothome.co.kr/
+- 개발 서버 : http://localhost:3000
 
 ## 🧰 개발 환경 (Development Environment)
 
@@ -79,4 +85,4 @@
 
 ```
 
-#
+## 📸 Screenshots

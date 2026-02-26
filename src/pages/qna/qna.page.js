@@ -1,4 +1,21 @@
 import { postItem } from '../../js/components/postItem.js'
+import { checkToken } from '../../api/JWT.js'
+
+let userData = null
+
+async function fetchUserData(forceRefresh = false) {
+  if (userData && !forceRefresh) return userData
+
+  const fetchedData = await checkToken()
+  if (fetchedData) {
+    userData = fetchedData
+    return userData
+  } else {
+    alert('유효하지 않은 접근입니다.')
+    window.location.href = '/index.html'
+    return
+  }
+}
 
 const PAGE = document.body?.dataset?.page || ''
 const IS_HOME = PAGE === 'home'
@@ -82,18 +99,13 @@ const renderPagination = function () {
   paginationList.innerHTML = htmlString
 
   firstButton.classList.toggle('pagination__button--hidden', currentGroup === 1)
-
-  if (prevButton) {
+  if (prevButton)
     prevButton.classList.toggle('pagination__button--hidden', currentPage === 1)
-  }
-
-  if (nextButton) {
+  if (nextButton)
     nextButton.classList.toggle(
       'pagination__button--hidden',
       currentPage === totalPages,
     )
-  }
-
   nextGroupButton.classList.toggle(
     'pagination__button--hidden',
     currentGroup === totalGroup,
@@ -110,11 +122,28 @@ const renderPagination = function () {
 
 async function fetchPosts() {
   try {
-    const url = IS_HOME
-      ? `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1`
-      : `http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=${currentPage}&search=${currentSearch}&category=${currentCategory === 'ALL' ? '' : currentCategory}`
+    await fetchUserData(true)
 
-    const response = await fetch(url)
+    const formData = new FormData()
+    formData.append('board_id', 2)
+    formData.append('page', IS_HOME ? 1 : currentPage)
+    formData.append('user_id', userData.UID)
+
+    if (!IS_HOME) {
+      formData.append('search', currentSearch)
+      formData.append(
+        'category',
+        currentCategory === 'ALL' ? '' : currentCategory,
+      )
+    }
+
+    const response = await fetch(
+      'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const responseData = await response.json()
