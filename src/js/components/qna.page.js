@@ -1,133 +1,159 @@
 import { postItem } from '../../js/components/postItem.js'
+import { checkToken } from '../../api/JWT.js'
 
-let qnaData = []
+let userData = null
 
-const itemsPerPage = 8
-const pageCount = 5
+async function fetchUserData(forceRefresh = false) {
+  if (userData && !forceRefresh) return userData
+
+  const fetchedData = await checkToken()
+  if (fetchedData) {
+    userData = fetchedData
+    return userData
+  } else {
+    alert('유효하지 않은 접근입니다.')
+    window.location.href = '/index.html'
+    return
+  }
+}
+
+const PAGE = document.body?.dataset?.page || ''
+const IS_HOME = PAGE === 'home'
+
 let currentPage = 1
-let currentDisplayData = qnaData
+let totalPages = 1
+let currentSearch = ''
+let currentCategory = 'ALL'
+const pageCount = 5
+const ITEMS_PER_PAGE = 8
 
-const qnaPostUl = document.querySelector('.main-post__list')
-const paginationList = document.querySelector('.pagination__list')
-const firstButton = document.querySelector('.pagination__control--first')
-const prevButton = document.querySelector('.pagination__control--prev')
-const nextButton = document.querySelector('.pagination__control--next')
-const nextGroupButton = document.querySelector(
-  '.pagination__control--next-group',
-)
-const searchInput = document.querySelector('#main-search__item')
+let qnaPostUl = null
+let paginationList = null
+let firstButton = null
+let prevButton = null
+let nextButton = null
+let nextGroupButton = null
+let searchInput = null
+let paginationRoot = null
+let categoryButtons = null
 
-const renderPosts = function (page, data) {
-  if (data.length === 0) {
+function removeMarkdown(text) {
+  if (!text) return ''
+  return text
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`.*?`/g, '')
+    .replace(/[#*_\-~[\]()>]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+const renderPosts = function (data) {
+  if (!qnaPostUl) return
+
+  if (!data || data.length === 0) {
     qnaPostUl.innerHTML = `
-    <li class="main-post__no-result">
-      <p>검색 결과가 없습니다.</p>
-    </li>
+      <li class="post__no-result">
+        <p>검색 결과가 없습니다.</p>
+      </li>
     `
     return
   }
 
-  const startIndex = (page - 1) * itemsPerPage
-  const endIndex = startIndex + itemsPerPage
-  const sliceData = data.slice(startIndex, endIndex)
-
-  const qnaElementList = sliceData.map((post) => postItem(post)).join('')
-  qnaPostUl.innerHTML = qnaElementList
+  const displayData = IS_HOME ? data.slice(0, ITEMS_PER_PAGE) : data
+  qnaPostUl.innerHTML = displayData.map((post) => postItem(post)).join('')
 }
 
-const setupPaginationEvents = function (data) {
-  const pageButtons = document.querySelectorAll('.pagination__link')
-  pageButtons.forEach((Btn) => {
-    Btn.addEventListener('click', (e) => {
-      currentPage = Number(e.target.textContent)
-      updateUI(data)
-    })
-  })
-}
+const renderPagination = function () {
+  if (IS_HOME) {
+    if (paginationRoot)
+      paginationRoot.classList.add('pagination__button--hidden')
+    return
+  }
 
-const renderPagination = function (data) {
+  if (!paginationList || !firstButton || !nextGroupButton) return
+
+  if (totalPages === 0 || !totalPages) {
+    paginationList.innerHTML = ''
+    if (paginationRoot)
+      paginationRoot.classList.add('pagination__button--hidden')
+    return
+  } else {
+    if (paginationRoot)
+      paginationRoot.classList.remove('pagination__button--hidden')
+  }
+
   let htmlString = ''
-  const currentTotalPage = Math.ceil(data.length / itemsPerPage)
   const currentGroup = Math.ceil(currentPage / pageCount)
-  const totalGroup = Math.ceil(currentTotalPage / pageCount)
-
-  let startPage = (currentGroup - 1) * pageCount + 1
-  let endPage = Math.min(startPage + pageCount - 1, currentTotalPage)
+  const totalGroup = Math.ceil(totalPages / pageCount)
+  const startPage = (currentGroup - 1) * pageCount + 1
+  const endPage = Math.min(startPage + pageCount - 1, totalPages)
 
   for (let i = startPage; i <= endPage; i++) {
-    const activeClass = i === currentPage ? 'is-active' : ''
+    const activeClass = i === currentPage ? 'pagination__link--active' : ''
     htmlString += `
       <li class="pagination__item">
-        <button type="button" class="pagination__link ${activeClass}">${i}</button>
+        <button type="button" class="pagination__button pagination__link ${activeClass}">${i}</button>
       </li>
     `
   }
   paginationList.innerHTML = htmlString
 
-  firstButton.classList.toggle('hidden', currentGroup === 1)
+  firstButton.classList.toggle('pagination__button--hidden', currentGroup === 1)
+  if (prevButton)
+    prevButton.classList.toggle('pagination__button--hidden', currentPage === 1)
+  if (nextButton)
+    nextButton.classList.toggle(
+      'pagination__button--hidden',
+      currentPage === totalPages,
+    )
   nextGroupButton.classList.toggle(
-    'hidden',
-    currentGroup === totalGroup || currentTotalPage === 0,
+    'pagination__button--hidden',
+    currentGroup === totalGroup,
   )
 
-  setupPaginationEvents(data)
+  const pageButtons = document.querySelectorAll('.pagination__link')
+  pageButtons.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      currentPage = Number(e.target.textContent)
+      fetchPosts()
+    })
+  })
 }
 
-const updateUI = function (data) {
-  currentDisplayData = data
-  renderPosts(currentPage, currentDisplayData)
-  renderPagination(data)
-}
-
-searchInput.addEventListener('input', () => {
-  const keyword = searchInput.value.toLowerCase().trim()
-  const searchedData = qnaData.filter(({ subject }) =>
-    subject.toLowerCase().includes(keyword),
-  )
-  currentPage = 1
-  updateUI(searchedData)
-})
-
-nextGroupButton.addEventListener('click', () => {
-  const currentTotalPage = Math.ceil(currentDisplayData.length / itemsPerPage)
-  const currentGroup = Math.ceil(currentPage / pageCount)
-  currentPage = Math.min(currentGroup * pageCount + 1, currentTotalPage)
-  updateUI(currentDisplayData)
-})
-
-firstButton.addEventListener('click', () => {
-  const currentGroup = Math.ceil(currentPage / pageCount)
-  currentPage = (currentGroup - 1) * pageCount
-  updateUI(currentDisplayData)
-})
-
-prevButton.addEventListener('click', () => {
-  currentPage = Math.max(currentPage - 1, 1)
-  updateUI(currentDisplayData)
-})
-
-nextButton.addEventListener('click', () => {
-  const currentTotalPage = Math.ceil(currentDisplayData.length / itemsPerPage)
-  currentPage = Math.min(currentPage + 1, currentTotalPage)
-  updateUI(currentDisplayData)
-})
-
-async function init() {
+async function fetchPosts() {
   try {
-    const [postResponse] = await Promise.all([
-      fetch(
-        'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php?board_id=2&page=1',
-      ),
-    ])
+    await fetchUserData(true)
 
-    if (!postResponse.ok) throw new Error('데이터 불러오기 실패')
+    const formData = new FormData()
+    formData.append('board_id', 2)
+    formData.append('page', IS_HOME ? 1 : currentPage)
+    formData.append('user_id', userData.UID)
 
-    const responseData = await postResponse.json()
-    const actualPosts = responseData.data
+    if (!IS_HOME) {
+      formData.append('search', currentSearch)
+      formData.append(
+        'category',
+        currentCategory === 'ALL' ? '' : currentCategory,
+      )
+    }
+
+    const response = await fetch(
+      'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+    if (!response.ok) throw new Error('데이터 불러오기 실패')
+
+    const responseData = await response.json()
+    totalPages = responseData.total_pages
+    const actualPosts = responseData.data || []
     const serverComments = []
 
-    if (!Array.isArray(actualPosts)) {
-      updateUI([])
+    if (!Array.isArray(actualPosts) || actualPosts.length === 0) {
+      renderPosts([])
+      renderPagination()
       return
     }
 
@@ -136,42 +162,137 @@ async function init() {
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
-    qnaData = qnaPosts.map((post) => {
+    const commentsPromises = qnaPosts.map(async (post) => {
+      try {
+        const res = await fetch(
+          `http://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${post.post_id}`,
+        )
+        const result = await res.json()
+        if (Array.isArray(result)) {
+          result.forEach((cmt) =>
+            serverComments.push({ ...cmt, post_id: post.post_id }),
+          )
+        }
+      } catch (error) {
+        console.error('댓글 로드 실패:', error)
+      }
+    })
+    await Promise.all(commentsPromises)
+
+    const finalData = qnaPosts.map((post) => {
       const myComments = serverComments.filter(
         (comment) => String(comment.post_id) === String(post.post_id),
       )
+      const cleanText = removeMarkdown(post.contents)
+      const summary =
+        cleanText.length > 500 ? cleanText.substring(0, 500) : cleanText
 
       return {
-        post_id: post.post_id,
-        board_id: post.board_id,
-        user_id: post.user_id,
-        // 💡 해결 1: postItem에서 user_nickname을 쓰니까 이름을 맞춰줘야 합니다.
+        ...post,
         user_nickname: post.user_nickname || post.nickname || '사용자',
-        subject: post.subject,
-        contents: post.contents,
-        type: post.type,
-        // 💡 해결 2: 날짜 데이터가 깨끗한지 확인 (앞뒤 공백 제거)
-        create_date: post.create_date ? post.create_date.trim() : '',
+        contents: summary,
+        create_date: post.create_date ? String(post.create_date).trim() : '',
         commentCount: myComments.length,
       }
     })
 
-    updateUI(qnaData)
+    renderPosts(finalData)
+    renderPagination()
   } catch (error) {
     console.error('에러 발생:', error)
-    updateUI([])
+    renderPosts([])
+    renderPagination()
   }
 }
 
-init()
+function bindEvents() {
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      currentSearch = searchInput.value.toLowerCase().trim()
+      currentPage = 1
+      fetchPosts()
+    })
+  }
 
-qnaPostUl.addEventListener('click', (e) => {
-  e.preventDefault()
-  const item = e.target.closest('.main-post__item')
-  if (!item) return
+  if (categoryButtons) {
+    categoryButtons.forEach((category) => {
+      category.addEventListener('click', () => {
+        categoryButtons.forEach((btn) =>
+          btn.classList.remove('category__button--active'),
+        )
+        category.classList.add('category__button--active')
+        const targetIndex = Number(category.dataset.index)
+        currentCategory =
+          targetIndex === 0 ? 'ALL' : category.textContent.trim().toUpperCase()
+        currentPage = 1
+        fetchPosts()
+      })
+    })
+  }
 
-  const postId = item.dataset.id
-  localStorage.setItem('selectedPostId', postId)
-  localStorage.setItem('selectedBoardId', 2)
-  location.href = '../readpost/index.html'
-})
+  if (!IS_HOME) {
+    if (nextGroupButton) {
+      nextGroupButton.addEventListener('click', () => {
+        const currentGroup = Math.ceil(currentPage / pageCount)
+        currentPage = Math.min(currentGroup * pageCount + 1, totalPages)
+        fetchPosts()
+      })
+    }
+    if (firstButton) {
+      firstButton.addEventListener('click', () => {
+        const currentGroup = Math.ceil(currentPage / pageCount)
+        currentPage = Math.max(1, (currentGroup - 1) * pageCount)
+        fetchPosts()
+      })
+    }
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--
+          fetchPosts()
+        }
+      })
+    }
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++
+          fetchPosts()
+        }
+      })
+    }
+  }
+
+  if (qnaPostUl) {
+    qnaPostUl.addEventListener('click', (e) => {
+      e.preventDefault()
+      const item = e.target.closest('.post__item')
+      if (!item) return
+      const postId = item.dataset.id
+      localStorage.setItem('selectedPostId', postId)
+      localStorage.setItem('selectedBoardId', 2)
+      location.href = '/src/pages/readpost/index.html'
+    })
+  }
+}
+
+function start() {
+  qnaPostUl = document.querySelector('.post__list')
+  paginationList = document.querySelector('.pagination__list')
+  firstButton = document.querySelector('.pagination__button--first')
+  prevButton = document.querySelector('.pagination__button--prev')
+  nextButton = document.querySelector('.pagination__button--next')
+  nextGroupButton = document.querySelector('.pagination__button--next-group')
+  searchInput = document.querySelector('#search__input')
+  paginationRoot = document.querySelector('.pagination')
+  categoryButtons = document.querySelectorAll('.category__button')
+
+  bindEvents()
+  fetchPosts()
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', start)
+} else {
+  start()
+}
