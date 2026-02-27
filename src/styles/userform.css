@@ -254,10 +254,12 @@ body.user{
   .profile__container{
     max-height: 428px;
     background: #fff;
+    box-shadow: var(--shadow-box);
   }
   .user__profile{
     grid-column: 2/3;
     background: #fff;
+    box-shadow: var(--shadow-box);
   }
 
   .user__activity{
@@ -274,6 +276,7 @@ body.user{
     height: 160px;
     border-radius: 14px;
     background: #fff;
+        box-shadow: var(--shadow-box);
   }
 
   .activity__item > .write__count{
@@ -360,6 +363,10 @@ body.user{
     width: 100%;
     padding-bottom: 16px;
     border-bottom: 1px solid #E5E7EB;
+  }
+
+  &.read{
+    max-height: 265px;
   }
 
 }
@@ -690,6 +697,7 @@ body.user{
     overflow: hidden;
   }
     
+  .user__input .text__box p,
   textarea{
     width: 100%;
     height: 100%;
