@@ -2,12 +2,9 @@ import { timeForToday } from '../../js/utils/date.js'
 import { checkToken } from '../../api/JWT.js'
 import { BASE_URL } from '../../api/api.js'
 import { removeMarkdown } from '../../js/utils/removemarkdown.js'
-console.log(import.meta.env)
 
-// 아예 빈값으로 변수선언
 let userData = null
 
-// 서버에서 검증하도록 비동기 함수를 생선
 async function fetchUserData(forceRefresh = false) {
   if (userData && !forceRefresh) return userData
 
@@ -39,28 +36,16 @@ const nextGroupButton = document.querySelector(
 const categoryButton = document.querySelectorAll('.category__button')
 const searchInput = document.getElementById('search__input')
 
-// function removeMarkdown(text) {
-//   if (!text) return ''
-//   return text
-//     .replace(/```[\s\S]*?```/g, '')
-//     .replace(/`.*?`/g, '')
-//     .replace(/[#*_\-~[\]()>]/g, '')
-//     .replace(/\s+/g, ' ')
-//     .trim()
-// }
-
 async function fetchPosts() {
   try {
-    // 일단 유저 데이터를 받아올태니, 함수실행을 잠깐 멈춰라.
     await fetchUserData(true)
 
-    // 위의 함수가 실행되면 토큰 안에 있는 정보를 뱉어라
     const token = localStorage.getItem('token')
 
     const formData = new FormData()
     formData.append('board_id', 1)
     formData.append('page', currentPage)
-    formData.append('user_id', userData.UID) // 👈 user_id 대신 UID로 키값을 바꿔서 전송
+    formData.append('user_id', userData.UID)
     formData.append('search', currentSearch)
     formData.append(
       'category',
@@ -70,21 +55,16 @@ async function fetchPosts() {
     const response = await fetch(`${BASE_URL}/board/list_board.php`, {
       method: 'POST',
       headers: {
-        // 💡 JWT 방식은 보통 Authorization 헤더에 Bearer 토큰을 실어 보냅니다.
         Authorization: `Bearer ${token}`,
       },
-      body: formData, // POST 방식이므로 body에 담아 보냄
+      body: formData,
     })
 
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const result = await response.json()
-    console.log('서버 응답 결과:', result) // 👈 여기서 데이터가 오는지 꼭 확인!
-    console.log(localStorage)
-
     totalPages = result.total_pages || 0
 
-    // 데이터가 없으면 검색 결과 없음 띄우고 종료
     if (!result.data || result.data.length === 0) {
       renderPosts([])
       renderPagination()
@@ -113,10 +93,6 @@ async function fetchPosts() {
     renderPagination()
   }
 }
-
-// -------------------------------------------------------------------
-// 렌더링 및 페이지네이션 함수들 (형님 코드 로직 유지)
-// -------------------------------------------------------------------
 
 function renderPosts(data) {
   if (data.length === 0) {
@@ -178,7 +154,6 @@ function renderPagination() {
   }
   paginationList.innerHTML = htmlString
 
-  // 버튼 숨기기 로직
   const hiddenClass = 'pagination__button--hidden'
   if (firstButton) firstButton.classList.toggle(hiddenClass, currentGroup === 1)
   if (nextGroupButton)
@@ -199,7 +174,6 @@ function renderPagination() {
   })
 }
 
-// 이벤트 리스너 설정
 nextButton.addEventListener('click', () => {
   if (currentPage < totalPages) {
     currentPage++
