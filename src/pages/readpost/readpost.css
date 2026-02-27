@@ -1,27 +1,33 @@
+/* =================================
+   1. 레이아웃
+================================= */
+
 .container {
   margin: auto;
   padding-block: 40px;
 }
 
-.post {
-  box-shadow: var(--shadow-box);
-}
 
+/* 게시글/댓글 공통 박스 */
 .post,
 .comment {
   background-color: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  /* box-shadow: var(--shadow-box); */
   margin-block: 24px;
   padding: 32px;
+    box-shadow: var(--shadow-box);
 
   .post__header {
     width: 100%;
   }
 }
 
-/* 글쓰기 헤더 */
+/* =================================
+   2. 포스트 헤더 영역
+================================= */
+
+/* 카테고리, 작성시간 영역 */
 .post__title-group {
   display: flex;
   align-items: center;
@@ -47,7 +53,7 @@
 }
 
 .post__title {
-  margin-block: 20px 78px;
+  margin-block: 20px 38px;
 }
 
 .post__meta {
@@ -64,6 +70,12 @@
   gap: 12px;
   margin-block: 6px;
 }
+
+
+/* =================================
+   3. 작성자 프로필 사진
+================================= */
+
 .avatar {
   display: flex;
   align-items: center;
@@ -89,7 +101,9 @@
   font-size: 16px;
 }
 
-/* 질문 내용 */
+/* =================================
+   4. 작성글 영역
+================================= */
 .post__content {
   line-height: 1.6;
   padding-block: 40px;
@@ -101,8 +115,6 @@
     border-radius: 14px;
     padding: 24px;
     overflow: auto;
-    /* font-family:monospace;
-    white-space: pre; */
 
     line-height: 1.4;
   }
@@ -122,7 +134,11 @@
   font-size: var(--fs-text-sm);
 }
 
-/* 댓글 */
+
+/* =================================
+   5. 코멘트 영역
+================================= */
+
 #comment__form {
   display: flex;
   flex-direction: column;
@@ -198,6 +214,7 @@
   line-height: 1.4;
 }
 
+/* 댓글 수정/삭제 버튼 */
 .comment__actions {
   grid-column: 3;
   grid-row: 2;
@@ -213,13 +230,17 @@
   border-radius: 10px;
 }
 
-/* 작성자 편집 버튼 활성화 */
+/* =================================
+   6. 작성글 수정/삭제 버튼
+================================= */
 .post__actions {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 16px;
-  padding-block-start: 70px;
+  margin-block-start: 40px;
+  padding-block-start: 20px;
+  border-top: 1px solid lightgray;
 
   .post__btn {
     display: inline-flex;

@@ -1,20 +1,7 @@
-/* .container {
-  margin: auto;
-  padding-block: 40px;
-} */
 
-/* .newpost__title {
-  font-size: var(--fs-h1);
-  font-weight: var(--fw-h1);
-  margin: 0;
-} */
-
-/* .newpost__desc {
-  font-size: var(--fs-header-desc);
-  letter-spacing: var(--ls-header-desc);
-  color: var(--color-desc);
-} */
-
+/* =================================
+post form
+================================= */
 .newpost__form {
   display: flex;
   flex-direction: column;
@@ -27,6 +14,10 @@
   border-radius: 14px;
   margin-block: 30px;
 
+
+  /* ================================
+  1. 게시판 선택 영역 (라디오 버튼)
+  ================================= */
   .newpost__field--board {
     border: 1px solid lightgray;
     border-radius: 12px;
@@ -41,11 +32,16 @@
     }
   }
 
+
+  /* ================================
+  2. 입력 필드 영역 (제목/ 카테고리/ 내용)
+  ================================= */
   .newpost__field {
     display: flex;
     flex-direction: column;
     gap: 12px;
 
+    /* 제목, 카테고리 */
     .input,
     #categorySelect {
       height: 50px;
@@ -54,6 +50,7 @@
       padding-inline: 12px;
     }
 
+    /* 내용 */
     #content {
       border: 1px solid lightgray;
       border-radius: 12px;
@@ -61,7 +58,6 @@
 
       box-sizing: border-box;
       width: 100%;
-      min-height: 300px;
       padding: 16px;
       font-size: 16px;
       line-height: 1.6;
@@ -70,6 +66,10 @@
     }
   }
 
+
+  /* ================================
+  3. 미리보기 영역
+  ================================= */
   .newpost__preview {
     background: var(--gray-50);
     border: 1px solid lightgray;
@@ -91,6 +91,9 @@
     }
   }
 
+  /* ================================
+  4. 하단 버튼 영역
+  ================================= */
   .newpost__actions {
     display: flex;
     justify-content: space-evenly;
@@ -112,7 +115,7 @@
     cursor: pointer;
   }
 
-  /* submit 버튼 */
+  /* 제출 버튼 */
   .button--primary {
     background: linear-gradient(90deg, #4f39f6 0%, #7c3aed 100%);
     color: #ffffff;
