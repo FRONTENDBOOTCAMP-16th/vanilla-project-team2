@@ -2,16 +2,10 @@
 페이지 상단 제목
 ==================================================*/
 
-<<<<<<< HEAD
-header {
-  margin: 0 auto;
-  border-bottom: 1px solid #e5e7eb;
-=======
 /* 페이지 헤더 박스  */
 .page-header__box {
   padding-top: 40px;
   margin-bottom: 32px;
->>>>>>> feature_hk_02
 }
 
 /* 페이지 헤더 타이틀 */
@@ -59,7 +53,6 @@ header {
   }
 }
 
-<<<<<<< HEAD
 /* 네비게이션 */
 .nav {
   display: flex;
@@ -118,14 +111,11 @@ footer
   background: linear-gradient(90deg, #0f172a 0%, #111827 50%, #020617 100%);
 }
 
-.footer-inner {
-=======
 /* =================================================
 서치바
 ==================================================*/
 
 .search {
->>>>>>> feature_hk_02
   display: flex;
   justify-content: center;
   align-items: center;
