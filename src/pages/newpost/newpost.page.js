@@ -1,10 +1,14 @@
-// 마크다운 라이브러리
-// sanitize 라이브러리
+/* ================================
+   Import
+================================= */
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 import { checkToken } from '../../api/JWT.js'
 import { BASE_URL } from '../../api/api.js'
 
+/* ================================
+   State
+================================= */
 const params = new URLSearchParams(location.search)
 const editPostId = params.get('postId')
 // const BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla'
@@ -21,8 +25,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 로그인했을 때만 실행될 나머지 코드들...
   console.log('로그인 성공')
 
-  //==========================================================================================
-
+  /* ================================
+   DOM caching
+================================= */
   const form = document.querySelector('.newpost__form')
   const title = document.getElementById('title')
   const pageTitle = document.querySelector('.newpost__title')
@@ -146,6 +151,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
         // 만약 네트워크 실패(->catch)가 아닌 400-500과 같은 오류일 경우,
         if (!response.ok) throw new Error('수정 실패')
+
+        //==========================================================================================
 
         // 글 작성 (editPostId 가 없는 경우,)
       } else {

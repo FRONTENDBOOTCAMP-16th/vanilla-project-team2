@@ -35,6 +35,10 @@ let currentUser = null
 const params = new URLSearchParams(location.search)
 const postId = params.get('postId') || localStorage.getItem('selectedPostId')
 const boardId = localStorage.getItem('selectedBoardId')
+const USERPAGE_BASE = `http://leedh9207.dothome.co.kr/src/pages/users/user_page/index.html?`
+function getUserPageLink(uid) {
+  return `${USERPAGE_BASE}${uid}`
+}
 
 /* ================================
    DOM caching
@@ -131,7 +135,12 @@ function renderPost(post) {
   const authorNickname = post.user_nickname
   authorNameEl.textContent = authorNickname
 
-  authorAvatar.innerHTML = renderAvatar(post.user_profile, authorNickname)
+  const profileLink = getUserPageLink(post.user_id)
+  authorAvatar.innerHTML = `
+  <a href="${profileLink}">
+    ${renderAvatar(post.user_profile, authorNickname)}
+  </a>
+`
 
   // 시간 렌더링
   if (post.create_date && timeElement) {
@@ -163,10 +172,10 @@ function renderComments(comments) {
   commentList.innerHTML = comments
     .map((cmt) => {
       console.log(cmt)
-      const profileLink = `http://leedh9207.dothome.co.kr/src/pages/users/user_page/index.html?${cmt.UID}`
+
       // 댓글 작성자에게만 수정/삭제 버튼 노출
       const isOwner = currentUser && Number(currentUser.UID) === Number(cmt.UID)
-
+      const profileLink = getUserPageLink(cmt.UID)
       return `
       <li class="comment__item" data-id="${cmt.comment_id}">
         <article class="comment__card">
@@ -182,7 +191,7 @@ function renderComments(comments) {
             </time>
           </div>
           <p class="comment__text">
-            ${cmt.contents}
+            ${DOMPurify.sanitize(cmt.contents)}
             </p>
             ${
               isOwner
@@ -314,3 +323,4 @@ function bindEvents(post) {
     }
   })
 }
+
