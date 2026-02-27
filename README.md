@@ -69,9 +69,9 @@
 │   │       ├── studyroom.css
 │   │       └── studyroom.page.js
 │   └── styles/                 # 전역 스타일
-│       ├── base.css
-│       ├── main.css
-│       └── theme.css
+│       ├─ base.css             #reset, font, body 기본값
+│       ├─ layout.css           #header/footer/nav/컨테이너
+│       └── components.css      # 버튼, 카드, 배지, 모달
 ├── index.html
 ├── vite.config.mjs
 ├── package.json
@@ -79,4 +79,6 @@
 
 ```
 
-#
+# API
+
+https://openweathermap.org/api
