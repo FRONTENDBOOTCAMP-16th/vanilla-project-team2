@@ -1,13 +1,11 @@
 import { checkToken } from '../../../api/JWT.js'
 const fetchedData = await checkToken()
 
-// 로그인
 const pwCheckURLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/check_password.php'
 const changePwURLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/change_password.php'
 
-// 변수 설정
-const loginButton = document.querySelector('.change-pw__button')
 const form = document.getElementById('change_password')
+const loginButton = document.querySelector('.change-pw__button')
 
 const showError = (inputElement, message) => {
   const container = inputElement.closest('.user__input')
@@ -15,8 +13,8 @@ const showError = (inputElement, message) => {
   errorEl.textContent = message;
 }
 
-loginButton.addEventListener('click', async (e) => {
-  // 1. 필수: 폼의 기본 제출 동작 방지 (새로고침 방지)
+// 버튼 클릭이 아닌 '폼 제출(submit)' 이벤트를 감지합니다.
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const errorTexts = document.querySelectorAll('.error__text');
@@ -26,12 +24,10 @@ loginButton.addEventListener('click', async (e) => {
   const newPassword = document.getElementById('new_user_password');
   const checkPassword = document.getElementById('new_user_password_check');
 
-  // 유효성 검사 (기존 로직 유지)
   if (!oldPassword.value) return showError(oldPassword, '현재 비밀번호를 입력하세요');
   if (!newPassword.value) return showError(newPassword, '새 비밀번호를 입력하세요');
   if (newPassword.value !== checkPassword.value) return showError(checkPassword, '비밀번호가 일치하지 않습니다');
 
-  // 데이터 준비
   const formData = new FormData();
   formData.append('user_id', fetchedData.user_id);
   formData.append('user_password', oldPassword.value);
@@ -40,39 +36,39 @@ loginButton.addEventListener('click', async (e) => {
   pwFormData.append('user_id', fetchedData.user_id);
   pwFormData.append('user_password', newPassword.value);
 
+  // 성공 여부를 체크하는 변수 추가
+  let isSuccess = false;
+
   try {
-    // 버튼 비활성화 (중복 클릭 방지 및 사용자 경험 개선)
     loginButton.disabled = true;
     loginButton.textContent = '처리 중...';
 
-    // 1단계: 비밀번호 검증
     const checkRes = await fetch(pwCheckURLS, { method: 'POST', body: formData });
     
     if (checkRes.status === 401) {
       showError(oldPassword, '비밀번호가 일치하지 않습니다');
-      loginButton.disabled = false;
-      loginButton.textContent = '변경하기';
-      return;
+      return; // 에러 시 아래 finally 블록으로 이동하여 버튼 복구됨
     }
 
     if (checkRes.ok) {
-      // 2단계: 패스워드 변경
       const changeRes = await fetch(changePwURLS, { method: 'POST', body: pwFormData });
       
       if (changeRes.ok) {
+        isSuccess = true; // 성공 표시
         alert('비밀번호 변경이 완료되었습니다.');
-        // alert 확인 후 즉시 이동
         window.location.replace('/src/pages/users/mypage/index.html');
       } else {
-        throw new Error('비밀번호 변경 중 오류가 발생했습니다.');
+        throw new Error('비밀번호 변경 실패');
       }
     }
   } catch (error) {
     console.error(error);
     alert('서버와의 통신에 실패했습니다.');
   } finally {
-    // 실패했을 경우를 대비해 버튼 복구
-    loginButton.disabled = false;
-    loginButton.textContent = '변경하기';
+    // 성공해서 페이지를 이동할 때는 버튼을 다시 활성화하지 않음
+    if (!isSuccess) {
+      loginButton.disabled = false;
+      loginButton.textContent = '변경하기';
+    }
   }
 });
