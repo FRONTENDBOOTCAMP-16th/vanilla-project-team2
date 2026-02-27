@@ -109,7 +109,7 @@ function renderPosts(data) {
       (post) => `
         <li class="post__item" data-id="${post.post_id}">
           <a href="#" class="post__inner">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div class="post__top-row">
               <span class="post__tag">${Array.isArray(post.type) ? post.type[0] : post.type}</span>
               <span class="post__date">${timeForToday(post.create_date)}</span>
             </div>
