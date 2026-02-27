@@ -322,5 +322,14 @@ function bindEvents(post) {
       console.error(err)
     }
   })
+
+  // 댓글 수정 기능 준비중
+  // TODO: 수정 기능 구현 (P2)
+  commentList.addEventListener('click', (e) => {
+    const editBtn = e.target.closest('.comment__edit')
+    if (!editBtn) return
+
+    alert('현재 준비중인 기능입니다.')
+  })
 }
 
