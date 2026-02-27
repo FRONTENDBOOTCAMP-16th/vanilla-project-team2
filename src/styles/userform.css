@@ -299,7 +299,8 @@ body.user{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 96px; height: 96px;
+    width: 96px;
+    aspect-ratio: 1/1;
     border-radius: 50%;
     background: linear-gradient(-45deg, #AD46FF, #615FFF);
     color: var(--white);
