@@ -109,7 +109,7 @@ function renderPosts(data) {
       (post) => `
         <li class="post__item" data-id="${post.post_id}">
           <a href="#" class="post__inner">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <div class="post__top-row">
               <span class="post__tag">${Array.isArray(post.type) ? post.type[0] : post.type}</span>
               <span class="post__date">${timeForToday(post.create_date)}</span>
             </div>
@@ -117,8 +117,11 @@ function renderPosts(data) {
               <h3 class="post__heading">${post.subject}</h3>
               <p class="post__text">${post.contents}</p>
             </div>
-            <div class="post__meta-box">
-              <span class="post__author-text" style="margin-left: auto;">by <strong>${post.nickname}</strong></span>
+            // 해당 부분 삭제해도 될 거 같은데 확인 해주세요
+            // 불러와야하면 뒤에 class none 사용
+            <div class="post__meta-box none">
+              <span class="post__author-text"></span>
+              <span>by <strong>${post.nickname}</strong></span>
             </div>
           </a>
         </li>

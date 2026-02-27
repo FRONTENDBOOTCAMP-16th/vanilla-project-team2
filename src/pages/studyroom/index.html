@@ -16,212 +16,214 @@
     class="gray-bg"
   >
     <div class="container">
-      <main>
-        <!-- page-header -->
-        <div class="page-header__box">
-          <h2 class="page-header__title">자습방</h2>
-          <p class="page-header__desc">
-            학습한 내용을 정리하고 복습하며 성장하세요
-          </p>
-        </div>
-        <!-- //page-header -->
+      <!-- page-header -->
+      <div class="page-header__box">
+        <h2 class="page-header__title">자습방</h2>
+        <p class="page-header__desc">
+          학습한 내용을 정리하고 복습하며 성장하세요
+        </p>
+      </div>
+      <!-- //page-header -->
 
-        <!-- search -->
-        <section class="search">
-          <form class="search__form">
-            <div class="search__group">
-              <svg
-                class="search__icon"
-                width="17"
-                height="17"
-                viewBox="0 0 17 17"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
-                  stroke="#99A1AF"
-                  stroke-width="1.66667"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M15.8333 15.8333L12.25 12.25"
-                  stroke="#99A1AF"
-                  stroke-width="1.66667"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <label class="sr-only" for="search__input">게시글 검색</label>
-              <input
-                class="search__input"
-                type="search"
-                id="search__input"
-                name="search__input"
-                placeholder="게시글 검색"
+      <!-- search -->
+      <section class="search">
+        <form class="search__form">
+          <div class="search__group">
+            <svg
+              class="search__icon"
+              width="17"
+              height="17"
+              viewBox="0 0 17 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
+                stroke-linecap="round"
+                stroke-linejoin="round"
               />
-            </div>
-          </form>
-        </section>
-        <!-- //search -->
-
-        <!-- category -->
-        <div class="category">
-          <ul class="category__list">
-            <li class="category__item">
-              <button
-                class="category__button category__button--active"
-                data-index="0"
-                data-topic="전체"
-                type="button"
-              >
-                전체
-              </button>
-            </li>
-            <li class="category__item">
-              <button
-                class="category__button"
-                data-index="1"
-                data-topic="HTML"
-                type="button"
-              >
-                HTML
-              </button>
-            </li>
-            <li class="category__item">
-              <button
-                class="category__button"
-                data-index="2"
-                data-topic="CSS"
-                type="button"
-              >
-                CSS
-              </button>
-            </li>
-            <li class="category__item">
-              <button
-                class="category__button"
-                data-index="3"
-                data-topic="JavaScript"
-                type="button"
-              >
-                JAVASCRIPT
-              </button>
-            </li>
-            <li class="category__item">
-              <button
-                class="category__button"
-                data-index="4"
-                data-topic="React"
-                type="button"
-              >
-                REACT
-              </button>
-            </li>
-            <li class="category__item">
-              <button
-                class="category__button"
-                data-index="5"
-                data-topic="기타"
-                type="button"
-              >
-                기타
-              </button>
-            </li>
-          </ul>
-        </div>
-        <!-- //category -->
-
-        <div class="post">
-          <ul class="post__list"></ul>
-        </div>
-
-        <nav class="pagination" aria-label="게시판 페이지 네비게이션">
-          <div
-            class="pagination__inner"
-            style="display: flex; align-items: center; gap: 6px"
-          >
-            <button
-              type="button"
-              class="pagination__button pagination__button--first pagination__button--hidden"
-              aria-label="처음 페이지"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
+              <path
+                d="M15.8333 15.8333L12.25 12.25"
+                stroke="#99A1AF"
+                stroke-width="1.66667"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-              >
-                <polyline points="11 17 6 12 11 7"></polyline>
-                <polyline points="18 17 13 12 18 7"></polyline>
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="pagination__button pagination__button--prev"
-              aria-label="이전 페이지"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-
-            <ul class="pagination__list"></ul>
-
-            <button
-              type="button"
-              class="pagination__button pagination__button--next"
-              aria-label="다음 페이지"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-            <button
-              type="button"
-              class="pagination__button pagination__button--next-group pagination__button--hidden"
-              aria-label="다음 5페이지"
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <polyline points="13 17 18 12 13 7"></polyline>
-                <polyline points="6 17 11 12 6 7"></polyline>
-              </svg>
-            </button>
+              />
+            </svg>
+            <label class="sr-only" for="search__input">게시글 검색</label>
+            <input
+              class="search__input"
+              type="search"
+              id="search__input"
+              name="search__input"
+              placeholder="게시글 검색"
+            />
           </div>
-        </nav>
-      </main>
+        </form>
+      </section>
+      <!-- //search -->
+
+      <!-- category -->
+      <div class="category">
+        <ul class="category__list">
+          <li class="category__item">
+            <button
+              class="category__button category__button--active"
+              data-index="0"
+              data-topic="전체"
+              type="button"
+            >
+              전체
+            </button>
+          </li>
+          <li class="category__item">
+            <button
+              class="category__button"
+              data-index="1"
+              data-topic="HTML"
+              type="button"
+            >
+              HTML
+            </button>
+          </li>
+          <li class="category__item">
+            <button
+              class="category__button"
+              data-index="2"
+              data-topic="CSS"
+              type="button"
+            >
+              CSS
+            </button>
+          </li>
+          <li class="category__item">
+            <button
+              class="category__button"
+              data-index="3"
+              data-topic="JavaScript"
+              type="button"
+            >
+              JAVASCRIPT
+            </button>
+          </li>
+          <li class="category__item">
+            <button
+              class="category__button"
+              data-index="4"
+              data-topic="React"
+              type="button"
+            >
+              REACT
+            </button>
+          </li>
+          <li class="category__item">
+            <button
+              class="category__button"
+              data-index="5"
+              data-topic="기타"
+              type="button"
+            >
+              기타
+            </button>
+          </li>
+        </ul>
+      </div>
+      <!-- //category -->
+
+      <!-- post -->
+      <div class="post">
+        <ul class="post__list"></ul>
+      </div>
+      <!-- //post -->
+
+      <!-- pagination -->
+      <nav class="pagination" aria-label="게시판 페이지 네비게이션">
+        <div
+          class="pagination__inner"
+          style="display: flex; align-items: center; gap: 6px"
+        >
+          <button
+            type="button"
+            class="pagination__button pagination__button--first pagination__button--hidden"
+            aria-label="처음 페이지"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="11 17 6 12 11 7"></polyline>
+              <polyline points="18 17 13 12 18 7"></polyline>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="pagination__button pagination__button--prev"
+            aria-label="이전 페이지"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <ul class="pagination__list"></ul>
+
+          <button
+            type="button"
+            class="pagination__button pagination__button--next"
+            aria-label="다음 페이지"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="pagination__button pagination__button--next-group pagination__button--hidden"
+            aria-label="다음 5페이지"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="13 17 18 12 13 7"></polyline>
+              <polyline points="6 17 11 12 6 7"></polyline>
+            </svg>
+          </button>
+        </div>
+      </nav>
+      <!-- pagination -->
     </div>
   </body>
 </html>

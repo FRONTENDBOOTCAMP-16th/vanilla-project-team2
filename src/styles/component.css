@@ -22,96 +22,6 @@
   color: var(--color-desc);
 }
 
-/* 서치바 */
-.search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  width: 100%;
-
-  height: 100px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: var(--shadow-box);
-  background-color: #ffffff;
-  margin-bottom: 24px;
-
-  .search__icon {
-    position: absolute;
-    top: 40px;
-    left: 44px;
-  }
-
-  .search__input {
-    width: 1150px;
-    height: 50px;
-    padding-left: 48px;
-    padding-right: 28px;
-    padding-block: 16px;
-    border: 1px solid #d1d5dc;
-    border-radius: 10px;
-  }
-}
-
-/* 네비게이션 */
-.nav {
-  display: flex;
-  gap: 8px;
-  align-items: space-between;
-}
-
-.nav-item {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-
-  padding: 8px 14px;
-  border-radius: 10px;
-  color: #374151;
-
-  font-size: 14px;
-  text-decoration: none;
-}
-
-.nav-item img {
-  width: 18px;
-  height: 18px;
-}
-
-.nav-item:hover {
-  background: #f3f4f6;
-}
-
-/* 활성 상태 - 현재 페이지*/
-.nav-item.active {
-  background: #eef2ff;
-  color: #2563eb;
-}
-
-/* 회원정보 */
-.personal {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.nav-item.btn__blue {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  color: #fff;
-}
-
-.logout img {
-  filter: brightness(0) invert(1);
-}
-
-/* ==================================================
-footer
-==================================================*/
-.footer {
-  background: linear-gradient(90deg, #0f172a 0%, #111827 50%, #020617 100%);
-}
-
 /* =================================================
 서치바
 ==================================================*/
@@ -128,6 +38,8 @@ footer
   border-radius: 12px;
   box-shadow: var(--shadow-box);
   background-color: #ffffff;
+
+  margin-bottom: 24px;
 
   .search__icon {
     position: absolute;
@@ -237,6 +149,13 @@ post list
     min-height: 220px;
   }
 
+  .post__top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
   .post__group {
     flex-grow: 1;
   }
@@ -244,10 +163,12 @@ post list
   .post__date {
     font-size: var(--fs-time);
     color: #868e96;
+    display: flex;
+    gap: 4px;
   }
 
   .post__author-text {
-    display: none;
+    /* display: none; */
     font-size: var(--fs-text);
     color: #212529;
   }
@@ -274,13 +195,15 @@ post list
 }
 
 .post__meta-box {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
   margin-top: auto;
   padding-top: 16px;
   align-items: center;
   border-top: 1px solid #f1f3f5;
+}
+
+.post__author-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* =================================================
@@ -369,11 +292,4 @@ pagination
   justify-content: center;
   align-items: center;
   min-height: 300px;
-}
-
-/* 아바타 이미지 */
-.comment__avatar-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
