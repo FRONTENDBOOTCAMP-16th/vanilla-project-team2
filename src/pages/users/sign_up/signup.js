@@ -73,7 +73,6 @@ form.addEventListener('click', (e) => {
         })
           .then((response) => response.text())
           .then((text) => {
-            console.log('서버 원본 응답:', text)
             // try, catch 사용
             try {
               const data = JSON.parse(text)
@@ -88,7 +87,7 @@ form.addEventListener('click', (e) => {
                 } else if (data.message === '이미 존재하는 휴대폰 번호입니다.') {
                   showError(phone, '이미 존재하는 휴대폰 번호입니다.')
                 } else {
-                  console.log(data.message)
+                  console.warn(data.message)
                 }
               }
             } catch (e) {

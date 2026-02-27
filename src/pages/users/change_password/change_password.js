@@ -58,7 +58,6 @@ loginButton.addEventListener('click', async (e) => {
         body: formData,
       })
         .then((res) => {
-          console.log(res)
           if (res.status === 200) {
           // 패스워드 변경
           fetch(changePwURLS, {
