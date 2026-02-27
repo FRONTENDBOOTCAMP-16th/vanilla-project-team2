@@ -3,10 +3,11 @@
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 import { checkToken } from '../../api/JWT.js'
+import { BASE_URL } from '../../api/api.js'
 
 const params = new URLSearchParams(location.search)
 const editPostId = params.get('postId')
-const BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla'
+// const BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla'
 
 // 글쓰기, 수정하기 페이지 진입시 회원 검증
 document.addEventListener('DOMContentLoaded', async () => {
