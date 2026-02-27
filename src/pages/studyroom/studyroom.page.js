@@ -1,8 +1,14 @@
+// ================================
+// Import
+// ================================
 import { timeForToday } from '../../js/utils/date.js'
 import { checkToken } from '../../api/JWT.js'
 import { BASE_URL } from '../../api/api.js'
 import { removeMarkdown } from '../../js/utils/removemarkdown.js'
 
+// ================================
+// 유저 인증
+// ================================
 let userData = null
 
 async function fetchUserData(forceRefresh = false) {
@@ -19,12 +25,18 @@ async function fetchUserData(forceRefresh = false) {
   }
 }
 
+// ================================
+// 상태 변수
+// ================================
 let currentPage = 1
 let currentSearch = ''
 let currentCategory = 'ALL'
 let totalPages = 1
 const pageCount = 5
 
+// ================================
+// DOM 요소
+// ================================
 const postListElement = document.querySelector('.post__list')
 const paginationList = document.querySelector('.pagination__list')
 const firstButton = document.querySelector('.pagination__button--first')
@@ -36,8 +48,12 @@ const nextGroupButton = document.querySelector(
 const categoryButton = document.querySelectorAll('.category__button')
 const searchInput = document.getElementById('search__input')
 
+// ================================
+// 게시글 데이터 fetch
+// ================================
 async function fetchPosts() {
   try {
+    // 로그인 검증
     await fetchUserData(true)
 
     const token = localStorage.getItem('token')
@@ -71,6 +87,7 @@ async function fetchPosts() {
       return
     }
 
+    // 데이터 가공
     const actualPosts = result.data.map((post) => {
       const categories = Array.isArray(post.type) ? post.type : [post.type]
       const cleanText = removeMarkdown(post.contents)
@@ -94,6 +111,9 @@ async function fetchPosts() {
   }
 }
 
+// ================================
+// 게시글 렌더링
+// ================================
 function renderPosts(data) {
   if (data.length === 0) {
     postListElement.innerHTML = `
@@ -111,17 +131,17 @@ function renderPosts(data) {
           <a href="#" class="post__inner">
             <div class="post__top-row">
               <span class="post__tag">${Array.isArray(post.type) ? post.type[0] : post.type}</span>
-              <span class="post__date">${timeForToday(post.create_date)}</span>
+              <span class="post__date">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.00016 14.6668C11.6821 14.6668 14.6668 11.6821 14.6668 8.00016C14.6668 4.31826 11.6821 1.3335 8.00016 1.3335C4.31826 1.3335 1.3335 4.31826 1.3335 8.00016C1.3335 11.6821 4.31826 14.6668 8.00016 14.6668Z" stroke="#6A7282" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M8 4V8L10.6667 9.33333" stroke="#6A7282" stroke-width="1.33333" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ${timeForToday(post.create_date)}
+              </span>
             </div>
             <div class="post__group">
               <h3 class="post__heading">${post.subject}</h3>
               <p class="post__text">${post.contents}</p>
-            </div>
-            // 해당 부분 삭제해도 될 거 같은데 확인 해주세요
-            // 불러와야하면 뒤에 class none 사용
-            <div class="post__meta-box none">
-              <span class="post__author-text"></span>
-              <span>by <strong>${post.nickname}</strong></span>
             </div>
           </a>
         </li>
@@ -130,6 +150,9 @@ function renderPosts(data) {
     .join('')
 }
 
+// ================================
+// 페이지네이션 렌더링
+// ================================
 function renderPagination() {
   const paginationWrapper = document.querySelector('.pagination')
 
@@ -168,6 +191,7 @@ function renderPagination() {
   if (nextButton)
     nextButton.classList.toggle(hiddenClass, currentPage === totalPages)
 
+  // 페이지 번호 버튼 클릭 이벤트
   const pageButtons = document.querySelectorAll('.pagination__link')
   pageButtons.forEach((button) => {
     button.addEventListener('click', (e) => {
@@ -177,6 +201,11 @@ function renderPagination() {
   })
 }
 
+// ================================
+// 이벤트 바인딩
+// ================================
+
+// 페이지네이션 버튼
 nextButton.addEventListener('click', () => {
   if (currentPage < totalPages) {
     currentPage++
@@ -200,12 +229,14 @@ firstButton.addEventListener('click', () => {
   fetchPosts()
 })
 
+// 검색
 searchInput.addEventListener('input', () => {
   currentSearch = searchInput.value.toLowerCase().trim()
   currentPage = 1
   fetchPosts()
 })
 
+// 카테고리
 categoryButton.forEach((category) => {
   category.addEventListener('click', () => {
     categoryButton.forEach((btn) =>
@@ -220,6 +251,7 @@ categoryButton.forEach((category) => {
   })
 })
 
+// 게시글 클릭 -> 상세 페이지 이동
 fetchPosts()
 
 postListElement.addEventListener('click', (e) => {
