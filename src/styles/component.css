@@ -35,6 +35,7 @@
   border-radius: 12px;
   box-shadow: var(--shadow-box);
   background-color: #ffffff;
+  margin-bottom: 24px;
 
   .search__icon {
     position: absolute;
@@ -188,6 +189,10 @@ footer
 /* =================================================
 post list 
 ==================================================*/
+.post {
+  margin-bottom: 40px;
+}
+
 .post__text {
   display: -webkit-box;
   -webkit-line-clamp: 5;
