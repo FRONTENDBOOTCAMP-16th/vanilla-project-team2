@@ -5,7 +5,7 @@ import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 
-
+let currentUser = null
 const BASE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla'
 
 //글, 댓글 작성자 프로필 이미지 가져오기
@@ -29,10 +29,10 @@ function renderAvatar(profile, name) {
 }
 
 // 로그인한 회원만 글에 접근
-async function userInit() {
-  const user = await checkToken() // 유저 확인 로직
+async function start() {
+  currentUser = await checkToken() // 유저 확인 로직
 
-  if (!user) {
+  if (!currentUser) {
     alert('로그인이 필요합니다.')
     window.location.href = '/src/pages/users/login/index.html'
     return // 이제 함수 안이므로 정상 작동합니다.
@@ -40,9 +40,11 @@ async function userInit() {
 
   // 로그인했을 때만 실행될 나머지 코드들...
   console.log('로그인 성공, 페이지 로드를 시작합니다.')
+
+  await init()
 }
 
-userInit()
+start()
 
 // 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
 const params = new URLSearchParams(location.search)
@@ -63,7 +65,6 @@ async function init() {
   const response = await fetch(`${BASE_URL}/board/read.php?post_id=${postId}`)
 
   if (!response.ok) throw new Error('글 불러오기 실패')
-  const currentUser = await checkToken()
   const result = await response.json()
   console.log('서버 원본 응답:', result)
 
@@ -80,11 +81,6 @@ async function init() {
     post = result
   }
 
-  // 콘솔로 한 번 더 확인!
-  // console.log('최종 추출된 post:', post)
-  // console.log('원본 contents:', post.contents)
-  // console.log('문자열 구조 확인:', JSON.stringify(post.contents))
-
   if (!post || Object.keys(post).length === 0) {
     console.log('글 없음 - 데이터 구조를 확인해야 합니다.')
     return
@@ -92,20 +88,6 @@ async function init() {
 
   console.log('user_id', post.user_id)
   console.log('작성자 user_profile:', post.user_profile)
-
-  // ===== 글쓴이에게만 수정/삭제 버튼 노출 =====
-  const actions = document.querySelector('.post__actions')
-
-  try {
-    const userData = await checkToken()
-
-    if (!userData || Number(userData.UID) !== Number(post.user_id)) {
-      actions.style.display = 'none'
-    }
-  } catch {
-    // 로그인 안 한 경우
-    actions.style.display = 'none'
-  }
 
   // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
   marked.setOptions({
@@ -152,8 +134,7 @@ async function init() {
     if (!ok) return
 
     try {
-      const userData = await checkToken()
-      const uid = userData?.UID
+      const uid = currentUser?.UID
 
       if (!uid) {
         alert('로그인이 필요합니다.')
@@ -271,10 +252,9 @@ async function init() {
     if (!contentValue) return
 
     const formData = new FormData()
-    const user = await checkToken()
 
     formData.append('post_id', postId)
-    formData.append('user_id', user.UID)
+    formData.append('user_id', currentUser.UID)
     formData.append('content', contentValue)
 
     try {
@@ -296,6 +276,51 @@ async function init() {
       console.error(err)
     }
   })
+
+  // ===== 글쓴이에게만 수정/삭제 버튼 노출 =====
+  const actions = document.querySelector('.post__actions')
+
+  try {
+    if (!currentUser || Number(currentUser.UID) !== Number(post.user_id)) {
+      actions.style.display = 'none'
+    }
+  } catch {
+    // 로그인 안 한 경우
+    actions.style.display = 'none'
+  }
+
+  // 댓글 삭제
+  commentList.addEventListener('click', async (e) => {
+    const deleteBtn = e.target.closest('.comment__delete')
+    if (!deleteBtn) return
+
+    const commentItem = deleteBtn.closest('.comment__item')
+    const commentId = commentItem.dataset.id
+    const ok = confirm('댓글을 삭제하시겠습니까?')
+    if (!ok) return
+
+    try {
+      const formData = new FormData()
+      formData.append('comment_id', commentId)
+      formData.append('user_id', currentUser.UID)
+
+      const res = await fetch(`${BASE_URL}/comment/delete.php`, {
+        method: 'POST',
+        body: formData,
+      })
+
+      const text = await res.text()
+      console.log('삭제 응답 :', text)
+
+      if (text.includes('success')) {
+        commentItem.remove()
+      } else {
+        alert('삭제 실패')
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  })
 }
 
-init()
+

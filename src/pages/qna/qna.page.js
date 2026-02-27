@@ -122,12 +122,20 @@ const renderPagination = function () {
 
 async function fetchPosts() {
   try {
-    await fetchUserData(true)
+    // 홈 화면에서는 로그인 상태를 확인하지 않습니다. 로그인 검증을 무조건 수행하면
+    // 토큰이 없을 때 '/index.html'로 리다이렉트되어 자기 자신을 다시 로드하는
+    // 무한 루프가 발생합니다. 따라서 홈에서는 체크를 건너뜁니다.
+    if (!IS_HOME) {
+      await fetchUserData(true)
+    }
 
     const formData = new FormData()
     formData.append('board_id', 2)
     formData.append('page', IS_HOME ? 1 : currentPage)
-    formData.append('user_id', userData.UID)
+    // 사용자 정보가 있을 때만 전송 (비로그인 홈에서는 서버가 기본 처리)
+    if (userData && userData.UID) {
+      formData.append('user_id', userData.UID)
+    }
 
     if (!IS_HOME) {
       formData.append('search', currentSearch)
