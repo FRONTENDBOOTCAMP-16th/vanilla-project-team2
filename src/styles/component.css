@@ -278,13 +278,6 @@ post list
   font-weight: 500;
 }
 
-<<<<<<< HEAD
-.comment__avatar-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-=======
 .post__meta-box {
   display: flex;
   justify-content: space-between;
@@ -382,4 +375,10 @@ pagination
   align-items: center;
   min-height: 300px;
 }
->>>>>>> feature_hk_02
+
+/* 아바타 이미지 */
+.comment__avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
