@@ -1,8 +1,14 @@
+// ================================
+// Import
+// ================================
 import { postItem } from '../../js/components/postItem.js'
 import { checkToken } from '../../api/JWT.js'
 import { removeMarkdown } from '../../js/utils/removemarkdown.js'
 import { BASE_URL } from '../../api/api.js'
 
+// ================================
+// 유저 인증
+// ================================
 let userData = null
 
 async function fetchUserData(forceRefresh = false) {
@@ -19,9 +25,15 @@ async function fetchUserData(forceRefresh = false) {
   }
 }
 
+// ================================
+// 페이지 모드 판별 (home vs qna)
+// ================================
 const PAGE = document.body?.dataset?.page || ''
 const IS_HOME = PAGE === 'home'
 
+// ================================
+// 상태 변수
+// ================================
 let currentPage = 1
 let totalPages = 1
 let currentSearch = ''
@@ -29,6 +41,9 @@ let currentCategory = 'ALL'
 const pageCount = 5
 const ITEMS_PER_PAGE = 8
 
+// ================================
+// DOM 요소
+// ================================
 let qnaPostUl = null
 let paginationList = null
 let firstButton = null
@@ -39,6 +54,9 @@ let searchInput = null
 let paginationRoot = null
 let categoryButtons = null
 
+// ================================
+// 게시글 렌더링
+// ================================
 const renderPosts = function (data) {
   if (!qnaPostUl) return
 
@@ -55,6 +73,9 @@ const renderPosts = function (data) {
   qnaPostUl.innerHTML = displayData.map((post) => postItem(post)).join('')
 }
 
+// ================================
+// 페이지네이션 렌더링
+// ================================
 const renderPagination = function () {
   if (IS_HOME) {
     if (paginationRoot)
@@ -103,6 +124,7 @@ const renderPagination = function () {
     currentGroup === totalGroup,
   )
 
+  // 페이지 번호 버튼 클릭 이벤트
   const pageButtons = document.querySelectorAll('.pagination__link')
   pageButtons.forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -112,8 +134,12 @@ const renderPagination = function () {
   })
 }
 
+// ================================
+// 게시글 데이터 fetch
+// ================================
 async function fetchPosts() {
   try {
+    // 홈이 아닐 때만 로그인 검증 (홈에서 검증 시 무한 루프 발생)
     if (!IS_HOME) {
       await fetchUserData(true)
     }
@@ -122,6 +148,7 @@ async function fetchPosts() {
     formData.append('board_id', 2)
     formData.append('page', IS_HOME ? 1 : currentPage)
 
+    // 로그인 유저일 때만 user_id 전송
     if (userData && userData.UID) {
       formData.append('user_id', userData.UID)
     }
@@ -151,11 +178,13 @@ async function fetchPosts() {
       return
     }
 
+    // 최신순 정렬
     actualPosts.sort(
       (a, b) => new Date(b.create_date) - new Date(a.create_date),
     )
     const qnaPosts = actualPosts.filter((item) => Number(item.board_id) === 2)
 
+    // 댓글 수 병렬 fetch
     const commentsPromises = qnaPosts.map(async (post) => {
       try {
         const res = await fetch(
@@ -173,6 +202,7 @@ async function fetchPosts() {
     })
     await Promise.all(commentsPromises)
 
+    // 데이터 가공
     const finalData = qnaPosts.map((post) => {
       const myComments = serverComments.filter(
         (comment) => String(comment.post_id) === String(post.post_id),
@@ -199,7 +229,11 @@ async function fetchPosts() {
   }
 }
 
+// ================================
+// 이벤트 바인딩
+// ================================
 function bindEvents() {
+  // 검색
   if (searchInput) {
     searchInput.addEventListener('input', () => {
       currentSearch = searchInput.value.toLowerCase().trim()
@@ -208,6 +242,7 @@ function bindEvents() {
     })
   }
 
+  // 카테고리
   if (categoryButtons) {
     categoryButtons.forEach((category) => {
       category.addEventListener('click', () => {
@@ -224,6 +259,7 @@ function bindEvents() {
     })
   }
 
+  // 페이지네이션 버튼 (홈에서는 불필요)
   if (!IS_HOME) {
     if (nextGroupButton) {
       nextGroupButton.addEventListener('click', () => {
@@ -257,6 +293,7 @@ function bindEvents() {
     }
   }
 
+  // 게시글 클릭 -> 상세 페이지 이동
   if (qnaPostUl) {
     qnaPostUl.addEventListener('click', (e) => {
       e.preventDefault()
@@ -270,6 +307,9 @@ function bindEvents() {
   }
 }
 
+// ================================
+// 앱 시작
+// ================================
 function start() {
   qnaPostUl = document.querySelector('.post__list')
   paginationList = document.querySelector('.pagination__list')
