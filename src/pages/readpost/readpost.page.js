@@ -8,72 +8,60 @@ import { BASE_URL } from '../../api/api.js'
 import { renderAvatar } from '../../js/components/avatar.js'
 
 let currentUser = null
-// const BASE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla'
+const params = new URLSearchParams(location.search)
+const postId = params.get('postId') || localStorage.getItem('selectedPostId')
+const boardId = localStorage.getItem('selectedBoardId')
 
-//글, 댓글 작성자 프로필 이미지 가져오기
-// function renderAvatar(profile, name) {
-//   const firstChar = name.charAt(0)
-
-//   if (profile) {
-//     return `
-//       <div class="avatar">
-//         <img class="avatar__image"
-//              src="${BASE_URL}/users/uploads/profile/${profile}"
-//              alt="${name}" />
-//       </div>
-//     `
-//   }
-//   return `
-//     <div class="avatar avatar--initial">
-//       ${firstChar}
-//     </div>
-//   `
-// }
+// DOM 캐싱
+const commentSection = document.getElementById('comment-area')
+const postContent = document.querySelector('.post__content')
+const timeElement = document.querySelector('.post__time time')
+const commentList = document.querySelector('.comment__list')
+const commentInput = document.getElementById('comment')
+const editBtn = document.querySelector('.post__btn--edit')
+const deleteBtn = document.querySelector('.post__btn--delete')
+const authorAvatar = document.querySelector('.post__author-avatar')
+const commentForm = document.getElementById('comment__form')
+const actions = document.querySelector('.post__actions')
+const categoryEl = document.querySelector('.post__category')
+const titleEl = document.querySelector('.post__title')
+const authorNameEl = document.querySelector('.post__author-name')
 
 // 로그인한 회원만 글에 접근
+start()
+
 async function start() {
   currentUser = await checkToken() // 유저 확인 로직
 
   if (!currentUser) {
     alert('로그인이 필요합니다.')
     window.location.href = '/src/pages/users/login/index.html'
-    return // 이제 함수 안이므로 정상 작동합니다.
+    return
   }
 
-  // 로그인했을 때만 실행될 나머지 코드들...
   console.log('로그인 성공, 페이지 로드를 시작합니다.')
-
   await init()
 }
 
-start()
+// fetch한 글 렌더링
+async function init() {
+  toggleCommentsSection()
 
-// 키값(글의 고유 번호-postId) 꺼내 오기 위해 변수로 선언
-const params = new URLSearchParams(location.search)
-const postId = params.get('postId') || localStorage.getItem('selectedPostId')
-console.log('읽으려는 postId', postId)
-const boardId = localStorage.getItem('selectedBoardId')
+  const post = await fetchPost()
+  if (!post) return
 
-const currentBoardId = localStorage.getItem('selectedBoardId') // 아까 저장한 1 또는 2
-const commentSection = document.getElementById('comment-area')
-
-if (currentBoardId === '1') {
-  commentSection.style.display = 'none' // 또는 .classList.add('hidden')
-} else {
-  commentSection.style.display = 'block'
+  renderPost(post)
+  await loadComments(post.post_id)
+  bindEvents(post)
 }
 
-async function init() {
+// 글 데이터 fetch로 불러오기
+async function fetchPost() {
   const response = await fetch(`${BASE_URL}/board/read.php?post_id=${postId}`)
-
   if (!response.ok) throw new Error('글 불러오기 실패')
-  const result = await response.json()
-  console.log('서버 원본 응답:', result)
 
-  // 💡 [수정 포인트] 상자 구조가 어떤 모양이든 찾아내는 무적 로직
-  // 1. result 자체가 배열이면 첫 번째 값
-  // 2. result.data가 있으면 그 안의 첫 번째 값 혹은 객체
-  // 3. 둘 다 아니면 result 자체를 객체로 취급
+  const result = await response.json()
+
   let post = null
   if (Array.isArray(result)) {
     post = result[0]
@@ -88,49 +76,104 @@ async function init() {
     return
   }
 
-  console.log('user_id', post.user_id)
-  console.log('작성자 user_profile:', post.user_profile)
+  return post
+}
 
-  // 선택된 글 렌더링 (마크다운 문법-특정 css적용)
-  marked.setOptions({
-    breaks: true,
-  })
+// 자습방 댓글 기능 숨기기
+function toggleCommentsSection() {
+  if (boardId === '1') {
+    commentSection.style.display = 'none' // 또는 .classList.add('hidden')
+  } else {
+    commentSection.style.display = 'block'
+  }
+}
 
+function renderPost(post) {
+  marked.setOptions({ breaks: true })
   const rawHtml = marked.parse(post.contents || '')
   const sanitizedHtml = DOMPurify.sanitize(rawHtml) // 사용자가 쓴 script를 읽지 않게 하기 위해서 (XSS방지)
 
-  const postContent = document.querySelector('.post__content')
   postContent.innerHTML = sanitizedHtml
 
   postContent.querySelectorAll('pre').forEach((pre) => {
     pre.classList.add('post__content--code')
   })
-  document.querySelector('.post__category').textContent = Array.isArray(
-    post.type,
-  )
-    ? post.type[0]
-    : post.type
-  document.querySelector('.post__title').textContent = post.subject
-  const authorNickname = post.user_nickname || post.nickname || '사용자'
-  document.querySelector('.post__author-name').textContent = authorNickname
-  const authorAvatar = document.querySelector('.post__author-avatar')
+
+  categoryEl.textContent = Array.isArray(post.type) ? post.type[0] : post.type
+
+  titleEl.textContent = post.subject
+  const authorNickname = post.user_nickname
+  authorNameEl.textContent = authorNickname
 
   authorAvatar.innerHTML = renderAvatar(post.user_profile, authorNickname)
 
   // 시간 렌더링
-  const timeElement = document.querySelector('.post__time time')
-
   if (post.create_date && timeElement) {
     timeElement.textContent = timeForToday(post.create_date)
     timeElement.setAttribute('datetime', post.create_date.replace(' ', 'T'))
   }
 
-  loadComments(post.post_id, currentUser)
+  postActions(post)
+}
 
-  // 삭제
+// 글 작성자에게만 수정/삭제 버튼 노출
+function postActions(post) {
+  if (!currentUser || Number(currentUser.UID) !== Number(post.user_id)) {
+    actions.style.display = 'none'
+  }
+}
 
-  const deleteBtn = document.querySelector('.post__btn--delete')
+// 댓글 불러오기
+async function loadComments(postId) {
+  const res = await fetch(`${BASE_URL}/comment/read.php?post_id=${postId}`)
 
+  const result = await res.json()
+
+  const data = result.data || result
+  const comments = Array.isArray(data) ? data : []
+
+  renderComments(comments)
+}
+
+function renderComments(comments) {
+  commentList.innerHTML = comments
+    .map((cmt) => {
+      // 댓글 작성자에게만 수정/삭제 버튼 노출
+      const isOwner = currentUser && Number(currentUser.UID) === Number(cmt.UID)
+
+      return `
+      <li class="comment__item" data-id="${cmt.comment_id}">
+        <article class="comment__card">
+          <div class="comment__avatar">
+            ${renderAvatar(cmt.user_profile, cmt.user_nickname)}
+          </div>
+          <div class="comment__meta">
+            <span class="comment__author">${cmt.user_nickname}</span>
+            <time class="comment__time">
+              ${new Date(cmt.create_date).toLocaleString()}
+            </time>
+          </div>
+          <p class="comment__text">
+            ${cmt.contents}
+            </p>
+            ${
+              isOwner
+                ? `
+            <div class = "comment__actions">
+            <button class = "comment__edit">수정</button>
+            <button class = "comment__delete">삭제</button>
+            </div>`
+                : ''
+            }
+        </article>
+      </li>
+    `
+    })
+    .join('')
+}
+
+function bindEvents(post) {
+  // 글 삭제
   deleteBtn.addEventListener('click', async () => {
     const ok = confirm('정말 글을 삭제하시겠습니까?')
     if (!ok) return
@@ -174,80 +217,12 @@ async function init() {
     }
   })
 
-  // 수정
-  const editBtn = document.querySelector('.post__btn--edit')
-
+  // 글 수정
   editBtn.addEventListener('click', () => {
     location.href = `../newpost/index.html?postId=${post.post_id}`
   })
 
-  //=================================댓글=================================
-
-  const commentForm = document.getElementById('comment__form')
-  const commentInput = document.getElementById('comment')
-  // 댓글 더미 데이터 제거 (댓글 템플릿 리터럴 JS작성 후 HTML에서 코드 지우기!)
-  // 아직 더미 댓글 남아 있어서 아래 댓글 숨기는 코드 작성)
-  const commentList = document.querySelector('.comment__list')
-  commentList.innerHTML = ''
-
-  // 댓글 불러오기
-  async function loadComments(postId, currentUser) {
-    // 1. 데이터 가져오기
-    const res = await fetch(`${BASE_URL}/comment/read.php?post_id=${postId}`)
-
-    // 2. 변수 이름을 result로 통일하거나 아래를 맞추거나!
-    const result = await res.json() // 💡 여기서 comments 대신 result로 받는게 안 헷갈립니다.
-    console.log('서버에서 온 알맹이 데이터:', result)
-    // 답변 렌더링 함수
-    const realData = result.data || result
-    console.log('댓글 데이터 확인:', realData)
-    function renderComments(data, currentUser) {
-      //  매개변수 이름을 data로 명확히!
-      const list = document.querySelector('.comment__list')
-
-      // [방어막] 데이터가 배열인지 확인 (백엔드에서 "댓글이 없습니다"가 올 경우 대비)
-      const commentList = Array.isArray(data) ? data : []
-      console.log('현재유저:', currentUser)
-      list.innerHTML = commentList
-        .map((cmt) => {
-          console.log('댓글 작성자:', cmt.UID)
-          console.log(cmt)
-          const isOwner =
-            currentUser && Number(currentUser.UID) === Number(cmt.UID)
-
-          return `
-      <li class="comment__item" data-id="${cmt.comment_id}">
-        <article class="comment__card">
-          <div class="comment__avatar">
-            ${renderAvatar(cmt.user_profile, cmt.user_nickname)}
-          </div>
-          <div class="comment__meta">
-            <span class="comment__author">${cmt.user_nickname}</span>
-            <time class="comment__time">
-              ${new Date(cmt.create_date).toLocaleString()}
-            </time>
-          </div>
-          <p class="comment__text">
-            ${cmt.contents}
-            </p>
-            ${
-              isOwner
-                ? `
-            <div class = "comment__actions">
-            <button class = "comment__edit">수정</button>
-            <button class = "comment__delete">삭제</button>
-            </div>`
-                : ''
-            }
-        </article>
-      </li>
-    `
-        })
-        .join('')
-    }
-    renderComments(realData, currentUser)
-  }
-
+  // 댓글 작성
   commentForm.addEventListener('submit', async (e) => {
     e.preventDefault()
     const contentValue = commentInput.value.trim()
@@ -268,28 +243,12 @@ async function init() {
       console.log('서버 최종 답변:', text)
       if (text.includes('success')) {
         commentInput.value = ''
-
-        setTimeout(async () => {
-          await loadComments(postId, currentUser)
-          console.log('실시간 반영 완료!')
-        }, 300)
+        await loadComments(postId)
       }
     } catch (err) {
       console.error(err)
     }
   })
-
-  // ===== 글쓴이에게만 수정/삭제 버튼 노출 =====
-  const actions = document.querySelector('.post__actions')
-
-  try {
-    if (!currentUser || Number(currentUser.UID) !== Number(post.user_id)) {
-      actions.style.display = 'none'
-    }
-  } catch {
-    // 로그인 안 한 경우
-    actions.style.display = 'none'
-  }
 
   // 댓글 삭제
   commentList.addEventListener('click', async (e) => {
