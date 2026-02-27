@@ -16,11 +16,13 @@
     class="gray-bg"
   >
     <div class="container">
+      <!-- post content -->
       <article class="post">
         <header class="post__header">
           <div class="post__title-group">
-            <!-- 카테고리 -->
+
             <span class="post__category"></span>
+
             <span class="post__time">
               <svg
                 width="16"
@@ -49,15 +51,13 @@
               </time>
             </span>
           </div>
-          <h1 class="post__title head">
-            <!-- 제목 -->
-          </h1>
+
+          <h1 class="post__title head"></h1>
 
           <div class="post__meta">
+
             <div class="post__author">
-              <div class="post__author-avatar">
-                <!-- 프로필 사진 -->
-              </div>
+              <div class="post__author-avatar"></div>
 
               <p class="post__author-name"></p>
             </div>
@@ -65,9 +65,11 @@
         </header>
 
         <div class="post__content">
+          <!-- 마크 다운 -->
           <pre class="post__content--code"></pre>
-          <!-- 글 내용 들어오는 부분 -->
         </div>
+
+        <!-- buttons -->
         <div class="post__actions">
           <button
             class="post__btn post__btn--edit"
@@ -93,9 +95,11 @@
             삭제
           </button>
         </div>
+        <!-- //buttons -->
       </article>
+      <!-- //post content -->
 
-      <!-- 코멘트 -->
+      <!-- comment -->
       <section class="comment" id="comment-area">
         <h2 class="comment__title">
           <svg
@@ -127,9 +131,10 @@
           </button>
         </form>
 
-        <!-- 댓글 리스트 시작 -->
+        <!-- 코멘트 리스트 시작 -->
         <ol class="comment__list"></ol>
       </section>
+      <!-- //comment -->
     </div>
   </body>
 </html>
