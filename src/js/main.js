@@ -2,43 +2,65 @@
 // 공통 레이아웃(header / footer) 불러오기
 // ===============================
 async function loadLayout() {
-  // 현재 문서의 <body> 요소
   const body = document.body
 
-  // body의 data 속성으로 header/footer 표시 여부 결정
-  // <body data-show-header="false"> 이면 숨김
-  // 속성이 없으면 기본 true (표시)
+  // <body data-show-header="false"> 로 숨김 제어
   const showHeader = body.dataset.showHeader !== 'false'
   const showFooter = body.dataset.showFooter !== 'false'
 
-  // header + footer가 들어있는 공통 HTML 파일 요청
-  // cache: 'no-store' → 항상 최신 파일 가져오기 (캐시 사용 안함)
-  const res = await fetch('/components/component.html', { cache: 'no-store' })
+  // ---------------------------
+  // 1) HEADER 로드
+  // ---------------------------
+  if (showHeader) {
+    const headerRes = await fetch('/components/header.html', {
+      cache: 'no-store',
+    })
 
-  // 요청 실패 시 콘솔에 에러만 출력하고 중단
-  if (!res.ok) {
-    console.error('layout fetch failed:', res.status, res.statusText)
-    return
+    if (!headerRes.ok) {
+      console.error(
+        'header load failed:',
+        headerRes.status,
+        headerRes.statusText,
+      )
+    } else {
+      const headerHtml = await headerRes.text()
+
+      const temp = document.createElement('div')
+      temp.innerHTML = headerHtml
+
+      // header.html의 실제 <header> 요소 추출
+      const header = temp.querySelector('header') || temp.firstElementChild
+
+      if (header) body.prepend(header)
+    }
   }
 
-  // HTML 문자열로 변환
-  const html = await res.text()
+  // ---------------------------
+  // 2) FOOTER 로드
+  // ---------------------------
+  if (showFooter) {
+    const footerRes = await fetch('/components/footer.html', {
+      cache: 'no-store',
+    })
 
-  // 문자열을 DOM으로 바꾸기 위한 임시 컨테이너
-  const temp = document.createElement('div')
-  temp.innerHTML = html
+    if (!footerRes.ok) {
+      console.error(
+        'footer load failed:',
+        footerRes.status,
+        footerRes.statusText,
+      )
+    } else {
+      const footerHtml = await footerRes.text()
 
-  // component.html 안에서 header, footer 태그 찾기
-  const header = temp.querySelector('header')
-  const footer = temp.querySelector('footer')
+      const temp = document.createElement('div')
+      temp.innerHTML = footerHtml
 
-  // header 표시 설정이면 body 맨 위에 삽입
-  // prepend → body의 첫 자식으로 들어감
-  if (showHeader && header) body.prepend(header)
+      // footer.html의 실제 <footer> 요소 추출
+      const footer = temp.querySelector('footer') || temp.firstElementChild
 
-  // footer 표시 설정이면 body 맨 아래에 삽입
-  // append → body의 마지막 자식으로 들어감
-  if (showFooter && footer) body.append(footer)
+      if (footer) body.append(footer)
+    }
+  }
 }
 
 // ===============================
