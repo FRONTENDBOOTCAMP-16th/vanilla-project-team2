@@ -276,7 +276,7 @@
 
   /* 푸터 */
   .element.style {
-    min-height: calc(100dvh-180px);
+    min-height: calc(100dvh - 180px);
   }
 
   /* 카드 박스 그림자 */
