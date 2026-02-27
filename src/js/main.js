@@ -82,6 +82,7 @@ function bindLogout() {
   logoutBtn.addEventListener(
     'click',
     (e) => {
+      // a 태그 기본 이동 방지
       e.preventDefault()
 
       // 로그인 관련 정보 전부 삭제

@@ -1,5 +1,4 @@
 export function timeForToday(value) {
-  console.log(value)
   if (!value) return ''
 
   const cleanValue = value.toString().replace(/\s+/g, ' ').trim()

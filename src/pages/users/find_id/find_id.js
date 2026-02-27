@@ -21,7 +21,6 @@ form.addEventListener('click', (e) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         if (data.status === 'success') {
           const formContainer = document.querySelector('.form__container')
           const html = `

@@ -16,8 +16,8 @@ export async function checkToken(retryCount = 0) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${accessToken}`
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
 
     // HTTP 상태 코드 확인 (네트워크는 성공했으나 응답이 에러인 경우)
@@ -55,7 +55,6 @@ export async function checkToken(retryCount = 0) {
     // 3. 기타 실패 (invalid 등)
     console.error('인증 실패:', data.message)
     return false
-
   } catch (err) {
     console.error('네트워크 또는 데이터 파싱 에러:', err)
     return false
@@ -71,16 +70,13 @@ async function refreshAccessToken() {
   }
 
   try {
-    const response = await fetch(
-      REFRESH_ENDPOINT,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refresh_token: refreshToken }),
+    const response = await fetch(REFRESH_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    )
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    })
 
     const data = await response.json()
 
