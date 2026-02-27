@@ -163,10 +163,12 @@ post list
   .post__date {
     font-size: var(--fs-time);
     color: #868e96;
+    display: flex;
+    gap: 4px;
   }
 
   .post__author-text {
-    display: none;
+    /* display: none; */
     font-size: var(--fs-text);
     color: #212529;
   }
@@ -193,13 +195,15 @@ post list
 }
 
 .post__meta-box {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
   margin-top: auto;
   padding-top: 16px;
   align-items: center;
   border-top: 1px solid #f1f3f5;
+}
+
+.post__author-row {
+  display: flex;
+  justify-content: space-between;
 }
 
 /* =================================================

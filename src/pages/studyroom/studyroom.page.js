@@ -117,8 +117,11 @@ function renderPosts(data) {
               <h3 class="post__heading">${post.subject}</h3>
               <p class="post__text">${post.contents}</p>
             </div>
-            <div class="post__meta-box">
-              <span class="post__author-text" style="margin-left: auto;">by <strong>${post.nickname}</strong></span>
+            // 해당 부분 삭제해도 될 거 같은데 확인 해주세요
+            // 불러와야하면 뒤에 class none 사용
+            <div class="post__meta-box none">
+              <span class="post__author-text"></span>
+              <span>by <strong>${post.nickname}</strong></span>
             </div>
           </a>
         </li>

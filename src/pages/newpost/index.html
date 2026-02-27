@@ -1,21 +1,28 @@
 <!doctype html>
-<html lang="ko-KR" >
+<html lang="ko-KR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/src/styles/main.css" />
     <link rel="stylesheet" href="newpost.css" />
- <script type="module" src="/src/js/main.js"></script>
+    <script type="module" src="/src/js/main.js"></script>
     <script src="newpost.page.js" type="module"></script>
 
     <title>글 작성 - 아기사자 공부방</title>
   </head>
-  <body data-page="newpost" data-show-header="true" data-show-footer="true">
-    <main class="container newpost gray-bg">
-      <div class="newpost__header">
-        <h1 class="newpost__title head">게시글 작성</h1>
-        <p class="newpost__desc description">학습한 내용을 공유해보세요</p>
+  <body
+    data-page="newpost"
+    data-show-header="true"
+    data-show-footer="true"
+    class="gray-bg"
+  >
+    <div class="container">
+      <!-- page-header -->
+      <div class="page-header__box">
+        <h1 class="page-header__title">게시글 작성</h1>
+        <p class="page-header__desc">학습한 내용을 공유해보세요</p>
       </div>
+      <!-- //page-header -->
 
       <form class="newpost__form" method="post">
         <!-- 게시판 선택 - 라디오 버튼  -->
@@ -79,7 +86,9 @@
 
         <!-- 내용 -->
         <div class="newpost__field newpost__field--content">
-          <label for="content">내용 (마크다운 문법을 사용할 수 있습니다.)</label>
+          <label for="content"
+            >내용 (마크다운 문법을 사용할 수 있습니다.)</label
+          >
           <textarea
             name="content"
             id="content"
@@ -150,6 +159,6 @@
           </button>
         </div>
       </form>
-    </main>
+    </div>
   </body>
 </html>
