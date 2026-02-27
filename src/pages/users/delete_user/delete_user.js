@@ -22,8 +22,6 @@ const deleteButton = document.querySelector('.delete_button')
 deleteButton.addEventListener('click', async (e) => {
   await initMyPage()
 
-  console.log(userData)
-
   const showError = (inputElement, message) => {
     const container = inputElement.closest('.user__input')
     const errorEl = container.querySelector('.error__text')
@@ -48,8 +46,6 @@ deleteButton.addEventListener('click', async (e) => {
         formData.append('user_password', password.value);
 
         const userNickname = userData.user_nickname
-
-        console.log(userData, password.value)
         
         const response = await fetch(URLS, {
           method: 'POST',

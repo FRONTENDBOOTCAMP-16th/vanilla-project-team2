@@ -178,7 +178,6 @@ async function userWriteInfo(userData) {
 
     // 1. 봉투(response)를 뜯어서 내용물(data)을 가져옵니다.
     const result = await response.json()
-    console.log(result)
 
     const totalPostForm = document.querySelector('.write .write__count')
     const totalCommentForm = document.querySelector('.comment .write__count')

@@ -34,7 +34,6 @@ form.addEventListener('click', (e) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         
         // 3. 성공 처리
         if (data.status === 'success') {
