@@ -1,5 +1,6 @@
-// 마크다운 라이브러리
-// sanitize 라이브러리
+/* ================================
+   Imports
+================================= */
 import { checkToken } from '../../api/JWT.js'
 import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
@@ -7,12 +8,37 @@ import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
 import { BASE_URL } from '../../api/api.js'
 import { renderAvatar } from '../../js/components/avatar.js'
 
+/* ================================
+   API Request Helper
+================================= */
+// async function request(url, options = {}) {
+//   const response = await fetch(url, options)
+
+//   if (!response.ok) {
+//     throw new Error(`Error: ${response.status}`)
+//   }
+
+//   const contentType = response.headers.get('content-type')
+
+//   if (contentType && contentType.includes('application/json')) {
+//     return await response.json()
+//   }
+
+//   return await response.text()
+// }
+
+/* ================================
+   State
+================================= */
 let currentUser = null
+
 const params = new URLSearchParams(location.search)
 const postId = params.get('postId') || localStorage.getItem('selectedPostId')
 const boardId = localStorage.getItem('selectedBoardId')
 
-// DOM 캐싱
+/* ================================
+   DOM caching
+================================= */
 const commentSection = document.getElementById('comment-area')
 const postContent = document.querySelector('.post__content')
 const timeElement = document.querySelector('.post__time time')
@@ -82,7 +108,7 @@ async function fetchPost() {
 // 자습방 댓글 기능 숨기기
 function toggleCommentsSection() {
   if (boardId === '1') {
-    commentSection.style.display = 'none' // 또는 .classList.add('hidden')
+    commentSection.style.display = 'none'
   } else {
     commentSection.style.display = 'block'
   }
@@ -126,9 +152,7 @@ function postActions(post) {
 // 댓글 불러오기
 async function loadComments(postId) {
   const res = await fetch(`${BASE_URL}/comment/read.php?post_id=${postId}`)
-
   const result = await res.json()
-
   const data = result.data || result
   const comments = Array.isArray(data) ? data : []
 
@@ -138,6 +162,8 @@ async function loadComments(postId) {
 function renderComments(comments) {
   commentList.innerHTML = comments
     .map((cmt) => {
+      console.log(cmt)
+      const profileLink = `http://leedh9207.dothome.co.kr/src/pages/users/user_page/index.html?${cmt.UID}`
       // 댓글 작성자에게만 수정/삭제 버튼 노출
       const isOwner = currentUser && Number(currentUser.UID) === Number(cmt.UID)
 
@@ -145,7 +171,9 @@ function renderComments(comments) {
       <li class="comment__item" data-id="${cmt.comment_id}">
         <article class="comment__card">
           <div class="comment__avatar">
+          <a href="${profileLink}">
             ${renderAvatar(cmt.user_profile, cmt.user_nickname)}
+            </a>
           </div>
           <div class="comment__meta">
             <span class="comment__author">${cmt.user_nickname}</span>
@@ -175,6 +203,7 @@ function renderComments(comments) {
 function bindEvents(post) {
   // 글 삭제
   deleteBtn.addEventListener('click', async () => {
+    // 컨펌
     const ok = confirm('정말 글을 삭제하시겠습니까?')
     if (!ok) return
 
@@ -187,6 +216,7 @@ function bindEvents(post) {
         return
       }
 
+      // api
       const response = await fetch(`${BASE_URL}/board/delete.php`, {
         method: 'POST',
         headers: {
@@ -198,6 +228,7 @@ function bindEvents(post) {
         }),
       })
 
+      // 이동
       const result = await response.text()
       console.log('삭제 응답:', result)
 
