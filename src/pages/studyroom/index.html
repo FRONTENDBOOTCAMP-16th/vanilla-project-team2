@@ -9,16 +9,24 @@
     <script src="studyroom.page.js" type="module"></script>
     <title>자습방</title>
   </head>
-  <body data-page="studyroom" data-show-header="true" data-show-footer="true">
+  <body
+    data-page="studyroom"
+    data-show-header="true"
+    data-show-footer="true"
+    class="gray-bg"
+  >
     <div class="container">
-      <main class="studyroom container studyroom--gray-bg">
-        <div class="studyroom__header">
-          <h2 class="studyroom__title head">자습방</h2>
-          <p class="studyroom__description description">
+      <main>
+        <!-- page-header -->
+        <div class="page-header__box">
+          <h2 class="page-header__title">자습방</h2>
+          <p class="page-header__desc">
             학습한 내용을 정리하고 복습하며 성장하세요
           </p>
         </div>
+        <!-- //page-header -->
 
+        <!-- search -->
         <section class="search">
           <form class="search__form">
             <div class="search__group">
@@ -51,11 +59,12 @@
                 type="search"
                 id="search__input"
                 name="search__input"
-                placeholder="게시글 검색..."
+                placeholder="게시글 검색"
               />
             </div>
           </form>
         </section>
+        <!-- //search -->
 
         <div class="category">
           <ul class="category__list">

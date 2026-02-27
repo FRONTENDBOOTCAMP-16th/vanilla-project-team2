@@ -6,4 +6,5 @@
 @import './_theme.css' layer(theme);
 
 @import './_a11y.css' layer(utilities);
+@import './layout.css';
 @import './component.css';
