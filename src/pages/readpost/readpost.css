@@ -34,6 +34,8 @@
   color: #432dd7;
   display: inline-flex;
   align-items: center;
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 .post__time {

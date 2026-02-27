@@ -303,3 +303,8 @@
   /* 작은 본문 텍스트 */
   --fs-text-sm: 14px;
 }
+
+/* none */
+.none {
+  display: none;
+}
