@@ -7,7 +7,7 @@
 
 https://www.notion.so/euid/311b02dcf1d8802497cdef3bd4580e10
 
-### 1. DS 파일삭제 ⭐
+### 1. DS 파일삭제 ⭐ ✅
 
 - 맥사용자들이 git 사용하면 자동으로 git에 올라가는 거
 - 삭제 후에 .gitignore 파일에 해당 내용 추가하기
@@ -269,7 +269,7 @@ export function renderMyPage(data) {
 
 담당 : 김한결
 
-### 14. api 호출 반복 처리
+### 14. api 호출 반복 처리 ✅
 
 - 코드의 중복성 줄이기
 - 공통함수 만들어서 관리하기
