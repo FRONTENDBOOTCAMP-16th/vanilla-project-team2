@@ -4,29 +4,31 @@ import { checkToken } from '../../api/JWT.js'
 import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
 import DOMPurify from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.6/+esm'
+import { BASE_URL } from '../../api/api.js'
+import { renderAvatar } from '../../js/components/avatar.js'
 
 let currentUser = null
-const BASE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla'
+// const BASE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla'
 
 //글, 댓글 작성자 프로필 이미지 가져오기
-function renderAvatar(profile, name) {
-  const firstChar = name.charAt(0)
+// function renderAvatar(profile, name) {
+//   const firstChar = name.charAt(0)
 
-  if (profile) {
-    return `
-      <div class="avatar">
-        <img class="avatar__image"
-             src="${BASE_URL}/users/uploads/profile/${profile}"
-             alt="${name}" />
-      </div>
-    `
-  }
-  return `
-    <div class="avatar avatar--initial">
-      ${firstChar}
-    </div>
-  `
-}
+//   if (profile) {
+//     return `
+//       <div class="avatar">
+//         <img class="avatar__image"
+//              src="${BASE_URL}/users/uploads/profile/${profile}"
+//              alt="${name}" />
+//       </div>
+//     `
+//   }
+//   return `
+//     <div class="avatar avatar--initial">
+//       ${firstChar}
+//     </div>
+//   `
+// }
 
 // 로그인한 회원만 글에 접근
 async function start() {
@@ -322,5 +324,3 @@ async function init() {
     }
   })
 }
-
-

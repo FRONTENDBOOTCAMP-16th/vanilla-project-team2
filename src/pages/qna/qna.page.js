@@ -1,5 +1,8 @@
 import { postItem } from '../../js/components/postItem.js'
 import { checkToken } from '../../api/JWT.js'
+import { removeMarkdown } from '../../js/utils/removemarkdown.js'
+import { BASE_URL } from '../../api/api.js'
+console.log(import.meta.env)
 
 let userData = null
 
@@ -37,15 +40,15 @@ let searchInput = null
 let paginationRoot = null
 let categoryButtons = null
 
-function removeMarkdown(text) {
-  if (!text) return ''
-  return text
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/`.*?`/g, '')
-    .replace(/[#*_\-~[\]()>]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
+// function removeMarkdown(text) {
+//   if (!text) return ''
+//   return text
+//     .replace(/```[\s\S]*?```/g, '')
+//     .replace(/`.*?`/g, '')
+//     .replace(/[#*_\-~[\]()>]/g, '')
+//     .replace(/\s+/g, ' ')
+//     .trim()
+// }
 
 const renderPosts = function (data) {
   if (!qnaPostUl) return
@@ -145,13 +148,10 @@ async function fetchPosts() {
       )
     }
 
-    const response = await fetch(
-      'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
+    const response = await fetch(`${BASE_URL}/board/list_board.php`, {
+      method: 'POST',
+      body: formData,
+    })
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const responseData = await response.json()
@@ -173,7 +173,7 @@ async function fetchPosts() {
     const commentsPromises = qnaPosts.map(async (post) => {
       try {
         const res = await fetch(
-          `http://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php?post_id=${post.post_id}`,
+          `${BASE_URL}/comment/read.php?post_id=${post.post_id}`,
         )
         const result = await res.json()
         if (Array.isArray(result)) {

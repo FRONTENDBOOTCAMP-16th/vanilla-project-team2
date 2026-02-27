@@ -1,5 +1,8 @@
 import { timeForToday } from '../../js/utils/date.js'
 import { checkToken } from '../../api/JWT.js'
+import { BASE_URL } from '../../api/api.js'
+import { removeMarkdown } from '../../js/utils/removemarkdown.js'
+console.log(import.meta.env)
 
 // 아예 빈값으로 변수선언
 let userData = null
@@ -36,15 +39,15 @@ const nextGroupButton = document.querySelector(
 const categoryButton = document.querySelectorAll('.category__button')
 const searchInput = document.getElementById('search__input')
 
-function removeMarkdown(text) {
-  if (!text) return ''
-  return text
-    .replace(/```[\s\S]*?```/g, '')
-    .replace(/`.*?`/g, '')
-    .replace(/[#*_\-~[\]()>]/g, '')
-    .replace(/\s+/g, ' ')
-    .trim()
-}
+// function removeMarkdown(text) {
+//   if (!text) return ''
+//   return text
+//     .replace(/```[\s\S]*?```/g, '')
+//     .replace(/`.*?`/g, '')
+//     .replace(/[#*_\-~[\]()>]/g, '')
+//     .replace(/\s+/g, ' ')
+//     .trim()
+// }
 
 async function fetchPosts() {
   try {
@@ -64,17 +67,14 @@ async function fetchPosts() {
       currentCategory === 'ALL' ? '' : currentCategory,
     )
 
-    const response = await fetch(
-      'http://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php',
-      {
-        method: 'POST',
-        headers: {
-          // 💡 JWT 방식은 보통 Authorization 헤더에 Bearer 토큰을 실어 보냅니다.
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData, // POST 방식이므로 body에 담아 보냄
+    const response = await fetch(`${BASE_URL}/board/list_board.php`, {
+      method: 'POST',
+      headers: {
+        // 💡 JWT 방식은 보통 Authorization 헤더에 Bearer 토큰을 실어 보냅니다.
+        Authorization: `Bearer ${token}`,
       },
-    )
+      body: formData, // POST 방식이므로 body에 담아 보냄
+    })
 
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
