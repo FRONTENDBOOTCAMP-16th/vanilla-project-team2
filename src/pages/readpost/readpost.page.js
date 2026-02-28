@@ -1,6 +1,9 @@
 /* ================================
    Imports
 ================================= */
+/* ================================
+   Imports
+================================= */
 import { checkToken } from '../../api/JWT.js'
 import { timeForToday } from '../../js/utils/date.js'
 import { marked } from 'https://cdn.jsdelivr.net/npm/marked/lib/marked.esm.js'
@@ -31,6 +34,7 @@ import { renderAvatar } from '../../js/components/avatar.js'
    State
 ================================= */
 let currentUser = null
+
 
 const params = new URLSearchParams(location.search)
 const postId = params.get('postId') || localStorage.getItem('selectedPostId')
@@ -112,6 +116,7 @@ async function fetchPost() {
 // 자습방 댓글 기능 숨기기
 function toggleCommentsSection() {
   if (boardId === '1') {
+    commentSection.style.display = 'none'
     commentSection.style.display = 'none'
   } else {
     commentSection.style.display = 'block'
@@ -213,6 +218,7 @@ function bindEvents(post) {
   // 글 삭제
   deleteBtn.addEventListener('click', async () => {
     // 컨펌
+    // 컨펌
     const ok = confirm('정말 글을 삭제하시겠습니까?')
     if (!ok) return
 
@@ -226,6 +232,7 @@ function bindEvents(post) {
       }
 
       // api
+      // api
       const response = await fetch(`${BASE_URL}/board/delete.php`, {
         method: 'POST',
         headers: {
@@ -237,6 +244,7 @@ function bindEvents(post) {
         }),
       })
 
+      // 이동
       // 이동
       const result = await response.text()
       console.log('삭제 응답:', result)
