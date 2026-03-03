@@ -116,27 +116,11 @@ npm run dev
 
 ```
 
-## 🌐 API
+## 🌐 외부 API
 
-- 날씨 API
-  https://openweathermap.org/api
+- 날씨 API https://openweathermap.org/api 
 - 명언 API https://korean-advice-open-api.vercel.app/api/advice
-- 회원관련 API
-  회원가입 시스템: https://leedh9276.dothome.co.kr/likelion-vanilla/users/signup.php
-  로그인: https://leedh9276.dothome.co.kr/likelion-vanilla/users/login.php
-  로그인 검증: https://leedh9276.dothome.co.kr/likelion-vanilla/users/auth.php
-- 댓글 API
-  댓글 불러오기: https://leedh9276.dothome.co.kr/likelion-vanilla/comment/read.php
-  추가: https://leedh9276.dothome.co.kr/likelion-vanilla/comment/write.php
-  수정: https://leedh9276.dothome.co.kr/likelion-vanilla/comment/update.php
-  삭제: https://leedh9276.dothome.co.kr/likelion-vanilla/comment/delete.php
-- 게시판 API 
-  게시물 불러오기: https://leedh9276.dothome.co.kr/likelion-vanilla/board/list_board.php
-  검색: https://leedh9276.dothome.co.kr/likelion-vanilla/board/search.php
-  조회: https://leedh9276.dothome.co.kr/likelion-vanilla/board/read.php
-  작성: https://leedh9276.dothome.co.kr/likelion-vanilla/board/write.php
-  수정: https://leedh9276.dothome.co.kr/likelion-vanilla/board/update.php
-  삭제: https://leedh9276.dothome.co.kr/likelion-vanilla/board/delete.php
+
 
 ## 🎈일정관리
 
