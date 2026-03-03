@@ -91,41 +91,107 @@ bun run dev
 ## 🗂️ 파일구조
 
 ```
-├── public/                     # 정적 파일 (favicon, 공개 이미지 등)
-├── src/
-│   ├── assets/                 # 프로젝트 공용 이미지/아이콘
-│   ├── components/             # ✅ HTML 공통 컴포넌트
-│   │   └── component.html      # (예: navbar / footer / modal 등 공통 HTML)
-│   ├── js/                     # 공통 JS 로직
-│   │   ├── core/               # 상태/스토리지/API
-│   │   ├── utils/              # 유틸 함수
-│   │   ├── components/         # (선택) 컴포넌트 관련 JS
-│   │   └── main.js             # 공통 초기화
-│   ├── pages/                  # 페이지 단위 리소스
-│   │   ├── dashboard/
-│   │   │   └── index.html
-│   │   ├── login/
-│   │   │   └── index.html
-│   │   ├── mypage/
-│   │   │   └── index.html
-│   │   ├── qna/
-│   │   │   └── index.html
-│   │   ├── signup/
+VANILLA-PROJECT-TEAM2                     # 프로젝트 루트
+
+├── public/                                # 정적 파일 (빌드시 그대로 복사)
+│
+│   ├── assets/                            # 이미지, 아이콘
+│
+│   ├── components/                        # 공통 HTML 조각
+│   │   ├── header.html                    # 헤더 마크업
+│   │   └── footer.html                    # 푸터 마크업
+│
+│   └── favicon.ico                        # 브라우저 아이콘
+
+
+├── src/                                   # 실제 애플리케이션 소스 코드
+
+│   ├── api/                               # API 및 인증 관련 로직
+│   │   ├── api.js                         # 공통 API 요청 함수
+│   │   ├── JWT.js                         # 토큰 검증 / 갱신 로직
+│   │   └── logout.js                      # 로그아웃 처리
+
+│
+│   ├── js/                                # 공통 JS 로직
+│   │   ├── components/                    # UI 제어 로직
+│   │   ├── utils/                         # 재사용 유틸 함수
+│   │   └── main.js                        # 공통 초기화 진입점
+
+│
+│   ├── pages/                             # 페이지 단위 리소스 (MPA 구조)
+│   │   ├── 404/                           # 에러 페이지
+│   │   ├── dashboard/                     # 대시보드
+│   │   ├── login/                         # 로그인
+│   │   ├── signup/                        # 회원가입
+│   │   ├── studyroom/                     # 자습방
+│   │   ├── qna/                           # QnA 게시판
+│   │   ├── newpost/                       # 글 작성
 │   │   │   ├── index.html
-│   │   │   ├── signup.css
-│   │   │   └── signup.page.js
-│   │   └── studyroom/
-│   │       ├── studyroom.html
-│   │       ├── studyroom.css
-│   │       └── studyroom.page.js
-│   └── styles/                 # 전역 스타일
-│       ├─ base.css             #reset, font, body 기본값
-│       ├─ layout.css           #header/footer/nav/컨테이너
-│       └── components.css      # 버튼, 카드, 배지, 모달
-├── index.html
-├── vite.config.mjs
-├── package.json
-└── README.md
+│   │   │   ├── newpost.css
+│   │   │   └── newpost.page.js
+│   │   ├── readpost/                      # 게시글 읽기
+│   │   ├── users/                         # 사용자 관련
+│   │   └── board_sample/                  # 테스트 / 샘플 페이지
+
+│
+│   └── styles/                            # 전역 스타일 (base, theme 등)
+
+
+├── index.html                             # 루트 진입 페이지
+├── vite.config.mjs                        # Vite 멀티 페이지 빌드 설정
+├── package.json                           # 의존성 및 실행 스크립트
+├── bun.lock                               # Bun 잠금 파일
+├── package-lock.json                      # npm 잠금 파일
+├── eslint.config.mjs                      # ESLint 설정
+├── .prettierrc                             # Prettier 설정
+├── .gitignore                             # Git 제외 설정
+└── [README.md](http://readme.md/)                              # 프로젝트 설명 문서VANILLA-PROJECT-TEAM2# 프로젝트 루트
+
+├── public/# 정적 파일 (빌드시 그대로 복사)
+│   ├── assets/# 이미지, 아이콘
+│   ├── components/# 공통 HTML 조각
+│   │   ├── header.html# 헤더 마크업
+│   │   └── footer.html# 푸터 마크업
+│   └── favicon.ico# 브라우저 아이콘
+
+├── src/# 실제 애플리케이션 소스 코드
+
+│   ├── api/# API 및 인증 관련 로직
+│   │   ├── api.js# 공통 API 요청 함수
+│   │   ├── JWT.js# 토큰 검증/갱신
+│   │   └── logout.js# 로그아웃 처리
+
+│   ├── js/# 공통 JS 로직
+│   │   ├── components/# UI 제어 로직
+│   │   ├── utils/# 재사용 함수
+│   │   └── main.js# 공통 초기화 진입점
+
+│   ├── pages/# 페이지 단위 리소스 (MPA 구조)
+│   │   ├──404/# 에러 페이지
+│   │   ├── dashboard/# 대시보드
+│   │   ├── login/# 로그인
+│   │   ├── signup/# 회원가입
+│   │   ├── studyroom/# 자습방
+│   │   ├── qna/# QnA 게시판
+│   │   ├── newpost/# 글 작성
+│   │   │   ├── index.html
+│   │   │   ├── newpost.css
+│   │   │   └── newpost.page.js
+│   │   ├── readpost/# 게시글 읽기
+│   │   ├── users/# 사용자 관련
+│   │   └── board_sample/# 테스트/샘플 페이지
+
+│   └── styles/# 전역 스타일 (base, theme 등)
+
+├── index.html# 루트 진입 페이지
+├── vite.config.mjs# Vite 멀티 페이지 빌드 설정
+├── package.json# 의존성 및 실행 스크립트
+├── bun.lock# Bun 잠금 파일
+├── package-lock.json# npm 잠금 파일
+├── eslint.config.mjs# ESLint 설정
+├── .prettierrc# Prettier 설정
+├── .gitignore# Git 제외 설정
+└── README.md# 프로젝트 설명 문서
 
 ```
 
