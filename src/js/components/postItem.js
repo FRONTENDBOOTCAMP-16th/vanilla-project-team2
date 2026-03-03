@@ -38,12 +38,16 @@ export const postItem = (post) => {
           <p class="post__text">${post.contents}</p>
         </div>
 
-        <div class="post__meta-box">
-          <div class="post__author-row">
-            <span class="post__comment-count">${post.commentCount}개의 댓글</span>
-            <span class="post__author-text">by <strong>${post.user_nickname}</strong></span>
+        
+          <div class="post__meta-box">
+            <div class="post__author-row">
+              <span class="post__comment-count">${post.commentCount}개의 댓글</span>
+              
+              <span class="post__author-text post__author-link" data-user-id="${post.user_id}">by <strong>${post.user_nickname}</strong></span>
+              
+            </div>
           </div>
-        </div>
+        
 
       </a>
     </li>

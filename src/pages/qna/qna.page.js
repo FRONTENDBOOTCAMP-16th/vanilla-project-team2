@@ -296,6 +296,14 @@ function bindEvents() {
   // 게시글 클릭 -> 상세 페이지 이동
   if (qnaPostUl) {
     qnaPostUl.addEventListener('click', (e) => {
+      // 작성자 클릭 시 유저 페이지로 이동
+      const authorEl = e.target.closest('.post__author-link')
+      if (authorEl) {
+        const userId = authorEl.dataset.userId
+        location.href = `/src/pages/users/user_page/index.html?${userId}`
+        return
+      }
+
       e.preventDefault()
       const item = e.target.closest('.post__item')
       if (!item) return
