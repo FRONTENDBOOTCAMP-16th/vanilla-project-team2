@@ -113,7 +113,7 @@ function bindLogout() {
 
       // 로그인 페이지로 이동
       // ※ 실제 로그인 페이지 경로에 맞게 유지
-      location.href = '/login/index.html'
+      location.href = '/src/pages/users/login/index.html'
     },
     { once: true }, // 이벤트 1회만 실행 (중복 로그아웃 방지)
   )

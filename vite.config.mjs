@@ -42,7 +42,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         qna: resolve(__dirname, 'src/pages/qna/index.html'),
         studyroom: resolve(__dirname, 'src/pages/studyroom/index.html'),
-        dashboard: resolve(__dirname, 'src/pages/dashboard/index.html'),
+        // dashboard: resolve(__dirname, 'src/pages/dashboard/index.html'),
         newpost: resolve(__dirname, 'src/pages/newpost/index.html'),
         readpost: resolve(__dirname, 'src/pages/readpost/index.html'),
         fallback: resolve(__dirname, 'src/pages/404/index.html'),
