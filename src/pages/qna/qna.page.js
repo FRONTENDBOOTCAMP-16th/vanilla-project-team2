@@ -19,8 +19,8 @@ async function fetchUserData(forceRefresh = false) {
     userData = fetchedData
     return userData
   } else {
-    alert('유효하지 않은 접근입니다.')
-    window.location.href = '/index.html'
+    alert('로그인이 필요한 서비스입니다.')
+    window.location.href = '/src/pages/users/login/index.html'
     return
   }
 }
