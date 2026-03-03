@@ -11,11 +11,11 @@
 /* 게시글/댓글 공통 박스 */
 .post,
 .comment {
-  background-color: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 14px;
   margin-block: 24px;
   padding: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  background-color: #fff;
     box-shadow: var(--shadow-box);
 
   .post__header {
@@ -34,22 +34,22 @@
 }
 
 .post__category {
-  background-color: #e0e7ff;
-  border-radius: 50px;
-  padding: 8px 12px;
-  color: #432dd7;
   display: inline-flex;
   align-items: center;
+  padding: 8px 12px;
+  border-radius: 50px;
+  background-color: #e0e7ff;
+  color: #432dd7;
   font-weight: 500;
   text-transform: uppercase;
 }
 
 .post__time {
   display: inline-flex;
+  gap: 4px;
   align-items: center;
   margin-left: auto;
   font-size: var(--fs-time);
-  gap: 4px;
 }
 
 .post__title {
@@ -66,8 +66,8 @@
 
 .post__author {
   display: flex;
-  align-items: center;
   gap: 12px;
+  align-items: center;
   margin-block: 6px;
 }
 
@@ -78,16 +78,16 @@
 
 .avatar {
   display: flex;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background: linear-gradient(45deg, #615fff, #ad46ff);
+  box-shadow: var(--shadow-box);
   color: white;
   overflow: hidden;
-  box-shadow: var(--shadow-box);
 }
 .avatar img {
   width: 100%;
@@ -97,26 +97,26 @@
 
 .avatar--initial {
   color: #fff;
-  font-weight: 600;
   font-size: 16px;
+  font-weight: 600;
 }
 
 /* =================================
    4. 작성글 영역
 ================================= */
 .post__content {
-  line-height: 1.6;
   padding-block: 40px;
+  line-height: 1.6;
   /* white-space: pre-line; */
 
   .post__content--code {
+    padding: 24px;
+    border-radius: 14px;
     background-color: #101828;
     color: white;
-    border-radius: 14px;
-    padding: 24px;
-    overflow: auto;
 
     line-height: 1.4;
+    overflow: auto;
   }
 }
 
@@ -146,37 +146,37 @@
 }
 
 .comment__title {
-  font-size: 20px;
   margin-block: 8px 24px;
+  font-size: 20px;
 }
 
 #comment {
   width: 100%;
+  padding: 12px;
   border: 1px solid lightgray;
   border-radius: 12px;
-  padding: 12px;
   line-height: 1.4;
 }
 
 .comment__submit {
   display: inline-flex;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 12px 24px;
   margin-block: 18px;
+  padding: 12px 24px;
+  border: none;
 
   border-radius: 12px;
   background: linear-gradient(90deg, #4f39f6 0%, #7c3aed 100%);
   color: #ffffff;
-  border: none;
 
   cursor: pointer;
 }
 
 .comment__list {
-  list-style: none;
   padding: 0;
+  list-style: none;
 }
 
 .comment__item {
@@ -191,43 +191,48 @@
 }
 
 .comment__meta {
-  grid-column: 2;
-  grid-row: 1;
   display: contents;
+  grid-row: 1;
+  grid-column: 2;
   gap: 8px;
   font-weight: 500;
+  line-height: 40px;
+
+  a{
+    color: #000;
+  }
 
   .comment__time {
-    grid-column: 3;
     grid-row: 1;
-    font-size: var(--fs-time);
-    color: #6a7282;
+    grid-column: 3;
     margin-left: auto;
+    color: #6a7282;
+    font-size: var(--fs-time);
   }
 }
 
 .comment__text {
-  grid-column: 2;
   grid-row: 2;
-  margin-top: 0px;
-  white-space: pre-line;
+  grid-column: 2;
+  margin-top: 8px;
   line-height: 1.4;
+  white-space: normal;
 }
 
 /* 댓글 수정/삭제 버튼 */
 .comment__actions {
-  grid-column: 3;
   grid-row: 2;
-  align-self: self-start;
+  grid-column: 3;
+  align-self: self-end;
   justify-self: end;
 }
 
 .comment__actions button {
   width: 56px;
   height: 30px;
-  background-color: #fff;
   border: 1px solid #6a7282;
   border-radius: 10px;
+  background-color: #fff;
 }
 
 /* =================================
@@ -235,22 +240,22 @@
 ================================= */
 .post__actions {
   display: flex;
+  gap: 16px;
   align-items: center;
   justify-content: flex-end;
-  gap: 16px;
   margin-block-start: 40px;
   padding-block-start: 20px;
   border-top: 1px solid lightgray;
 
   .post__btn {
     display: inline-flex;
+    gap: 6px;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    background-color: transparent;
-    border-radius: 8px;
     padding: 4px 10px;
     border: 0;
+    border-radius: 8px;
+    background-color: transparent;
     cursor: pointer;
 
     &.post__btn--edit {

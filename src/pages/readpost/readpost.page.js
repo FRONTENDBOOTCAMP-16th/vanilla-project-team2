@@ -146,6 +146,10 @@ function renderPost(post) {
     ${renderAvatar(post.user_profile, authorNickname)}
   </a>
 `
+  const authContainer = document.querySelector('.post__author')
+
+  authContainer.setAttribute('href', profileLink)
+  
 
   // 시간 렌더링
   if (post.create_date && timeElement) {
@@ -190,7 +194,7 @@ function renderComments(comments) {
             </a>
           </div>
           <div class="comment__meta">
-            <span class="comment__author">${cmt.user_nickname}</span>
+            <a href="${profileLink}" class="comment__author">${cmt.user_nickname}</a>
             <time class="comment__time">
               ${new Date(cmt.create_date).toLocaleString()}
             </time>

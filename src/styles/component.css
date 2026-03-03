@@ -4,22 +4,22 @@
 
 /* 페이지 헤더 박스  */
 .page-header__box {
-  padding-top: 40px;
   margin-bottom: 32px;
+  padding-top: 40px;
 }
 
 /* 페이지 헤더 타이틀 */
 .page-header__title {
+  margin: 0;
   font-size: var(--fs-h1);
   font-weight: var(--fw-h1);
-  margin: 0;
 }
 
 /* 페이지 헤더 설명 */
 .page-header__desc {
+  color: var(--color-desc);
   font-size: var(--fs-header-desc);
   letter-spacing: var(--ls-header-desc);
-  color: var(--color-desc);
 }
 
 /* =================================================
@@ -27,19 +27,19 @@
 ==================================================*/
 
 .search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
 
   height: 100px;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  box-shadow: var(--shadow-box);
-  background-color: #ffffff;
 
   margin-bottom: 24px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: var(--shadow-box);
 
   .search__icon {
     position: absolute;
@@ -50,8 +50,8 @@
   .search__input {
     width: 1150px;
     height: 50px;
-    padding-left: 48px;
     padding-right: 28px;
+    padding-left: 48px;
     padding-block: 16px;
     border: 1px solid #d1d5dc;
     border-radius: 10px;
@@ -62,34 +62,34 @@
 카테고리 - 전체, HTML, CSS, JS 등 서치바 하단에 위치하는 카테고리 표시
 ==================================================*/
 .category {
-  margin-block: 16px;
   width: 100%;
+  margin-block: 16px;
 
   .category__list {
     display: flex;
-    list-style-type: none;
     column-gap: 8px;
     margin: 0;
     padding-left: 0;
+    list-style-type: none;
   }
 
   .category__button {
-    box-shadow: var(--shadow-box);
-    padding-block: 7px;
     padding-inline: 15px;
-    background-color: #ffffff;
+    padding-block: 7px;
     border: 1px solid #d1d5dc;
     border-radius: 10px;
-    text-transform: uppercase;
+    background-color: #ffffff;
+    box-shadow: var(--shadow-box);
     font-size: 12px;
-    line-height: 20px;
     font-weight: 500;
+    line-height: 20px;
+    text-transform: uppercase;
   }
 
   .category__button:not(.category__button--active):hover {
+    border-color: #4f39f6;
     background-color: #eef2ff;
     color: #4f39f6;
-    border-color: #4f39f6;
   }
 
   .category__button--active {
@@ -107,52 +107,52 @@ post list
 
 .post__text {
   display: -webkit-box;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  overflow: hidden;
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.5;
 }
 
 .post__list {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  padding: 0px;
-  column-gap: 24px;
   row-gap: 24px;
+  column-gap: 24px;
   margin: 0px;
+  padding: 0px;
 
   .post__item {
-    box-shadow: var(--shadow-box);
-    list-style-type: none;
+    height: 332px;
+    padding: 25px;
     border: 1px solid #e5e7eb;
     border-radius: 15px;
-    padding: 25px;
     background-color: #ffffff;
-    height: 332px;
+    box-shadow: var(--shadow-box);
+    list-style-type: none;
 
     &:hover {
-      background-color: #eef2ff;
       border: 1px solid #4f39f6;
+      background-color: #eef2ff;
     }
   }
 
   .post__inner {
-    text-decoration: none;
-    color: black;
-    font-weight: 300;
     position: relative;
-    width: 100%;
     display: flex;
     flex-direction: column;
+    width: 100%;
     height: 100%;
     min-height: 220px;
+    color: black;
+    font-weight: 300;
+    text-decoration: none;
   }
 
   .post__top-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 8px;
   }
 
@@ -161,16 +161,16 @@ post list
   }
 
   .post__date {
-    font-size: var(--fs-time);
-    color: #868e96;
     display: flex;
     gap: 4px;
+    color: #868e96;
+    font-size: var(--fs-time);
   }
 
   .post__author-text {
+    color: #212529;
     /* display: none; */
     font-size: var(--fs-text);
-    color: #212529;
   }
 }
 
@@ -183,21 +183,21 @@ post list
   align-items: center;
   width: auto;
   height: 24px;
-  background-color: #e0e7ff;
-  text-align: center;
-  line-height: 25px;
   padding: 2px 11px;
   border-radius: 20px;
-
-  text-transform: uppercase;
+  background-color: #e0e7ff;
   font-size: 12px;
   font-weight: 500;
+  line-height: 25px;
+  text-align: center;
+
+  text-transform: uppercase;
 }
 
 .post__meta-box {
+  align-items: center;
   margin-top: auto;
   padding-top: 16px;
-  align-items: center;
   border-top: 1px solid #f1f3f5;
 }
 
@@ -210,21 +210,21 @@ post list
 pagination
 ==================================================*/
 .pagination {
-  margin-top: 40px;
   display: flex;
   justify-content: center;
+  margin-top: 40px;
 
   .pagination__inner {
     display: flex;
-    align-items: center;
     gap: 6px;
+    align-items: center;
   }
 }
 
 .pagination__list {
   display: flex;
-  align-items: center;
   gap: 6px;
+  align-items: center;
   padding: 0;
   list-style: none;
 }
@@ -236,26 +236,26 @@ pagination
   width: 32px;
   height: 32px;
   border: 1px solid transparent;
-  background-color: transparent;
   border-radius: 6px;
+  background-color: transparent;
+  color: #6b7280;
   font-size: var(--fs-text);
   font-weight: 500;
-  color: #6b7280;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .pagination__button:hover:not(:disabled) {
+  border-color: #e0e7ff;
   background-color: #f3f0ff;
   color: #4f39f6;
-  border-color: #e0e7ff;
 }
 
 .pagination__link--active {
+  border-color: #4f39f6;
   background-color: #4f39f6;
   color: #ffffff;
   font-weight: 700;
-  border-color: #4f39f6;
 }
 
 .pagination__link--active:hover {
@@ -282,14 +282,18 @@ pagination
 
 /* 검색 결과 없을 때 나오는 텍스트 */
 .post__no-result {
-  grid-column: 1 / -1;
-  width: 100%;
-  padding: 100px 0;
-  text-align: center;
-  font-size: var(--fs-text);
-  color: #888;
   display: flex;
-  justify-content: center;
+  grid-column: 1 / -1;
   align-items: center;
+  justify-content: center;
+  width: 100%;
   min-height: 300px;
+  padding: 100px 0;
+  color: #888;
+  font-size: var(--fs-text);
+  text-align: center;
+}
+
+.post__author-name{
+  color: #000;
 }
