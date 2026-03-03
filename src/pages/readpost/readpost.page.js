@@ -39,7 +39,7 @@ let currentUser = null
 const params = new URLSearchParams(location.search)
 const postId = params.get('postId') || localStorage.getItem('selectedPostId')
 const boardId = localStorage.getItem('selectedBoardId')
-const USERPAGE_BASE = `http://leedh9207.dothome.co.kr/src/pages/users/user_page/index.html?`
+const USERPAGE_BASE = `/src/pages/users/user_page/index.html?`
 function getUserPageLink(uid) {
   return `${USERPAGE_BASE}${uid}`
 }
