@@ -153,8 +153,8 @@ async function fetchPosts() {
       formData.append('user_id', userData.UID)
     }
 
+    formData.append('search', currentSearch) // 👈 if 밖으로 빼기
     if (!IS_HOME) {
-      formData.append('search', currentSearch)
       formData.append(
         'category',
         currentCategory === 'ALL' ? '' : currentCategory,
