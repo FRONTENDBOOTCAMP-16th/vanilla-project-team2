@@ -18,8 +18,8 @@
 
 git clone https://github.com/FRONTENDBOOTCAMP-16th/vanilla-project-team2.git  
 cd vanilla-project-team2  
-npm install  
-npm run dev
+bun install  
+bun run dev
 
 ## 🧰 개발 환경 (Development Environment)
 
@@ -27,7 +27,7 @@ npm run dev
 | -------------------- | ------------------ |
 | Editor               | Visual Studio Code |
 | Runtime / Build Tool | dothome            |
-| Package Manager      | npm / bun          |
+| Package Manager      | bun                |
 | Version Control      | Git / GitHub       |
 
 ## 🧩 기술 스택 (Tech Stack)
@@ -37,18 +37,10 @@ npm run dev
 | Frontend | HTML5, CSS3, JavaScript |
 | Backend  | PHP                     |
 | Database | MySQL                   |
-| Tools    | Git/GitHub, Prettier    |
 
 ## ⚙️ 주요 구현 내용
 
-👤 회원 서비스
 
-- 회원가입 시 입력값 검증 및 계정 생성 처리
-- 로그인 시 사용자 인증 상태 저장(localStorage) 및 UI 반영
-- 로그아웃 시 인증 정보 제거 및 메뉴 초기화
-- 회원정보 조회 및 수정 기능 제공
-- 회원 탈퇴 시 계정 정보 삭제 처리
-- 로그인 상태에 따라 접근 가능한 페이지 제한 처리
 
 📊 대시보드
 
@@ -70,10 +62,31 @@ npm run dev
 - 게시글 상세 조회 기능
 - 페이지 이동 후에도 목록 상태 유지
 
+👤 회원 서비스
+
+- 회원가입 시 입력값 검증 및 계정 생성 처리
+- 로그인 시 사용자 인증 상태 저장(localStorage) 및 UI 반영
+- 로그아웃 시 인증 정보 제거 및 메뉴 초기화
+- 회원정보 조회 및 수정 기능 제공
+- 회원 탈퇴 시 계정 정보 삭제 처리
+- 로그인 상태에 따라 접근 가능한 페이지 제한 처리
+
 ## 📸 Screenshots
 
-대시보드 자습방 QnA 글쓰기
-(이미지 추가) (이미지 추가) (이미지 추가) (이미지 추가)
+### 🏷️ 대시보드 
+![alt text](./readme_img/image.png)
+
+### 🏷️ 자습방 
+![alt text](./readme_img/image-1.png)
+
+### 🏷️ QnA 
+![alt text](./readme_img/image-2.png)
+
+### 🏷️ 글쓰기 
+![alt text](./readme_img/image-3.png)
+
+### 🏷️ 회원 서비스
+![alt text](./readme_img/image-4.png)
 
 ## 🗂️ 파일구조
 
