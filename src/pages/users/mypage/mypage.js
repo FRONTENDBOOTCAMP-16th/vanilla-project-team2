@@ -1,5 +1,5 @@
 import { checkToken } from '../../../api/JWT.js'
-const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/update_user.php'
+const URLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/update_user.php'
 
 let userData = null
 
@@ -30,7 +30,7 @@ function renderMyPage(data) {
 
   // 프로필 이미지
   if (data.user_profile) {
-    USER_PROFILE.innerHTML = `<img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}">`
+    USER_PROFILE.innerHTML = `<img src="https://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}">`
   } else {
     const thumbName = data.user_nickname.substring(0, 1)
     USER_PROFILE.innerHTML = `<p>${thumbName}</p>`
@@ -93,7 +93,7 @@ async function updateProfileInfo() {
   if (!form) return
 
   const formData = new FormData(form)
-  
+
   // ✅ 여기에 user_id를 강제로 추가해 줍니다!
   // userData.UID 또는 userData.user_id (가지고 계신 데이터 구조에 맞게 작성)
   formData.append('user_id', userData.user_id) // 혹시 식별자가 UID라면 userData.UID 로 적어주세요.
@@ -137,7 +137,7 @@ async function uploadProfileImage(file) {
   const accessToken = localStorage.getItem('access_token')
 
   try {
-    const response = await fetch('http://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php', {
+    const response = await fetch('https://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
@@ -150,9 +150,9 @@ async function uploadProfileImage(file) {
 
     if (data.status === 'success') {
       alert('프로필 이미지가 성공적으로 변경되었습니다.')
-      
+
       // 화면 업데이트: 서버에서 데이터를 다시 가져와서 이미지 경로를 갱신합니다.
-      await fetchUserData(true) 
+      await fetchUserData(true)
       renderMyPage(userData)
     } else {
       console.error('업로드 실패:', data.message)
@@ -166,15 +166,15 @@ async function uploadProfileImage(file) {
 
 
 async function userWriteInfo(userData) {
-    const user = userData.UID
-    const formData = new FormData()
-    formData.append('user_id', user) // PHP의 $_POST['user_id']로 들어감
+  const user = userData.UID
+  const formData = new FormData()
+  formData.append('user_id', user) // PHP의 $_POST['user_id']로 들어감
 
-    try {
-      const response = await fetch(`http://leedh9276.dothome.co.kr/likelion-vanilla/users/user_posts.php`, {
-        method: 'POST',
-        body: formData // ✅ 객체 대신 FormData를 넣습니다.
-      })
+  try {
+    const response = await fetch(`https://leedh9276.dothome.co.kr/likelion-vanilla/users/user_posts.php`, {
+      method: 'POST',
+      body: formData // ✅ 객체 대신 FormData를 넣습니다.
+    })
 
     // 1. 봉투(response)를 뜯어서 내용물(data)을 가져옵니다.
     const result = await response.json()

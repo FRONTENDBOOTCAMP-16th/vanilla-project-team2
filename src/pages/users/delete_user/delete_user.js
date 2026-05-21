@@ -4,9 +4,9 @@ let userData = null
 
 async function initMyPage() {
   const fetchedData = await checkToken()
-  
+
   if (fetchedData) {
-    userData = fetchedData 
+    userData = fetchedData
     return userData
   }
 }
@@ -14,7 +14,7 @@ async function initMyPage() {
 
 
 // 로그인
-const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/delete_user.php'
+const URLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/delete_user.php'
 
 // 변수 설정
 const deleteButton = document.querySelector('.delete_button')
@@ -27,7 +27,7 @@ deleteButton.addEventListener('click', async (e) => {
     const errorEl = container.querySelector('.error__text')
     errorEl.textContent = message;
   }
-  
+
   const password = document.getElementById('user_password')
   const agree = document.getElementById('check')
   const agreeCheck = agree.checked
@@ -46,14 +46,14 @@ deleteButton.addEventListener('click', async (e) => {
         formData.append('user_password', password.value);
 
         const userNickname = userData.user_nickname
-        
+
         const response = await fetch(URLS, {
           method: 'POST',
           body: formData
         });
-        
+
         const result = await response.json();
-        
+
         if (result.status === 'success') {
           const formBox = document.querySelector('.form__container')
           const html = `

@@ -1,8 +1,8 @@
 import { checkToken } from '../../../api/JWT.js'
 const fetchedData = await checkToken()
 
-const pwCheckURLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/check_password.php'
-const changePwURLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/change_password.php'
+const pwCheckURLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/check_password.php'
+const changePwURLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/change_password.php'
 
 const form = document.getElementById('change_password')
 const loginButton = document.querySelector('.change-pw__button')
@@ -44,7 +44,7 @@ form.addEventListener('submit', async (e) => {
     loginButton.textContent = '처리 중...';
 
     const checkRes = await fetch(pwCheckURLS, { method: 'POST', body: formData });
-    
+
     if (checkRes.status === 401) {
       showError(oldPassword, '비밀번호가 일치하지 않습니다');
       return; // 에러 시 아래 finally 블록으로 이동하여 버튼 복구됨
@@ -52,7 +52,7 @@ form.addEventListener('submit', async (e) => {
 
     if (checkRes.ok) {
       const changeRes = await fetch(changePwURLS, { method: 'POST', body: pwFormData });
-      
+
       if (changeRes.ok) {
         isSuccess = true; // 성공 표시
         alert('비밀번호 변경이 완료되었습니다.');

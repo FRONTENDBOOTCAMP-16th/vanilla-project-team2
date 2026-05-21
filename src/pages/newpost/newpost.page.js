@@ -11,7 +11,7 @@ import { BASE_URL } from '../../api/api.js'
 ================================= */
 const params = new URLSearchParams(location.search)
 const editPostId = params.get('postId')
-// const BASE_URL = 'http://leedh9276.dothome.co.kr/likelion-vanilla'
+// const BASE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla'
 
 // 글쓰기, 수정하기 페이지 진입시 회원 검증
 document.addEventListener('DOMContentLoaded', async () => {

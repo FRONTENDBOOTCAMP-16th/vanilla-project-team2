@@ -36,6 +36,7 @@ export default defineConfig({
     open: true,
   },
   build: {
+    target: 'esnext',
     rollupOptions: {
       input: {
         // 1. 직접 지정할 페이지들
