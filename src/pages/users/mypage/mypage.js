@@ -94,7 +94,6 @@ async function updateProfileInfo() {
 
   const formData = new FormData(form)
   
-  // ✅ 여기에 user_id를 강제로 추가해 줍니다!
   // userData.UID 또는 userData.user_id (가지고 계신 데이터 구조에 맞게 작성)
   formData.append('user_id', userData.user_id) // 혹시 식별자가 UID라면 userData.UID 로 적어주세요.
 
