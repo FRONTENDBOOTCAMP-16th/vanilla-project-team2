@@ -44,7 +44,7 @@ function renderProfileForm(data) {
   if (!data) return
 
   document.getElementById('user_nickname').value = data.user_nickname
-  document.getElementById('user_intro').value = data.user_intro // ✅ value로 수정
+  document.getElementById('user_intro').value = data.user_intro
 }
 
 // --- 이벤트 리스너 및 UI 제어 ---
@@ -172,7 +172,7 @@ async function userWriteInfo(userData) {
     try {
       const response = await fetch(`http://leedh9276.dothome.co.kr/likelion-vanilla/users/user_posts.php`, {
         method: 'POST',
-        body: formData // ✅ 객체 대신 FormData를 넣습니다.
+        body: formData
       })
 
     // 1. 봉투(response)를 뜯어서 내용물(data)을 가져옵니다.
