@@ -95,7 +95,7 @@ async function updateProfileInfo() {
   const formData = new FormData(form)
   
   // userData.UID 또는 userData.user_id (가지고 계신 데이터 구조에 맞게 작성)
-  formData.append('user_id', userData.user_id) // 혹시 식별자가 UID라면 userData.UID 로 적어주세요.
+  formData.append('user_id', userData.user_id)
 
   try {
     const response = await fetch(URLS, {
@@ -140,9 +140,8 @@ async function uploadProfileImage(file) {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${accessToken}`,
-        // Content-Type은 절대 적지 마세요! (자동 설정됨)
       },
-      body: formData // ★ 이 부분이 빠져있어서 Bad Request가 발생했습니다!
+      body: formData
     })
 
     const data = await response.json()
