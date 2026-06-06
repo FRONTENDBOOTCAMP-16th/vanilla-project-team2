@@ -1,5 +1,8 @@
 import { checkToken } from '../../../api/JWT.js'
 const URLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/update_user.php'
+const UPLOAD_PROFILE_URL = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php'
+const MAX_PROFILE_IMAGE_SIZE = 500 * 1024
+const ALLOWED_PROFILE_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
 
 let userData = null
 
@@ -45,6 +48,26 @@ function renderProfileForm(data) {
 
   document.getElementById('user_nickname').value = data.user_nickname
   document.getElementById('user_intro').value = data.user_intro // ✅ value로 수정
+}
+
+function getCurrentUserId() {
+  return userData?.UID ?? userData?.user_id
+}
+
+async function parseJsonResponse(response) {
+  const responseText = await response.text()
+
+  try {
+    const data = responseText ? JSON.parse(responseText) : {}
+    return data
+  } catch (error) {
+    console.error('JSON이 아닌 서버 응답:', {
+      status: response.status,
+      url: response.url,
+      body: responseText.slice(0, 300),
+    })
+    throw new Error('서버가 JSON 대신 HTML/문자열을 응답했습니다.')
+  }
 }
 
 // --- 이벤트 리스너 및 UI 제어 ---
@@ -93,16 +116,26 @@ async function updateProfileInfo() {
   if (!form) return
 
   const formData = new FormData(form)
+  const userId = getCurrentUserId()
 
-  // ✅ 여기에 user_id를 강제로 추가해 줍니다!
-  // userData.UID 또는 userData.user_id (가지고 계신 데이터 구조에 맞게 작성)
-  formData.append('user_id', userData.user_id) // 혹시 식별자가 UID라면 userData.UID 로 적어주세요.
+  if (!userId) {
+    alert('사용자 정보를 찾을 수 없습니다. 다시 로그인해 주세요.')
+    return
+  }
+
+  formData.set('user_id', userId)
 
   try {
     const response = await fetch(URLS, {
       method: 'POST',
       body: formData,
     })
+
+    if (!response.ok) {
+      const errorText = await response.text()
+      console.error('프로필 수정 서버 응답 오류:', errorText)
+      throw new Error(`프로필 수정 요청 실패 (${response.status})`)
+    }
 
     await fetchUserData(true)
     renderProfileForm(userData)
@@ -127,26 +160,53 @@ const thumb = document.getElementById('thumb')
 thumb.addEventListener('change', (e) => {
   const file = e.target.files[0]
   if (!file) return
+
+  if (!ALLOWED_PROFILE_IMAGE_TYPES.includes(file.type)) {
+    alert('이미지 파일(jpg, png, gif, webp)만 업로드 가능합니다.')
+    thumb.value = ''
+    return
+  }
+
+  if (file.size > MAX_PROFILE_IMAGE_SIZE) {
+    alert('파일 크기는 500KB를 초과할 수 없습니다.')
+    thumb.value = ''
+    return
+  }
+
   uploadProfileImage(file)
 })
 
 async function uploadProfileImage(file) {
   const formData = new FormData()
+  const userId = getCurrentUserId()
+
+  if (!userId) {
+    alert('사용자 정보를 찾을 수 없습니다. 다시 로그인해 주세요.')
+    return
+  }
+
   formData.append('profile_image', file)
+  formData.append('user_id', userId)
 
   const accessToken = localStorage.getItem('access_token')
+  if (!accessToken) {
+    alert('로그인이 필요합니다.')
+    return
+  }
+
+  formData.append('access_token', accessToken)
 
   try {
-    const response = await fetch('https://leedh9276.dothome.co.kr/likelion-vanilla/users/upload_profile.php', {
+    const response = await fetch(UPLOAD_PROFILE_URL, {
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        // Content-Type은 절대 적지 마세요! (자동 설정됨)
-      },
       body: formData // ★ 이 부분이 빠져있어서 Bad Request가 발생했습니다!
     })
 
-    const data = await response.json()
+    const data = await parseJsonResponse(response)
+
+    if (!response.ok) {
+      throw new Error(data.message ?? `프로필 이미지 업로드 요청 실패 (${response.status})`)
+    }
 
     if (data.status === 'success') {
       alert('프로필 이미지가 성공적으로 변경되었습니다.')
@@ -157,9 +217,12 @@ async function uploadProfileImage(file) {
     } else {
       console.error('업로드 실패:', data.message)
       alert(`업로드 실패: ${data.message}`)
+      thumb.value = ''
     }
   } catch (error) {
     console.error('파일 업로드 통신 에러:', error)
+    alert(error.message)
+    thumb.value = ''
   }
 }
 
