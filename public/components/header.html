@@ -12,7 +12,7 @@
     <!-- //로고 -->
 
     <!-- 네비게이션 -->
-    <nav class="nav">
+    <nav class="nav" id="mainNav">
       <a href="/index.html" class="nav-item active">
         <img src="/assets/icons/icon-home.svg" alt="" />
         <span>대시보드</span>
@@ -32,35 +32,45 @@
         <img src="/assets/icons/icon-edit.svg" alt="" />
         <span>글쓰기</span>
       </a>
+
+      <!-- 회원정보 (모바일에서는 nav 안에 포함) -->
+      <div class="personal" id="personalMenu">
+        <a
+          href="/src/pages/users/mypage/index.html"
+          class="nav-item"
+          data-role="mypage"
+        >
+          <img src="/assets/icons/icon-user.svg" alt="" />
+          <span>마이페이지</span>
+        </a>
+
+        <a href="#" class="nav-item btn__blue logout" data-role="logout">
+          <img src="/assets/icons/icon-logout.svg" alt="" />
+          <span>로그아웃</span>
+        </a>
+
+        <a
+          href="/src/pages/users/login/index.html"
+          class="nav-item btn__blue"
+          data-role="login"
+        >
+          <span>로그인</span>
+        </a>
+      </div>
     </nav>
     <!-- //네비게이션 -->
 
-    <!-- 회원정보 -->
-    <div class="personal">
-      <a
-        href="/src/pages/users/mypage/index.html"
-        class="nav-item"
-        data-role="mypage"
-      >
-        <img src="/assets/icons/icon-user.svg" alt="" />
-        <span>마이페이지</span>
-      </a>
-
-      <a href="#" class="nav-item btn__blue logout" data-role="logout">
-        <img src="/assets/icons/icon-logout.svg" alt="" />
-        <span>로그아웃</span>
-      </a>
-
-      <a
-        href="/src/pages/users/login/index.html"
-        class="nav-item btn__blue"
-        data-role="login"
-      >
-        <span>로그인</span>
-      </a>
-    </div>
-
-    <!-- //회원정보 -->
+    <!-- 모바일 메뉴 버튼 -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="메뉴 열기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <!-- //모바일 메뉴 버튼 -->
   </div>
 </header>
+<!-- 모바일 오버레이 -->
+<div class="mobile-overlay" id="mobileOverlay"></div>
 <!-- //header -->

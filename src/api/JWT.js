@@ -1,6 +1,18 @@
-//
-const AUTH_ENDPOINT = import.meta.env.VITE_API_AUTH_ENDPOINT
-const REFRESH_ENDPOINT = import.meta.env.VITE_API_REFRESH_ENDPOINT
+import { BASE_URL } from './api.js'
+
+function resolveEndpoint(envValue, fallbackPath) {
+  if (envValue && envValue !== 'undefined') return envValue
+  return `${BASE_URL}${fallbackPath}`
+}
+
+const AUTH_ENDPOINT = resolveEndpoint(
+  import.meta.env.VITE_API_AUTH_ENDPOINT,
+  '/users/auth.php',
+)
+const REFRESH_ENDPOINT = resolveEndpoint(
+  import.meta.env.VITE_API_REFRESH_ENDPOINT,
+  '/users/refresh.php',
+)
 const MAX_RETRIES = 3
 
 export async function checkToken(retryCount = 0) {

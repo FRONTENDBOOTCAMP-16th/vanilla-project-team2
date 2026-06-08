@@ -32,6 +32,10 @@ async function loadLayout() {
       const header = temp.querySelector('header') || temp.firstElementChild
 
       if (header) body.prepend(header)
+
+      // 오버레이도 추가
+      const overlay = temp.querySelector('.mobile-overlay')
+      if (overlay) body.insertBefore(overlay, header.nextSibling)
     }
   }
 
@@ -197,6 +201,96 @@ function setActiveNav() {
 }
 
 // ===============================
+// 모바일 메뉴 토글
+// ===============================
+function bindMobileMenu() {
+  const toggleBtn = document.getElementById('mobileMenuToggle')
+  const nav = document.getElementById('mainNav')
+  const overlay = document.getElementById('mobileOverlay')
+
+  if (!toggleBtn || !nav) return
+
+  function openMenu() {
+    nav.classList.add('is-open')
+    if (overlay) overlay.classList.add('is-active')
+    document.body.style.overflow = 'hidden'
+    toggleBtn.setAttribute('aria-label', '메뉴 닫기')
+
+    // 닫기 아이콘으로 변경
+    toggleBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    `
+  }
+
+  function closeMenu() {
+    nav.classList.remove('is-open')
+    if (overlay) overlay.classList.remove('is-active')
+    document.body.style.overflow = ''
+    toggleBtn.setAttribute('aria-label', '메뉴 열기')
+
+    // 햄버거 아이콘으로 복원
+    toggleBtn.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    `
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    const isOpen = nav.classList.contains('is-open')
+    isOpen ? closeMenu() : openMenu()
+  })
+
+  // 오버레이 클릭 시 닫기
+  if (overlay) {
+    overlay.addEventListener('click', closeMenu)
+  }
+
+  // 네비 링크 클릭 시 닫기 (모바일)
+  nav.querySelectorAll('a.nav-item').forEach((link) => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        closeMenu()
+      }
+    })
+  })
+
+  // 리사이즈 시 메뉴 상태 초기화
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      closeMenu()
+    }
+  })
+}
+
+// ===============================
+// 헤더 스크롤 효과
+// ===============================
+function bindHeaderScroll() {
+  const header = document.querySelector('header')
+  if (!header) return
+
+  let lastScrollY = 0
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY
+
+    if (scrollY > 10) {
+      header.classList.add('scrolled')
+    } else {
+      header.classList.remove('scrolled')
+    }
+
+    lastScrollY = scrollY
+  }, { passive: true })
+}
+
+// ===============================
 // 앱 시작 순서 (페이지 로딩 후 실행)
 // ===============================
 
@@ -211,6 +305,8 @@ async function init() {
   setActiveNav()
   controlAuthUI()
   bindLogout()
+  bindMobileMenu()
+  bindHeaderScroll()
 }
 
 init()
