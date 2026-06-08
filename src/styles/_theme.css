@@ -282,12 +282,50 @@
   --clr-accent-warm: #f59e0b;
   --clr-accent-warm-light: #fff7ed;
 
-  --clr-surface: #ffffff;
-  --clr-surface-raised: #fcfcfd;
-  --clr-surface-sunken: #f6f8fb;
+  --clr-surface: rgba(255, 255, 255, 0.64);
+  --clr-surface-raised: rgba(255, 255, 255, 0.78);
+  --clr-surface-sunken: rgba(255, 255, 255, 0.34);
 
-  --clr-bg: #f4f6f8;
-  --clr-bg-warm: #f4f6f8;
+  --clr-bg: #eef4f8;
+  --clr-bg-warm: #f6fbfb;
+
+  /* 글래스모피즘 전용 시스템 토큰 */
+  --glass-blur: blur(30px) saturate(175%) contrast(1.03);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.62);
+  --glass-border-light: 1px solid rgba(255, 255, 255, 0.82);
+  --glass-panel: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(255, 255, 255, 0.58) 42%,
+    rgba(255, 255, 255, 0.36) 100%
+  );
+  --glass-panel-strong: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.66) 46%,
+    rgba(255, 255, 255, 0.44) 100%
+  );
+  --glass-panel-soft: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.68) 0%,
+    rgba(255, 255, 255, 0.42) 54%,
+    rgba(255, 255, 255, 0.26) 100%
+  );
+  --glass-sheen: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(255, 255, 255, 0.28) 24%,
+    rgba(255, 255, 255, 0.04) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  --glass-edge: 0 0 0 1px rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 24px 60px rgba(15, 23, 42, 0.12),
+    0 8px 24px rgba(15, 118, 110, 0.06);
+  --glass-shadow-hover: 0 32px 76px rgba(15, 23, 42, 0.16),
+    0 12px 30px rgba(15, 118, 110, 0.08);
+  --glass-shadow-inset: inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.22),
+    inset 1px 0 0 rgba(255, 255, 255, 0.18);
 
   --clr-text: #111827;
   --clr-text-secondary: #475467;
@@ -324,10 +362,10 @@
   /* ===================================================
      둥근 모서리
   =================================================== */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 8px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-xl: 28px;
   --radius-full: 9999px;
 
   /* ===================================================

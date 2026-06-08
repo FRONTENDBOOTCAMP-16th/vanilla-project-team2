@@ -294,7 +294,19 @@ function bindHeaderScroll() {
 // 앱 시작 순서 (페이지 로딩 후 실행)
 // ===============================
 
+function injectLiquidGlassBackground() {
+  if (document.querySelector('.liquid-glass-bg')) return
+
+  const backgroundHtml = `
+    <div class="liquid-glass-bg" aria-hidden="true"></div>
+  `
+  document.body.insertAdjacentHTML('afterbegin', backgroundHtml)
+}
+
 async function init() {
+  // Liquid Glass 배경 레이어 추가
+  injectLiquidGlassBackground()
+
   // 레이아웃과 상관없는 일은 즉시 실행
   initByPage()
 

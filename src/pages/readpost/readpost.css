@@ -13,16 +13,21 @@
 /* 게시글/댓글 공통 박스 */
 .post,
 .comment {
+  position: relative;
+  isolation: isolate;
   margin-block: 24px;
   padding: 32px;
-  border: 1px solid var(--clr-border);
-  border-radius: var(--radius-lg);
-  background-color: var(--clr-surface);
-  box-shadow: var(--shadow-box);
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  background: var(--glass-sheen), var(--glass-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inset);
   transition: box-shadow var(--transition-base);
+  overflow: hidden;
 
   &:hover {
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--glass-shadow-hover), var(--glass-shadow-inset);
   }
 
   .post__header {
@@ -47,7 +52,8 @@
   align-items: center;
   padding: 8px 16px;
   border-radius: var(--radius-full);
-  background: linear-gradient(135deg, var(--clr-primary-light), #ede9fe);
+  background: var(--glass-sheen), rgba(230, 244, 241, 0.72);
+  border: var(--glass-border);
   color: var(--clr-primary);
   font-weight: 600;
   text-transform: uppercase;
@@ -102,8 +108,10 @@
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
-  box-shadow: var(--shadow-box);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent 36%),
+    linear-gradient(135deg, var(--clr-primary), var(--clr-accent));
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inset);
   color: var(--clr-surface);
   overflow: hidden;
 }
@@ -173,18 +181,21 @@
 #comment {
   width: 100%;
   padding: 16px;
-  border: 1px solid var(--clr-border);
+  border: var(--glass-border);
   border-radius: var(--radius-md);
   line-height: 1.5;
   resize: vertical;
   min-height: 100px;
-  background: var(--clr-surface-sunken);
+  background: rgba(255, 255, 255, 0.38);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: var(--glass-shadow-inset);
   transition: all var(--transition-fast);
 
   &:focus {
     outline: none;
     border-color: var(--clr-primary);
-    background: var(--clr-surface);
+    background: rgba(255, 255, 255, 0.68);
     box-shadow: 0 0 0 3px var(--clr-primary-glow);
   }
 }
@@ -198,16 +209,18 @@
   padding: 12px 28px;
   border: none;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 36%),
+    linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%);
   color: #ffffff;
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 12px rgba(79, 57, 246, 0.2);
+  box-shadow: var(--shadow-primary);
 
   &:hover {
-    box-shadow: 0 6px 16px rgba(79, 57, 246, 0.3);
+    box-shadow: 0 14px 28px rgba(15, 118, 110, 0.24);
     transform: translateY(-1px);
   }
 }
@@ -276,9 +289,11 @@
 
 .comment__actions button {
   padding: 6px 14px;
-  border: 1px solid var(--clr-border);
+  border: var(--glass-border);
   border-radius: var(--radius-sm);
-  background-color: var(--clr-surface);
+  background: var(--glass-panel-soft);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   color: var(--clr-text-secondary);
   font-size: 13px;
   font-weight: 500;
@@ -286,9 +301,9 @@
   transition: all var(--transition-fast);
 
   &:hover {
-    background-color: var(--clr-surface-sunken);
+    background: var(--glass-sheen), rgba(255, 255, 255, 0.5);
     color: var(--clr-text);
-    border-color: var(--clr-text-muted);
+    border-color: rgba(255, 255, 255, 0.88);
   }
 }
 

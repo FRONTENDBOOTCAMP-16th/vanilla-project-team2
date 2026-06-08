@@ -2,16 +2,21 @@
 post form
 ================================= */
 .newpost__form {
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   gap: 24px;
   padding: 32px;
-  box-shadow: var(--shadow-card);
-  background: var(--clr-surface);
-  border: 1px solid var(--clr-border);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inset);
+  background: var(--glass-sheen), var(--glass-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
   border-radius: var(--radius-xl);
   margin-block: 40px;
   transition: box-shadow var(--transition-base);
+  overflow: hidden;
 
   /* ================================
   1. 게시판 선택 영역 (라디오 버튼)
@@ -20,7 +25,7 @@ post form
     border: 1px solid var(--clr-border);
     border-radius: var(--radius-md);
     padding: 16px;
-    background: var(--clr-surface-sunken);
+    background: rgba(255, 255, 255, 0.34);
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
@@ -59,7 +64,8 @@ post form
       border-radius: var(--radius-md);
       padding-inline: 16px;
       font-size: 15px;
-      background: var(--clr-surface);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52);
       color: var(--clr-text);
       transition: all var(--transition-fast);
 
@@ -81,7 +87,8 @@ post form
       line-height: 1.6;
       resize: vertical;
       min-height: 400px;
-      background: var(--clr-surface);
+      background: rgba(255, 255, 255, 0.58);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.52);
       color: var(--clr-text);
       transition: all var(--transition-fast);
 
@@ -98,14 +105,16 @@ post form
   3. 미리보기 영역
   ================================= */
   .newpost__preview {
-    background: var(--clr-surface-sunken);
-    border: 1px solid var(--clr-border-light);
+    background: var(--glass-panel-soft);
+    border: var(--glass-border);
     border-radius: var(--radius-md);
     padding: 32px 24px;
+    box-shadow: var(--glass-shadow-inset);
   }
 
   strong {
-    background: linear-gradient(135deg, var(--clr-primary-light), #ede9fe);
+    background: var(--glass-sheen), rgba(230, 244, 241, 0.72);
+    border: var(--glass-border);
     padding: 8px 16px;
     border-radius: var(--radius-full);
     color: var(--clr-primary);
@@ -163,28 +172,31 @@ post form
     gap: 8px;
     border-radius: var(--radius-md);
     border: 1px solid var(--clr-border);
-    background: var(--clr-surface);
+    background: var(--glass-panel-soft);
     color: var(--clr-text-secondary);
+    box-shadow: var(--glass-shadow-inset);
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     transition: all var(--transition-fast);
 
     &:hover {
-      background: var(--clr-surface-sunken);
+      background: rgba(255, 255, 255, 0.5);
       color: var(--clr-text);
     }
   }
 
   /* 제출 버튼 */
   .button--primary {
-    background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%) !important;
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.18), transparent 36%),
+      linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%) !important;
     color: #ffffff !important;
     border: none !important;
-    box-shadow: 0 4px 12px rgba(79, 57, 246, 0.25);
+    box-shadow: var(--shadow-primary);
 
     &:hover {
-      box-shadow: 0 6px 16px rgba(79, 57, 246, 0.35);
+      box-shadow: 0 14px 28px rgba(15, 118, 110, 0.24);
       transform: translateY(-1px);
     }
   }
@@ -198,7 +210,7 @@ post form
   .newpost__form {
     padding: 24px;
     margin-block: 24px;
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
   }
 
   .newpost__field #content {

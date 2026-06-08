@@ -45,13 +45,18 @@
 
 /* 이동 링크 박스 */
 .suggest {
-  background-color: var(--clr-surface);
+  position: relative;
+  isolation: isolate;
+  background: var(--glass-sheen), var(--glass-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border-radius: var(--radius-xl);
   width: 100%;
   max-width: 600px;
   padding: 40px;
-  box-shadow: var(--shadow-card);
-  border: 1px solid var(--clr-border);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inset);
+  border: var(--glass-border);
+  overflow: hidden;
 
   .suggest__list {
     padding: 0;
@@ -72,8 +77,8 @@
     }
 
     .suggest__item {
-      background-color: var(--clr-surface-sunken);
-      border: 1px solid var(--clr-border);
+      background: var(--glass-panel-soft);
+      border: var(--glass-border);
       padding: 16px;
       border-radius: var(--radius-md);
       text-align: center;
@@ -81,8 +86,8 @@
       cursor: pointer;
 
       &:hover {
-        background-color: var(--clr-primary-light);
-        border-color: var(--clr-primary);
+        background: var(--glass-sheen), rgba(230, 244, 241, 0.66);
+        border-color: rgba(255, 255, 255, 0.88);
         color: var(--clr-primary);
         transform: translateY(-2px);
       }
@@ -114,11 +119,13 @@
   justify-content: center;
   gap: 8px;
   min-width: 140px;
-  background-color: var(--clr-surface);
-  border: 1px solid var(--clr-border);
+  background: var(--glass-panel-soft);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
   border-radius: var(--radius-md);
   padding: 14px 24px;
-  box-shadow: var(--shadow-box);
+  box-shadow: var(--glass-shadow), var(--glass-shadow-inset);
   font-weight: 600;
   font-size: 15px;
   text-decoration: none;
@@ -126,9 +133,9 @@
   transition: all var(--transition-fast);
 
   &:hover {
-    background-color: var(--clr-surface-sunken);
+    background: rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
-    box-shadow: var(--shadow-card);
+    box-shadow: var(--glass-shadow-hover), var(--glass-shadow-inset);
   }
 
   &.shortcut__btn--home {
