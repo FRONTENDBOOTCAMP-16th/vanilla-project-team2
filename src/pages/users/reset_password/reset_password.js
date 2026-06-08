@@ -14,8 +14,8 @@ initMyPage()
 // 1. 에러 표시 및 초기화 함수 추가
 const showError = (inputElement, message) => {
   const container = inputElement.closest('.user__input');
-  if (!container) return; 
-  
+  if (!container) return;
+
   const errorEl = container.querySelector('.error__text');
   if (errorEl) {
     errorEl.textContent = message;
@@ -28,7 +28,7 @@ const clearErrors = (formElement) => {
 };
 
 // 로그인 및 비밀번호 초기화 설정
-const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/reset_password.php'
+const URLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/reset_password.php'
 const form = document.getElementById('reset_pw')
 
 // 2. form이 존재하는 페이지에서만 실행되도록 보호 (에러 방지)
@@ -38,7 +38,7 @@ if (form) {
 
     if (submitBtn) {
       e.preventDefault()
-     
+
       // 클릭 시 기존 에러 메시지 초기화
       clearErrors(form);
 
@@ -54,12 +54,12 @@ if (form) {
         showError(idInput, '아이디를 입력해주세요.');
         isFormValid = false;
       }
-      
+
       if (nameInput.value.trim() === '') {
         showError(nameInput, '이름(닉네임)을 입력해주세요.');
         isFormValid = false;
       }
-      
+
       if (phoneInput.value.trim() === '') {
         showError(phoneInput, '휴대전화 번호를 입력해주세요.');
         isFormValid = false;
@@ -73,19 +73,19 @@ if (form) {
       submitBtn.innerHTML = '초기화 진행 중...⏳';
       submitBtn.disabled = true;
       const formData = new FormData(form)
-      
+
       fetch(URLS, {
         method: 'POST',
         body: formData,
       })
         .then(async (response) => {
           const data = await response.json();
-          
+
           // 👉 [수정된 부분] response.ok가 아니거나(네트워크 에러), 서버에서 보낸 JSON의 status가 'error'라면 catch로 던짐!
           if (!response.ok || data.status === 'error') {
             throw data;
           }
-          return data; 
+          return data;
         })
         .then((data) => {
           // 5. 성공 처리 (200 OK & status === 'success')
@@ -109,28 +109,28 @@ if (form) {
         })
         .catch((error) => {
           console.error('에러:', error)
-          
+
           // 6. 실패 처리 (alert 대신 알맞은 input 아래에 showError 적용)
           if (error && error.status === 'error') {
-              switch(error.errorCode) {
-                  case 'USER_NOT_FOUND':
-                      showError(idInput, '가입된 아이디가 없습니다.');
-                      break;
-                  case 'NICKNAME_MISMATCH':
-                      showError(nameInput, '계정의 이름과 일치하지 않습니다.');
-                      break;
-                  case 'PHONE_MISMATCH':
-                      showError(phoneInput, '계정의 휴대전화 번호와 일치하지 않습니다.');
-                      break;
-                  case 'DB_UPDATE_ERROR':
-                      showError(phoneInput, '서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-                      break;
-                  default:
-                      showError(phoneInput, error.message || '초기화에 실패했습니다. 정보를 확인해주세요.');
-              }
+            switch (error.errorCode) {
+              case 'USER_NOT_FOUND':
+                showError(idInput, '가입된 아이디가 없습니다.');
+                break;
+              case 'NICKNAME_MISMATCH':
+                showError(nameInput, '계정의 이름과 일치하지 않습니다.');
+                break;
+              case 'PHONE_MISMATCH':
+                showError(phoneInput, '계정의 휴대전화 번호와 일치하지 않습니다.');
+                break;
+              case 'DB_UPDATE_ERROR':
+                showError(phoneInput, '서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+                break;
+              default:
+                showError(phoneInput, error.message || '초기화에 실패했습니다. 정보를 확인해주세요.');
+            }
           } else {
-              // 네트워크 에러 등의 경우 마지막 인풋(또는 첫번째 인풋)에 메시지 표시
-              showError(phoneInput, '서버와 통신 중 문제가 발생했습니다.');
+            // 네트워크 에러 등의 경우 마지막 인풋(또는 첫번째 인풋)에 메시지 표시
+            showError(phoneInput, '서버와 통신 중 문제가 발생했습니다.');
           }
         })
         .finally(() => {

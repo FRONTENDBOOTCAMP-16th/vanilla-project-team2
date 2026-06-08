@@ -1,6 +1,6 @@
 // (상단의 showError, clearErrors 함수는 그대로 유지합니다)
 
-const URLS = 'http://leedh9276.dothome.co.kr/likelion-vanilla/users/find_id.php';
+const URLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/find_id.php';
 const form = document.getElementById('find_id');
 
 const showError = (inputElement, message) => {
@@ -17,17 +17,17 @@ const clearErrors = (formElement) => {
 if (form) {
   form.addEventListener('click', (e) => {
     const submitBtn = e.target.closest('.find_id');
-    
+
     if (submitBtn) {
       e.preventDefault();
-      
+
       // 기존 에러 초기화
       clearErrors(form);
 
       // 인풋 요소 가져오기 (HTML의 id 속성 확인 필요)
       const nameInput = document.getElementById('user_nickname');
       const phoneInput = document.getElementById('user_phone');
-      
+
       let isFormValid = true;
 
       // 1. 프론트엔드 방어 로직: 빈 값 체크
@@ -35,21 +35,21 @@ if (form) {
         showError(nameInput, '이름(닉네임)을 입력해주세요.');
         isFormValid = false;
       }
-      
+
       if (phoneInput && phoneInput.value.trim() === '') {
         showError(phoneInput, '휴대전화 번호를 입력해주세요.');
         isFormValid = false;
       }
 
       if (!isFormValid) return; // 통신 중단
-      
+
       // 로딩 UI 적용
       const originalText = submitBtn.innerHTML;
       submitBtn.innerHTML = '조회 중...⏳';
       submitBtn.disabled = true;
 
       const formData = new FormData(form);
-      
+
       fetch(URLS, {
         method: 'POST',
         body: formData,
@@ -84,10 +84,10 @@ if (form) {
         })
         .catch((error) => {
           console.error('에러:', error);
-          
+
           // 2. 백엔드 방어 로직에 따른 에러 메시지 분기 처리
           if (error && error.status === 'error') {
-            switch(error.errorCode) {
+            switch (error.errorCode) {
               case 'NICKNAME_MISMATCH':
                 showError(nameInput, error.message);
                 break;

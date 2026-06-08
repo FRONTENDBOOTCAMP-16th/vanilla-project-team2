@@ -19,28 +19,28 @@ async function fetchUserData(forceRefresh = false) {
 
 async function renderUserPage(param) {
   try {
-    const response = await fetch(`http://leedh9276.dothome.co.kr/likelion-vanilla/users/read_user.php?user_uid=${param}`, {
+    const response = await fetch(`https://leedh9276.dothome.co.kr/likelion-vanilla/users/read_user.php?user_uid=${param}`, {
       method: 'GET',
     })
 
     const data = await response.json()
     console.log(data)
 
-  const USER_NICKNAME = document.querySelector('.user')
-  const USER_CREATE_DATE = document.querySelector('.create-date span')
-  const USER_PROFILE = document.querySelector('.profile_thumb')
-  const USER_GRADE = document.querySelector('.expert')
-  const USER_INTRO = document.querySelector('#user_intro')
-  const USER_POST_COUNT = document.querySelector('.write .write__count')
-  const USER_COMMENT_COUNT = document.querySelector('.comment .write__count')
-    
-  USER_NICKNAME.textContent = data.user_nickname
-  USER_CREATE_DATE.textContent = data.create_date.split(' ')[0]
+    const USER_NICKNAME = document.querySelector('.user')
+    const USER_CREATE_DATE = document.querySelector('.create-date span')
+    const USER_PROFILE = document.querySelector('.profile_thumb')
+    const USER_GRADE = document.querySelector('.expert')
+    const USER_INTRO = document.querySelector('#user_intro')
+    const USER_POST_COUNT = document.querySelector('.write .write__count')
+    const USER_COMMENT_COUNT = document.querySelector('.comment .write__count')
+
+    USER_NICKNAME.textContent = data.user_nickname
+    USER_CREATE_DATE.textContent = data.create_date.split(' ')[0]
 
 
     // 프로필 이미지
     if (data.user_profile) {
-      USER_PROFILE.innerHTML = `<img src="http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}">`
+      USER_PROFILE.innerHTML = `<img src="https://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}">`
     } else {
       const thumbName = data.user_nickname.substring(0, 1)
       USER_PROFILE.innerHTML = `<p>${thumbName}</p>`

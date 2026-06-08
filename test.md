@@ -216,7 +216,7 @@ const formatUserData = (data) => ({
   date: data.create_date.split(' ')[0],
   grade: ['초급 개발자', '중급 개발자', '고급 개발자'][data.user_grade] ?? '???',
   profilePath: data.user_profile
-    ? `http://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}`
+    ? `https://leedh9276.dothome.co.kr/likelion-vanilla/users/uploads/profile/${data.user_profile}`
     : null
 })
 
