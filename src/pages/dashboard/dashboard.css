@@ -1,143 +1,151 @@
-.container {
-  width: 1200px;
-  margin: 0 auto;
-}
+/* 대시보드 전용 스타일 */
 
-/* 카드 2개 레이아웃 */
 .dash-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(280px, 1fr));
-  gap: 18px;
-
-  margin-top: 16px;
-  margin-bottom: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
 }
 
-/* 공통 카드 */
 .dash-card {
   position: relative;
   overflow: hidden;
-
-  min-height: 160px;
-  padding: 20px 22px;
-
-  border-radius: 16px;
-  color: #fff;
-
-  box-shadow: 0 12px 30px rgba(17, 24, 39, 0.16);
+  min-height: 132px;
+  padding: 20px;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  background: var(--clr-surface);
+  box-shadow: var(--shadow-box);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base),
+    transform var(--transition-base);
 }
 
-/* 상단 라벨 라인 */
+.dash-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: var(--clr-accent);
+}
+
+.dash-card--quote::before {
+  background: var(--clr-accent-warm);
+}
+
+.dash-card:hover {
+  border-color: rgba(37, 99, 235, 0.24);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.dash-card--quote:hover {
+  border-color: rgba(245, 158, 11, 0.32);
+}
+
 .dash-card__top {
   display: inline-flex;
+  gap: 10px;
   align-items: center;
-  gap: 8px;
-
-  font-size: 14px;
-  font-weight: 700;
-  opacity: 0.95;
+  color: var(--clr-text-secondary);
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .dash-card__icon {
-  font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-lg);
+  background: var(--clr-accent-light);
+}
+
+.dash-card--quote .dash-card__icon {
+  background: var(--clr-accent-warm-light);
+}
+
+.dash-card__icon img {
+  width: 20px;
+  height: 20px;
 }
 
 .dash-card__label {
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
-/* 제목/설명 */
 .dash-card__title {
   margin-top: 14px;
-  font-size: 28px;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
+  color: var(--clr-text);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.25;
+}
+
+.dash-card__title--quote {
+  font-size: 20px;
 }
 
 .dash-card__desc {
-  margin-top: 12px;
+  margin-top: 10px;
+  color: var(--clr-text-secondary);
   font-size: 13px;
-  opacity: 0.9;
 }
 
-/* 날씨 카드 그라데이션 */
-.dash-card--weather {
-  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 45%, #60a5fa 130%);
-}
-
-/* 명언 카드 그라데이션 */
-.dash-card--quote {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 35%, #db2777 120%);
-}
-
-/* 배경 원형 장식(블롭) */
-.dash-card__blob {
-  position: absolute;
-  border-radius: 999px;
-  pointer-events: none;
-  opacity: 0.22;
-  background: #ffffff;
-}
-
-.dash-card__blob--a {
-  width: 160px;
-  height: 160px;
-  top: -70px;
-  right: -50px;
-}
-
-.dash-card__blob--b {
-  width: 120px;
-  height: 120px;
-  bottom: -60px;
-  left: -50px;
-  opacity: 0.14;
-}
-
-/* 검색 폼 컨테이너 */
 .search-form {
   width: 100%;
   margin-bottom: 16px;
 }
 
-/* 인풋 래퍼 */
 .search-input {
   position: relative;
   width: 100%;
 }
 
-/* 돋보기 아이콘 */
 .search-icon {
   position: absolute;
-  left: 16px;
   top: 50%;
+  left: 16px;
+  color: var(--clr-text-muted);
   transform: translateY(-50%);
-  color: #9ca3af;
   pointer-events: none;
 }
 
-/* 인풋 */
 .search-input input {
   width: 100%;
-  height: 52px;
-
+  height: 46px;
   padding: 0 16px 0 48px;
-
-  border-radius: 14px;
-  border: 1px solid #d1d5db;
-  background: #ffffff;
-
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  background: var(--clr-surface);
+  color: var(--clr-text);
   font-size: 15px;
-  color: #111827;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-input input::placeholder {
-  color: #9ca3af;
+  color: var(--clr-text-muted);
 }
 
-/* 포커스 상태 */
 .search-input input:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  border-color: var(--clr-primary);
+  box-shadow: 0 0 0 3px var(--clr-primary-glow);
+}
+
+@media (max-width: 768px) {
+  .dash-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .dash-card {
+    min-height: 124px;
+    padding: 18px;
+  }
+
+  .dash-card__title,
+  .dash-card__title--quote {
+    font-size: 19px;
+  }
 }

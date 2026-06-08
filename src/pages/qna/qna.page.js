@@ -55,12 +55,41 @@ let paginationRoot = null
 let categoryButtons = null
 
 // ================================
+// 게시판 요약 렌더링
+// ================================
+const updateOverviewMetrics = function (data = []) {
+  const metricPosts = document.querySelectorAll('[data-metric="posts"]')
+  const metricComments = document.querySelectorAll('[data-metric="comments"]')
+  const metricTopics = document.querySelectorAll('[data-metric="topics"]')
+
+  if (!metricPosts.length && !metricComments.length && !metricTopics.length)
+    return
+
+  const commentTotal = data.reduce(
+    (sum, post) => sum + (Number(post.commentCount) || 0),
+    0,
+  )
+  const topicTotal = new Set(data.map((post) => post.type || '기타')).size
+
+  metricPosts.forEach((el) => {
+    el.textContent = data.length.toLocaleString('ko-KR')
+  })
+  metricComments.forEach((el) => {
+    el.textContent = commentTotal.toLocaleString('ko-KR')
+  })
+  metricTopics.forEach((el) => {
+    el.textContent = topicTotal.toLocaleString('ko-KR')
+  })
+}
+
+// ================================
 // 게시글 렌더링
 // ================================
 const renderPosts = function (data) {
   if (!qnaPostUl) return
 
   if (!data || data.length === 0) {
+    updateOverviewMetrics([])
     qnaPostUl.innerHTML = `
       <li class="post__no-result">
         <p>검색 결과가 없습니다.</p>
@@ -70,6 +99,7 @@ const renderPosts = function (data) {
   }
 
   const displayData = IS_HOME ? data.slice(0, ITEMS_PER_PAGE) : data
+  updateOverviewMetrics(displayData)
   qnaPostUl.innerHTML = displayData.map((post) => postItem(post)).join('')
 }
 

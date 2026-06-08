@@ -1,14 +1,19 @@
 import { timeForToday } from '../utils/date.js'
 
 export const postItem = (post) => {
+  const nickname = post.user_nickname || '사용자'
+  const initial = nickname.trim().slice(0, 1) || 'U'
+  const commentCount = Number(post.commentCount) || 0
+  const postType = post.type || '기타'
+
   return `
     <li class="post__item" data-category="${post.typeIndex}" data-id="${post.post_id}">
       <a href="#" class="post__inner">
 
         <div class="post__top-row">
-          <span class="post__tag">${post.type}</span>
+          <span class="post__tag">${postType}</span>
           <span class="post__date">
-                        <svg
+              <svg
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"
@@ -17,14 +22,14 @@ export const postItem = (post) => {
               >
                 <path
                   d="M8.00016 14.6668C11.6821 14.6668 14.6668 11.6821 14.6668 8.00016C14.6668 4.31826 11.6821 1.3335 8.00016 1.3335C4.31826 1.3335 1.3335 4.31826 1.3335 8.00016C1.3335 11.6821 4.31826 14.6668 8.00016 14.6668Z"
-                  stroke="#6A7282"
+                  stroke="currentColor"
                   stroke-width="1.33333"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                 />
                 <path
                   d="M8 4V8L10.6667 9.33333"
-                  stroke="#6A7282"
+                  stroke="currentColor"
                   stroke-width="1.33333"
                   stroke-linecap="round"
                   stroke-linejoin="round"
@@ -41,10 +46,14 @@ export const postItem = (post) => {
         
           <div class="post__meta-box">
             <div class="post__author-row">
-              <span class="post__comment-count">${post.commentCount}개의 댓글</span>
-              
-              <span class="post__author-text post__author-link" data-user-id="${post.user_id}">by <strong>${post.user_nickname}</strong></span>
-              
+              <span class="post__author-profile">
+                <span class="post__avatar" aria-hidden="true">${initial}</span>
+                <span class="post__author-text post__author-link" data-user-id="${post.user_id}">
+                  <strong>${nickname}</strong>
+                </span>
+              </span>
+
+              <span class="post__answer-pill">${commentCount} 답변</span>
             </div>
           </div>
         

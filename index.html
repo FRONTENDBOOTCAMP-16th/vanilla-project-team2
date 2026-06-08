@@ -15,10 +15,45 @@
     <title>사자들의 공부방</title>
   </head>
   <body data-page="home" class="gray-bg">
-    <div class="container">
-      <!-- 대시보드 -->
+    <main class="container community-page">
+      <section class="community-overview" aria-labelledby="community-title">
+        <div class="community-overview__main">
+          <span class="community-overview__badge">학습 커뮤니티</span>
+          <h1 class="community-overview__title" id="community-title">
+            오늘의 질문과 답변을 한곳에서 확인하세요
+          </h1>
+          <p class="community-overview__desc">
+            막힌 지점을 남기고, 답변이 쌓인 글을 빠르게 찾아보는 부트캠프
+            커뮤니티입니다.
+          </p>
+        </div>
+
+        <div class="community-overview__actions">
+          <a class="button button--primary" href="/src/pages/newpost/index.html">
+            새 질문
+          </a>
+          <a class="button button--subtle" href="/src/pages/qna/index.html">
+            전체 QnA
+          </a>
+        </div>
+
+        <dl class="community-metrics" aria-label="커뮤니티 요약">
+          <div class="community-metric">
+            <dt>최신 질문</dt>
+            <dd data-metric="posts">-</dd>
+          </div>
+          <div class="community-metric">
+            <dt>등록 답변</dt>
+            <dd data-metric="comments">-</dd>
+          </div>
+          <div class="community-metric">
+            <dt>활성 주제</dt>
+            <dd data-metric="topics">-</dd>
+          </div>
+        </dl>
+      </section>
+
       <section class="dash-cards" aria-label="대시보드 요약 카드">
-        <!-- 오늘의 날씨 카드 -->
         <article class="dash-card dash-card--weather">
           <div class="dash-card__top">
             <span class="dash-card__icon" aria-hidden="true">
@@ -32,19 +67,8 @@
           </h3>
 
           <p class="dash-card__desc">공부하기 좋은 날씨입니다!</p>
-
-          <!-- 배경 원형 장식 -->
-          <span
-            class="dash-card__blob dash-card__blob--a"
-            aria-hidden="true"
-          ></span>
-          <span
-            class="dash-card__blob dash-card__blob--b"
-            aria-hidden="true"
-          ></span>
         </article>
 
-        <!-- 오늘의 명언 카드 -->
         <article class="dash-card dash-card--quote">
           <div class="dash-card__top">
             <span class="dash-card__icon" aria-hidden="true">
@@ -58,66 +82,79 @@
           </h3>
 
           <p class="dash-card__desc">&nbsp;</p>
-
-          <!-- 배경 원형 장식 -->
-          <span
-            class="dash-card__blob dash-card__blob--a"
-            aria-hidden="true"
-          ></span>
-          <span
-            class="dash-card__blob dash-card__blob--b"
-            aria-hidden="true"
-          ></span>
         </article>
       </section>
-      <!-- //대시보드 -->
 
-      <!-- search -->
-      <section class="search">
-        <form class="search__form">
-          <div class="search__group">
-            <svg
-              class="search__icon"
-              width="17"
-              height="17"
-              viewBox="0 0 17 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
-                stroke="#99A1AF"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M15.8333 15.8333L12.25 12.25"
-                stroke="#99A1AF"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <label class="sr-only" for="search__input">게시글 검색</label>
-            <input
-              class="search__input"
-              type="search"
-              id="search__input"
-              name="search__input"
-              placeholder="게시글 검색"
-            />
+      <section class="board-layout" aria-labelledby="home-feed-title">
+        <div class="board-main">
+          <div class="board-toolbar">
+            <div class="board-toolbar__heading">
+              <span class="section-kicker">QnA Feed</span>
+              <h2 id="home-feed-title">최신 질문</h2>
+              <p>최근 올라온 질문을 확인하고 바로 답변 흐름을 따라가세요.</p>
+            </div>
+
+            <form class="search">
+              <div class="search__group">
+                <svg
+                  class="search__icon"
+                  width="17"
+                  height="17"
+                  viewBox="0 0 17 17"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
+                    stroke="currentColor"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M15.8333 15.8333L12.25 12.25"
+                    stroke="currentColor"
+                    stroke-width="1.66667"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                <label class="sr-only" for="search__input">게시글 검색</label>
+                <input
+                  class="search__input"
+                  type="search"
+                  id="search__input"
+                  name="search__input"
+                  placeholder="질문 제목, 내용 검색"
+                />
+              </div>
+            </form>
           </div>
-        </form>
-      </section>
-      <!-- //search -->
 
-      <!-- post -->
-      <div class="post">
-          <ul class="post__list"></ul>
+          <div class="post">
+            <ul class="post__list"></ul>
+          </div>
         </div>
-      </div>
-      <!-- //post -->
-    </div>
+
+        <aside class="community-sidebar" aria-label="커뮤니티 안내">
+          <section class="sidebar-panel">
+            <h2 class="sidebar-panel__title">답변이 빨라지는 질문</h2>
+            <ul class="sidebar-list">
+              <li>재현 경로와 에러 메시지를 함께 남긴 글</li>
+              <li>시도한 코드와 막힌 지점을 분리한 글</li>
+              <li>HTML, CSS, JavaScript처럼 주제가 명확한 글</li>
+            </ul>
+          </section>
+
+          <section class="sidebar-panel sidebar-panel--accent">
+            <span class="sidebar-panel__label">운영 팁</span>
+            <p>
+              해결된 글은 댓글 흐름이 학습 자료가 됩니다. 비슷한 문제가 있으면
+              먼저 검색해보세요.
+            </p>
+          </section>
+        </aside>
+      </section>
+    </main>
   </body>
 </html>
