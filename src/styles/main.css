@@ -1,5 +1,8 @@
 @layer base, theme, components, utilities;
 
+/* Google Fonts: Pretendard */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
 @import './_normalize.css' layer(base);
 @import './_base.css' layer(base);
 
