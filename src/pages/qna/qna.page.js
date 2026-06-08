@@ -330,7 +330,7 @@ function bindEvents() {
       const authorEl = e.target.closest('.post__author-link')
       if (authorEl) {
         const userId = authorEl.dataset.userId
-        location.href = `/src/pages/users/user_page/index.html?${userId}`
+        location.href = (window.ROOT_PATH || './') + `src/pages/users/user_page/index.html?${userId}`
         return
       }
 
