@@ -77,6 +77,10 @@ const profileInputs = profileBox.querySelectorAll('input')
 const profileIntro = document.getElementById('user_intro')
 const userProfile = document.querySelector('.user__thumbnail')
 
+profileBox.addEventListener('submit', (e) => {
+  e.preventDefault()
+})
+
 function toggleEditMode(isEdit) {
   if (isEdit) {
     modifyWrap.classList.add('is-modify')

@@ -1,77 +1,91 @@
 .container {
-
-  /* background-color: #F9FAFB; */
   margin: auto;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: var(--container-padding);
+  text-align: center;
 }
 
 /* 404 안내 메시지 */
-
 .error {
-  display: contents;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .error__icon {
-    width: 64px;
+    width: 80px;
+    margin-bottom: 16px;
   }
 
   .error__code {
-    font-size: 128px;
-    background-image: linear-gradient(45deg, #4f39f6, #9810fa);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+    font-size: 112px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--clr-primary);
+    margin-bottom: 8px;
   }
 
   .error__title {
-    font-size: 36px;
-    color: #0a0a0a;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--clr-text);
+    margin-bottom: 12px;
+    letter-spacing: 0;
   }
 
   .error__desc {
-    font-size: 18px;
-    color: #4a5565;
+    font-size: 17px;
+    color: var(--clr-text-secondary);
+    margin-bottom: 40px;
   }
 }
 
 /* 이동 링크 박스 */
-
 .suggest {
-  background-color: var(--white);
-  border-radius: 16px;
-  width: 600px;
-  padding: 32px;
-  box-shadow: var(--shadow-box);
+  background-color: var(--clr-surface);
+  border-radius: var(--radius-xl);
+  width: 100%;
+  max-width: 600px;
+  padding: 40px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--clr-border);
 
   .suggest__list {
     padding: 0;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 12px;
     list-style: none;
-    text-decoration: none;
 
     .suggest__link {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
+      gap: 8px;
       text-decoration: none;
-      color: inherit;
+      color: var(--clr-text);
+      font-weight: 500;
+      transition: all var(--transition-fast);
     }
 
     .suggest__item {
-      background-color: #f9fafb;
-      border: 1px solid #e5e7eb;
-      padding: 8px;
-      border-radius: 12px;
+      background-color: var(--clr-surface-sunken);
+      border: 1px solid var(--clr-border);
+      padding: 16px;
+      border-radius: var(--radius-md);
       text-align: center;
-      text-decoration: none;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--clr-primary-light);
+        border-color: var(--clr-primary);
+        color: var(--clr-primary);
+        transform: translateY(-2px);
+      }
     }
   }
 }
@@ -79,37 +93,89 @@
 .suggest__message {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  font-weight: 600;
+  color: var(--clr-text);
 }
-
-
 
 /* 자주 쓰이는 버튼 */
 .shortcut {
   display: flex;
   align-items: center;
   gap: 16px;
- 
+  margin-top: 40px;
 }
 
 .shortcut__btn {
-    display: flex;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-
-
-  background-color: #fff;
-  border: 1px solid #d1d5dc;
-  border-radius: 14px;
-  padding: 12px;
-  margin-block: 32px;
-   box-shadow: var(--shadow-box);
-
+  min-width: 140px;
+  background-color: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 14px 24px;
+  box-shadow: var(--shadow-box);
+  font-weight: 600;
+  font-size: 15px;
   text-decoration: none;
-  color: inherit;
+  color: var(--clr-text);
+  transition: all var(--transition-fast);
 
-  &.shortcut__btn--home{
-    background-image: linear-gradient(45deg, #4f39f6, #9810fa);
+  &:hover {
+    background-color: var(--clr-surface-sunken);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+
+  &.shortcut__btn--home {
+    background-color: var(--clr-primary);
     color: var(--white);
+    border: none;
+    box-shadow: var(--shadow-primary);
+
+    &:hover {
+      background-color: var(--clr-primary-hover);
+      box-shadow: var(--shadow-primary);
+    }
+  }
+}
+
+/* =================================
+   반응형 브레이크포인트
+================================= */
+@media (max-width: 768px) {
+  .suggest {
+    padding: 24px;
+  }
+
+  .suggest .suggest__list {
+    grid-template-columns: 1fr;
+  }
+
+  .shortcut {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    gap: 12px;
+  }
+
+  .shortcut__btn {
+    width: 100%;
+  }
+
+  .error .error__code {
+    font-size: 84px;
+  }
+
+  .error .error__title {
+    font-size: 26px;
+  }
+
+  .error .error__desc {
+    font-size: 16px;
   }
 }
