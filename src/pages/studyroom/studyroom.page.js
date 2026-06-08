@@ -49,6 +49,92 @@ const categoryButton = document.querySelectorAll('.category__button')
 const searchInput = document.getElementById('search__input')
 
 // ================================
+// 게시판 요약
+// ================================
+const getTopicCount = () =>
+  [...categoryButton].filter((button) => Number(button.dataset.index) !== 0)
+    .length
+
+const updateOverviewMetrics = (totalPosts = 0) => {
+  const metricPosts = document.querySelectorAll('[data-metric="posts"]')
+  const metricTopics = document.querySelectorAll('[data-metric="topics"]')
+
+  metricPosts.forEach((el) => {
+    el.textContent = Number(totalPosts).toLocaleString('ko-KR')
+  })
+  metricTopics.forEach((el) => {
+    el.textContent = getTopicCount().toLocaleString('ko-KR')
+  })
+}
+
+const createPostsFormData = (page = currentPage) => {
+  const formData = new FormData()
+  formData.append('board_id', 1)
+  formData.append('page', page)
+  formData.append('user_id', userData.UID)
+  formData.append('search', currentSearch)
+  formData.append('category', currentCategory === 'ALL' ? '' : currentCategory)
+
+  return formData
+}
+
+const getTotalCountFromResult = (result) => {
+  const totalKeys = [
+    'total_count',
+    'total_posts',
+    'total_post_count',
+    'total_records',
+    'total_items',
+    'total',
+  ]
+  const totalValue = totalKeys
+    .map((key) => Number(result?.[key]))
+    .find((value) => Number.isFinite(value))
+
+  return totalValue ?? null
+}
+
+const fetchPageSize = async (page, token) => {
+  const response = await fetch(`${BASE_URL}/board/list_board.php`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: createPostsFormData(page),
+  })
+
+  if (!response.ok) return 0
+
+  const result = await response.json()
+  return Array.isArray(result.data) ? result.data.length : 0
+}
+
+const resolveTotalPostCount = async (result, currentPosts, token) => {
+  const directTotalCount = getTotalCountFromResult(result)
+
+  if (directTotalCount !== null) return directTotalCount
+  if (!totalPages || totalPages <= 1) return currentPosts.length
+
+  const firstPageSizePromise =
+    currentPage === 1
+      ? Promise.resolve(currentPosts.length)
+      : fetchPageSize(1, token)
+  const lastPageSizePromise =
+    currentPage === totalPages
+      ? Promise.resolve(currentPosts.length)
+      : fetchPageSize(totalPages, token)
+
+  const [firstPageSize, lastPageSize] = await Promise.all([
+    firstPageSizePromise,
+    lastPageSizePromise,
+  ])
+
+  if (!firstPageSize) return currentPosts.length
+
+  return (totalPages - 1) * firstPageSize + lastPageSize
+}
+
+// ================================
 // 게시글 데이터 fetch
 // ================================
 async function fetchPosts() {
@@ -58,37 +144,33 @@ async function fetchPosts() {
 
     const token = localStorage.getItem('token')
 
-    const formData = new FormData()
-    formData.append('board_id', 1)
-    formData.append('page', currentPage)
-    formData.append('user_id', userData.UID)
-    formData.append('search', currentSearch)
-    formData.append(
-      'category',
-      currentCategory === 'ALL' ? '' : currentCategory,
-    )
-
     const response = await fetch(`${BASE_URL}/board/list_board.php`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: formData,
+      body: createPostsFormData(currentPage),
     })
 
     if (!response.ok) throw new Error('데이터 불러오기 실패')
 
     const result = await response.json()
-    totalPages = result.total_pages || 0
+    totalPages = Number(result.total_pages) || 0
+    const currentPosts = Array.isArray(result.data) ? result.data : []
+    const totalPostCount = await resolveTotalPostCount(
+      result,
+      currentPosts,
+      token,
+    )
 
-    if (!result.data || result.data.length === 0) {
-      renderPosts([])
+    if (currentPosts.length === 0) {
+      renderPosts([], totalPostCount)
       renderPagination()
       return
     }
 
     // 데이터 가공
-    const actualPosts = result.data.map((post) => {
+    const actualPosts = currentPosts.map((post) => {
       const categories = Array.isArray(post.type) ? post.type : [post.type]
       const cleanText = removeMarkdown(post.contents)
       const summary =
@@ -102,10 +184,11 @@ async function fetchPosts() {
       }
     })
 
-    renderPosts(actualPosts)
+    renderPosts(actualPosts, totalPostCount)
     renderPagination()
   } catch (error) {
     console.error('에러 발생:', error)
+    updateOverviewMetrics(0)
     renderPosts([])
     renderPagination()
   }
@@ -114,7 +197,9 @@ async function fetchPosts() {
 // ================================
 // 게시글 렌더링
 // ================================
-function renderPosts(data) {
+function renderPosts(data, totalPostCount = data.length) {
+  updateOverviewMetrics(totalPostCount)
+
   if (data.length === 0) {
     postListElement.innerHTML = `
       <div class="post__no-result">

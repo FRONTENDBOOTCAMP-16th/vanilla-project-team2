@@ -420,7 +420,7 @@
 
 /* 배경색 */
 .gray-bg {
-  background-color: var(--clr-bg);
+  background-color: transparent;
 }
 
 /* none */

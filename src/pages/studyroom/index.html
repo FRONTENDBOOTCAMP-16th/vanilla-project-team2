@@ -16,122 +16,153 @@
     data-show-footer="true"
     class="gray-bg"
   >
-    <div class="container vh100">
-      <!-- page-header -->
-      <div class="page-header__box">
-        <h2 class="page-header__title">자습방</h2>
-        <p class="page-header__desc">
-          학습한 내용을 정리하고 복습하며 성장하세요
-        </p>
-      </div>
-      <!-- //page-header -->
+    <main class="container community-page board-page vh100">
+      <section
+        class="community-overview board-overview"
+        aria-labelledby="studyroom-title"
+      >
+        <div class="community-overview__main">
+          <span class="community-overview__badge">Study Board</span>
+          <h1 class="community-overview__title" id="studyroom-title">
+            자습방
+          </h1>
+          <p class="community-overview__desc">
+            학습한 내용을 주제별로 정리하고 복습 흐름을 빠르게 확인하세요.
+          </p>
+        </div>
 
-      <!-- search -->
-      <section class="search">
-        <form class="search__form">
-          <div class="search__group">
-            <svg
-              class="search__icon"
-              width="17"
-              height="17"
-              viewBox="0 0 17 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
-                stroke="#99A1AF"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M15.8333 15.8333L12.25 12.25"
-                stroke="#99A1AF"
-                stroke-width="1.66667"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <label class="sr-only" for="search__input">게시글 검색</label>
-            <input
-              class="search__input"
-              type="search"
-              id="search__input"
-              name="search__input"
-              placeholder="게시글 검색"
-            />
+        <div class="community-overview__actions">
+          <a class="button button--primary" href="../../../src/pages/newpost/index.html">
+            학습글 작성
+          </a>
+          <a class="button button--subtle" href="../../../index.html">대시보드</a>
+        </div>
+
+        <dl
+          class="community-metrics community-metrics--pair"
+          aria-label="자습방 요약"
+        >
+          <div class="community-metric">
+            <dt>총 게시물 갯수</dt>
+            <dd data-metric="posts">-</dd>
           </div>
-        </form>
+          <div class="community-metric">
+            <dt>분류 주제</dt>
+            <dd data-metric="topics">-</dd>
+          </div>
+        </dl>
       </section>
-      <!-- //search -->
 
-      <!-- category -->
-      <div class="category">
-        <ul class="category__list">
-          <li class="category__item">
-            <button
-              class="category__button category__button--active"
-              data-index="0"
-              data-topic="전체"
-              type="button"
-            >
-              전체
-            </button>
-          </li>
-          <li class="category__item">
-            <button
-              class="category__button"
-              data-index="1"
-              data-topic="HTML"
-              type="button"
-            >
-              HTML
-            </button>
-          </li>
-          <li class="category__item">
-            <button
-              class="category__button"
-              data-index="2"
-              data-topic="CSS"
-              type="button"
-            >
-              CSS
-            </button>
-          </li>
-          <li class="category__item">
-            <button
-              class="category__button"
-              data-index="3"
-              data-topic="JavaScript"
-              type="button"
-            >
-              JAVASCRIPT
-            </button>
-          </li>
-          <li class="category__item">
-            <button
-              class="category__button"
-              data-index="4"
-              data-topic="React"
-              type="button"
-            >
-              REACT
-            </button>
-          </li>
-          <li class="category__item">
-            <button
-              class="category__button"
-              data-index="5"
-              data-topic="기타"
-              type="button"
-            >
-              기타
-            </button>
-          </li>
-        </ul>
-      </div>
-      <!-- //category -->
+      <section class="board-console" aria-label="자습방 게시글 필터">
+        <div class="board-toolbar">
+          <div class="board-toolbar__heading">
+            <span class="section-kicker">Explore</span>
+            <h2>학습글 탐색</h2>
+            <p>검색어와 카테고리로 필요한 학습 기록을 좁혀보세요.</p>
+          </div>
+
+          <form class="search">
+            <div class="search__group">
+              <svg
+                class="search__icon"
+                width="17"
+                height="17"
+                viewBox="0 0 17 17"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7.50016 14.1667C11.1821 14.1667 14.1668 11.1819 14.1668 7.50001C14.1668 3.81811 11.1821 0.833344 7.50016 0.833344C3.81826 0.833344 0.833496 3.81811 0.833496 7.50001C0.833496 11.1819 3.81826 14.1667 7.50016 14.1667Z"
+                  stroke="currentColor"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M15.8333 15.8333L12.25 12.25"
+                  stroke="currentColor"
+                  stroke-width="1.66667"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <label class="sr-only" for="search__input">게시글 검색</label>
+              <input
+                class="search__input"
+                type="search"
+                id="search__input"
+                name="search__input"
+                placeholder="학습글 제목, 내용 검색"
+              />
+            </div>
+          </form>
+        </div>
+
+        <div class="category">
+          <ul class="category__list">
+            <li class="category__item">
+              <button
+                class="category__button category__button--active"
+                data-index="0"
+                data-topic="전체"
+                type="button"
+              >
+                전체
+              </button>
+            </li>
+            <li class="category__item">
+              <button
+                class="category__button"
+                data-index="1"
+                data-topic="HTML"
+                type="button"
+              >
+                HTML
+              </button>
+            </li>
+            <li class="category__item">
+              <button
+                class="category__button"
+                data-index="2"
+                data-topic="CSS"
+                type="button"
+              >
+                CSS
+              </button>
+            </li>
+            <li class="category__item">
+              <button
+                class="category__button"
+                data-index="3"
+                data-topic="JavaScript"
+                type="button"
+              >
+                JAVASCRIPT
+              </button>
+            </li>
+            <li class="category__item">
+              <button
+                class="category__button"
+                data-index="4"
+                data-topic="React"
+                type="button"
+              >
+                REACT
+              </button>
+            </li>
+            <li class="category__item">
+              <button
+                class="category__button"
+                data-index="5"
+                data-topic="기타"
+                type="button"
+              >
+                기타
+              </button>
+            </li>
+          </ul>
+        </div>
+      </section>
 
       <!-- post -->
       <div class="post">
@@ -222,6 +253,6 @@
         </div>
       </nav>
       <!-- pagination -->
-    </div>
+    </main>
   </body>
 </html>
