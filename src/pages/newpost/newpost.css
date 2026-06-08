@@ -1,34 +1,44 @@
-
 /* =================================
 post form
 ================================= */
 .newpost__form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 20px;
-  box-shadow: var(--shadow-box);
-
-  background: var(--white);
-  border: 1px solid lightgray;
-  border-radius: 14px;
-  margin-block: 30px;
-
+  gap: 24px;
+  padding: 32px;
+  box-shadow: var(--shadow-card);
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-xl);
+  margin-block: 40px;
+  transition: box-shadow var(--transition-base);
 
   /* ================================
   1. 게시판 선택 영역 (라디오 버튼)
   ================================= */
   .newpost__field--board {
-    border: 1px solid lightgray;
-    border-radius: 12px;
-    padding: 12px;
-    margin-top: 12px;
-    line-height: 1;
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    background: var(--clr-surface-sunken);
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
 
     .newpost__radio {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      font-weight: 500;
+      color: var(--clr-text);
+      cursor: pointer;
+
+      input[type="radio"] {
+        accent-color: var(--clr-primary);
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+      }
     }
   }
 
@@ -39,30 +49,47 @@ post form
   .newpost__field {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 
     /* 제목, 카테고리 */
     .input,
     #categorySelect {
-      height: 50px;
-      border: 1px solid lightgray;
-      border-radius: 12px;
-      padding-inline: 12px;
+      height: 52px;
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding-inline: 16px;
+      font-size: 15px;
+      background: var(--clr-surface);
+      color: var(--clr-text);
+      transition: all var(--transition-fast);
+
+      &:focus {
+        outline: none;
+        border-color: var(--clr-primary);
+        box-shadow: 0 0 0 3px var(--clr-primary-glow);
+      }
     }
 
     /* 내용 */
     #content {
-      border: 1px solid lightgray;
-      border-radius: 12px;
-      padding-inline: 12px;
-
+      border: 1px solid var(--clr-border);
+      border-radius: var(--radius-md);
+      padding: 20px;
       box-sizing: border-box;
       width: 100%;
-      padding: 16px;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 1.6;
-      resize: none;
+      resize: vertical;
       min-height: 400px;
+      background: var(--clr-surface);
+      color: var(--clr-text);
+      transition: all var(--transition-fast);
+
+      &:focus {
+        outline: none;
+        border-color: var(--clr-primary);
+        box-shadow: 0 0 0 3px var(--clr-primary-glow);
+      }
     }
   }
 
@@ -71,23 +98,49 @@ post form
   3. 미리보기 영역
   ================================= */
   .newpost__preview {
-    background: var(--gray-50);
-    border: 1px solid lightgray;
-    border-radius: 12px;
-    padding: 24px 12px;
+    background: var(--clr-surface-sunken);
+    border: 1px solid var(--clr-border-light);
+    border-radius: var(--radius-md);
+    padding: 32px 24px;
   }
+
   strong {
-    background-color: #e0e7ff;
-    padding: 8px 14px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, var(--clr-primary-light), #ede9fe);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    color: var(--clr-primary);
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 16px;
   }
 
   #previewContent {
-    padding-block: 30px;
-    line-height: 1.6;
+    padding-block: 16px;
+    line-height: 1.7;
+    color: var(--clr-text);
+
+    h1, h2, h3 {
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      color: var(--clr-text);
+    }
 
     h2 {
-      padding-block-end: 18px;
+      padding-block-end: 16px;
+      border-bottom: 1px solid var(--clr-border);
+    }
+
+    p {
+      margin-bottom: 1em;
+    }
+
+    pre {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
     }
   }
 
@@ -96,29 +149,84 @@ post form
   ================================= */
   .newpost__actions {
     display: flex;
-    justify-content: space-evenly;
-    gap: 14px;
-
-    height: 50px;
-    margin-block: 30px;
+    justify-content: center;
+    gap: 16px;
+    margin-block: 32px 16px;
   }
 
   .newpost__actions .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-
-    gap: 6px;
-    border-radius: 12px;
-    border: 1px solid lightgray;
+    min-width: 140px;
+    height: 52px;
+    gap: 8px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--clr-border);
+    background: var(--clr-surface);
+    color: var(--clr-text-secondary);
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: all var(--transition-fast);
+
+    &:hover {
+      background: var(--clr-surface-sunken);
+      color: var(--clr-text);
+    }
   }
 
   /* 제출 버튼 */
   .button--primary {
-    background: linear-gradient(90deg, #4f39f6 0%, #7c3aed 100%);
-    color: #ffffff;
-    border: none;
+    background: linear-gradient(135deg, var(--clr-primary) 0%, var(--clr-accent) 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(79, 57, 246, 0.25);
+
+    &:hover {
+      box-shadow: 0 6px 16px rgba(79, 57, 246, 0.35);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+/* =================================
+   반응형 브레이크포인트
+================================= */
+
+@media (max-width: 768px) {
+  .newpost__form {
+    padding: 24px;
+    margin-block: 24px;
+    border-radius: var(--radius-lg);
+  }
+
+  .newpost__field #content {
+    min-height: 300px;
+  }
+
+  .newpost__preview {
+    padding: 20px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newpost__form {
+    padding: 16px;
+    margin-block: 16px;
+  }
+
+  .newpost__field--board {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .newpost__actions {
+    flex-direction: column;
+    gap: 12px;
+
+    .button {
+      width: 100%;
+    }
   }
 }
