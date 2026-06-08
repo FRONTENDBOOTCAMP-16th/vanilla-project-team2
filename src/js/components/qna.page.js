@@ -14,7 +14,7 @@ async function fetchUserData(forceRefresh = false) {
     return userData
   } else {
     alert('유효하지 않은 접근입니다.')
-    window.location.href = '/index.html'
+    window.location.href = (window.ROOT_PATH || './') + 'index.html'
     return
   }
 }
@@ -265,7 +265,7 @@ function bindEvents() {
       const postId = item.dataset.id
       localStorage.setItem('selectedPostId', postId)
       localStorage.setItem('selectedBoardId', 2)
-      location.href = '/src/pages/readpost/index.html'
+      location.href = (window.ROOT_PATH || './') + 'src/pages/readpost/index.html'
     })
   }
 }

@@ -69,7 +69,7 @@ async function start() {
 
   if (!currentUser) {
     alert('로그인이 필요합니다.')
-    window.location.href = '/src/pages/users/login/index.html'
+    window.location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
     return
   }
 
@@ -231,7 +231,7 @@ function bindEvents(post) {
 
       if (!uid) {
         alert('로그인이 필요합니다.')
-        window.location.href = '/src/pages/users/login/index.html'
+        window.location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
         return
       }
 

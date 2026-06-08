@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. (선택사항) 특정 시간 후 자동으로 홈으로 리다이렉트 하고 싶다면 아래 주석을 해제하세요.
   /*
   setTimeout(() => {
-    window.location.href = '/';
+    window.location.href = (window.ROOT_PATH || './') + '';
   }, 10000); // 10초 후 메인으로 이동
   */
 });

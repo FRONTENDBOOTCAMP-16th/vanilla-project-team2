@@ -20,7 +20,7 @@ async function fetchUserData(forceRefresh = false) {
     return userData
   } else {
     alert('로그인이 필요합니다.')
-    window.location.href = '/src/pages/users/login/index.html'
+    window.location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
     return
   }
 }
@@ -340,7 +340,7 @@ function bindEvents() {
       const postId = item.dataset.id
       localStorage.setItem('selectedPostId', postId)
       localStorage.setItem('selectedBoardId', 2)
-      location.href = '/src/pages/readpost/index.html'
+      location.href = (window.ROOT_PATH || './') + 'src/pages/readpost/index.html'
     })
   }
 }

@@ -5,7 +5,7 @@ async function initMyPage() {
 
   if (fetchedData) {
     alert('이미 로그인하셨습니다.')
-    window.location.href = '/index.html'
+    window.location.href = (window.ROOT_PATH || './') + 'index.html'
   }
 }
 

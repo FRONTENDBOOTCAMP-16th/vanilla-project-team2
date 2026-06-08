@@ -12,7 +12,7 @@ async function loadLayout() {
   // 1) HEADER 로드
   // ---------------------------
   if (showHeader) {
-    const headerRes = await fetch('/components/header.html', {
+    const headerRes = await fetch((window.ROOT_PATH || './') + 'components/header.html', {
       cache: 'no-store',
     })
 
@@ -43,7 +43,7 @@ async function loadLayout() {
   // 2) FOOTER 로드
   // ---------------------------
   if (showFooter) {
-    const footerRes = await fetch('/components/footer.html', {
+    const footerRes = await fetch((window.ROOT_PATH || './') + 'components/footer.html', {
       cache: 'no-store',
     })
 
@@ -117,7 +117,7 @@ function bindLogout() {
 
       // 로그인 페이지로 이동
       // ※ 실제 로그인 페이지 경로에 맞게 유지
-      location.href = '/src/pages/users/login/index.html'
+      location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
     },
     { once: true }, // 이벤트 1회만 실행 (중복 로그아웃 방지)
   )

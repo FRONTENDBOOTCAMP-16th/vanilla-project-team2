@@ -3,7 +3,7 @@ import { checkToken } from '../../../api/JWT.js'
 const fetchedData = await checkToken()
 if (fetchedData) {
   alert('이미 로그인 되어 있습니다.')
-  window.location.href = '/index.html'
+  window.location.href = (window.ROOT_PATH || './') + 'index.html'
 }
 
 // 로그인
@@ -78,7 +78,7 @@ form.addEventListener('click', (e) => {
               const data = JSON.parse(text)
               if (data.status === 'success') {
                 alert('가입 완료!')
-                window.location.href = '/src/pages/users/login/index.html'
+                window.location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
               } else {
                 if (data.message === '이미 존재하는 아이디입니다.') {
                   showError(id, '이미 존재하는 아이디입니다.')

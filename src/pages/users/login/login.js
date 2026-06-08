@@ -5,7 +5,7 @@ async function checkIsLoggedIn() {
 
   if (isLoggedIn) {
     alert('이미 로그인 되었습니다.')
-    window.location.href = '/index.html'
+    window.location.href = (window.ROOT_PATH || './') + 'index.html'
   }
 }
 

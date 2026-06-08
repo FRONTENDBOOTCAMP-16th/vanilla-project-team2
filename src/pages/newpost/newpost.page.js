@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // 유저가 아니라면 되돌리기
   if (!user) {
     alert('로그인이 필요합니다.')
-    window.location.href = '/src/pages/users/login/index.html'
+    window.location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
     return // 이제 함수 안이므로 정상 작동합니다
   }
   // 로그인했을 때만 실행될 나머지 코드들...
