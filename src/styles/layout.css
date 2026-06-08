@@ -117,13 +117,65 @@ header.scrolled {
   color: var(--clr-primary-hover);
 }
 
-.nav-item.write {
-  border-color: rgba(255, 255, 255, 0.78);
+/* 플로팅 글쓰기 버튼 */
+.floating-write-btn {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
   background:
-    linear-gradient(145deg, rgba(239, 246, 255, 0.82), rgba(255, 255, 255, 0.34)),
+    linear-gradient(145deg, rgba(239, 246, 255, 0.85), rgba(255, 255, 255, 0.3)),
+    var(--glass-sheen),
+    rgba(255, 255, 255, 0.4);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  box-shadow: 
+    0 12px 28px rgba(15, 23, 42, 0.16),
+    var(--glass-shadow-inset);
+  color: var(--clr-accent, #2563eb);
+  transition: transform var(--transition-spring), box-shadow var(--transition-base), background var(--transition-base);
+}
+
+.floating-write-btn:hover {
+  transform: translateY(-6px) scale(1.05);
+  border-color: rgba(255, 255, 255, 0.95);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(239, 246, 255, 0.6)),
     var(--glass-sheen);
-  box-shadow: var(--glass-shadow-inset);
-  color: var(--clr-accent);
+  box-shadow: 
+    0 20px 40px rgba(15, 23, 42, 0.22),
+    var(--glass-shadow-inset);
+  color: var(--clr-primary-hover);
+}
+
+.floating-write-btn svg {
+  width: 26px;
+  height: 26px;
+  transition: transform var(--transition-spring);
+}
+
+.floating-write-btn:hover svg {
+  transform: rotate(-8deg);
+}
+
+@media (max-width: 860px) {
+  .floating-write-btn {
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+  }
+  .floating-write-btn svg {
+    width: 22px;
+    height: 22px;
+  }
 }
 
 /* 회원정보 */

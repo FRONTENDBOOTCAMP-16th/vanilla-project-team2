@@ -44,6 +44,10 @@ async function loadLayout() {
       // 오버레이도 추가
       const overlay = temp.querySelector('.mobile-overlay')
       if (overlay) body.insertBefore(overlay, header.nextSibling)
+
+      // 플로팅 글쓰기 버튼 추가
+      const floatingBtn = temp.querySelector('.floating-write-btn')
+      if (floatingBtn) body.append(floatingBtn)
     }
   }
 
