@@ -63,7 +63,7 @@ deleteButton.addEventListener('click', async (e) => {
                 <b>학습방</b>을 이용해주셔서 <br>감사합니다.
               </p>
             </div>
-            <a href="/" class="form__button white">
+            <a href="${window.ROOT_PATH || './'}index.html" class="form__button white">
               <span>메인페이지</span>
             </a>`
           formBox.innerHTML = html

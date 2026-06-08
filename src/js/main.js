@@ -28,6 +28,14 @@ async function loadLayout() {
       const temp = document.createElement('div')
       temp.innerHTML = headerHtml
 
+      const rootPath = window.ROOT_PATH || './';
+      temp.querySelectorAll('[href^="/"]').forEach(el => {
+        el.setAttribute('href', rootPath + el.getAttribute('href').substring(1));
+      });
+      temp.querySelectorAll('[src^="/"]').forEach(el => {
+        el.setAttribute('src', rootPath + el.getAttribute('src').substring(1));
+      });
+
       // header.html의 실제 <header> 요소 추출
       const header = temp.querySelector('header') || temp.firstElementChild
 
@@ -58,6 +66,14 @@ async function loadLayout() {
 
       const temp = document.createElement('div')
       temp.innerHTML = footerHtml
+
+      const rootPath = window.ROOT_PATH || './';
+      temp.querySelectorAll('[href^="/"]').forEach(el => {
+        el.setAttribute('href', rootPath + el.getAttribute('href').substring(1));
+      });
+      temp.querySelectorAll('[src^="/"]').forEach(el => {
+        el.setAttribute('src', rootPath + el.getAttribute('src').substring(1));
+      });
 
       // footer.html의 실제 <footer> 요소 추출
       const footer = temp.querySelector('footer') || temp.firstElementChild
