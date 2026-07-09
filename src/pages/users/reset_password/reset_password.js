@@ -81,7 +81,7 @@ if (form) {
         .then(async (response) => {
           const data = await response.json();
 
-          // 👉 [수정된 부분] response.ok가 아니거나(네트워크 에러), 서버에서 보낸 JSON의 status가 'error'라면 catch로 던짐!
+          // HTTP 오류와 서버가 정의한 실패 상태를 같은 catch 흐름으로 처리한다.
           if (!response.ok || data.status === 'error') {
             throw data;
           }

@@ -18,21 +18,16 @@ const URLS = 'https://leedh9276.dothome.co.kr/likelion-vanilla/users/login.php'
 const loginButton = document.querySelector('.login__button')
 const form = document.getElementById('login')
 
-// 로그인 버튼 로직
+// 로그인 버튼은 입력 검증 후 FormData를 그대로 서버의 PHP POST 계약에 맞춰 전달한다.
 loginButton.addEventListener('click', (e) => {
   e.preventDefault()
   const formData = new FormData(form)
 
-  // 1. 모든 에러 메시지 초기화 (이전 에러 지우기)
   const errorTexts = document.querySelectorAll('.error__text')
   errorTexts.forEach((el) => (el.textContent = ''))
 
-  // 2. 검사할 입력 요소들 가져오기
-  const nickname = document.getElementById('user_nickname')
   const id = document.getElementById('user_id')
   const password = document.getElementById('user_password')
-  const passwordCheck = document.getElementById('user_password_check')
-  const phone = document.getElementById('user_phone')
 
   const showError = (inputElement, message) => {
     const container = inputElement.closest('.user__input')
@@ -65,12 +60,9 @@ loginButton.addEventListener('click', (e) => {
         })
         .then((data) => {
           if (data.code === '00') {
-            // id 변수가 이 스코프 내에 정의되어 있어야 합니다.
             showError(id, '잘못된 아이디입니다.')
             return
           } else if (data.code === '01') {
-            // password 변수가 이 스코프 내에 정의되어 있어야 합니다.
-            const password = document.getElementById('user_password') // 예시
             showError(password, '잘못된 비밀번호입니다.')
             return
           }

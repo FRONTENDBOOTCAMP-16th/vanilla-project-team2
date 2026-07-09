@@ -135,8 +135,7 @@ function bindLogout() {
       // (auth, token 등 모두 제거됨)
       localStorage.clear()
 
-      // 로그인 페이지로 이동
-      // ※ 실제 로그인 페이지 경로에 맞게 유지
+      // 공통 ROOT_PATH를 사용해 어느 깊이의 페이지에서도 같은 로그인 URL로 이동한다.
       location.href = (window.ROOT_PATH || './') + 'src/pages/users/login/index.html'
     },
     { once: true }, // 이벤트 1회만 실행 (중복 로그아웃 방지)
@@ -185,22 +184,16 @@ function setActiveNav() {
   // 기존 active 클래스 전부 제거
   links.forEach((a) => a.classList.remove('active'))
 
-  // ---------------------------
-  // 1️⃣ href와 정확히 같은 링크 찾기
-  // ---------------------------
+  // 상대 href를 현재 origin 기준 절대 URL로 바꾼 뒤 pathname을 비교한다.
   let activeLink = links.find((a) => {
     const href = a.getAttribute('href')
     if (!href) return false
 
-    // 상대경로 → 절대경로 변환 후 pathname 비교
     const hrefPath = new URL(href, location.origin).pathname.replace(/\/+$/, '')
     return hrefPath === currentPath
   })
 
-  // ---------------------------
-  // 2️⃣ index.html 생략 접근 보정
-  // 예: /qna/ 로 접근했지만 실제 링크는 /qna/index.html
-  // ---------------------------
+  // /qna/처럼 index.html을 생략한 접근도 같은 메뉴로 인식한다.
   if (!activeLink) {
     activeLink = links.find((a) => {
       const href = a.getAttribute('href')
@@ -295,8 +288,6 @@ function bindHeaderScroll() {
   const header = document.querySelector('header')
   if (!header) return
 
-  let lastScrollY = 0
-
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY
 
@@ -306,7 +297,6 @@ function bindHeaderScroll() {
       header.classList.remove('scrolled')
     }
 
-    lastScrollY = scrollY
   }, { passive: true })
 }
 
@@ -321,7 +311,7 @@ async function init() {
   // 레이아웃이 로드된 후에만 할 수 있는 일들을 묶어주기
   await loadLayout()
 
-  // 이제 헤더/푸터가 확실히 있으니 안심하고 실행
+  // 동적으로 삽입된 헤더 요소가 필요한 초기화는 loadLayout 이후에 실행한다.
   setActiveNav()
   controlAuthUI()
   bindLogout()
